@@ -151,6 +151,30 @@ Happy Birthday. Let's make this year the best one yet.
 Love Always,
 [Your Name]`,
 
+  brother: `To My Amazing Brother, ${name},
+
+Growing up with you taught me what it means to have a true ally. You've been my protector, my rival, my challenge, and ultimately, my greatest supporter. The memories we've built together—from childhood adventures to navigating adulthood—are woven into the fabric of who I am today.
+
+Your strength has inspired me, your humor has lifted me, and your unwavering loyalty has anchored me. You don't just have my back; you have my heart. Through every ups and downs, you've remained a constant presence I can always count on.
+
+On your birthday, I celebrate not just the man you've become, but the incredible journey we've shared. Here's to more laughter, more memories, and a lifetime of brotherhood.
+
+Your Sibling (The Better One 😎),
+[Your Name]`,
+
+  sister: `To My Incredible Sister, ${name},
+
+You are the one person in this world who truly understands me—not just as a sibling, but as your own complete person with dreams, struggles, and a heart as beautiful as the world around you. Our bond is something I've never taken for granted, and with each passing year, I realize how rare it is to have someone who knows all your secrets and still thinks you're amazing.
+
+Your strength lifts me up. Your laughter fills our home. Your compassion shapes how I see the world. You are not just my sister; you are my inspiration, my confidant, and the keeper of my deepest memories.
+
+As you celebrate another year of being absolutely extraordinary, I want you to know: you are loved beyond measure, appreciated more than words can express, and cherished like no one else in my life.
+
+Happy Birthday to my forever sister. The world is infinitely better because you're in it.
+
+With All My Love,
+[Your Name]`,
+
   colleague: `To an Incredible Colleague, ${name},
 
 Working with you is a daily reminder that the people make the place. Your dedication, your brilliant ideas, and your positive energy transform even the most stressful days into something manageable—and often, genuinely fun.
