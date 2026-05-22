@@ -55,12 +55,17 @@ Copy `.env.example` to `.env.local`, change values, restart the dev server, and 
 
 ---
 
-## 🔥 Why Birthday Bloom?
-Developed by **Naboraj Sarkar**, Birthday Bloom is an open-source gift to the community. Anyone can fork this project and create a world-class surprise for their loved ones in minutes.
 
-*   **Zero-Config Deployment**: Launch instantly via Vercel with just a few ENV variables.
-*   **60fps Cinematography**: Optimized for buttery-smooth animations on both Desktop and Mobile.
-*   **Emotionally Driven**: From the fake chat interface to the growing Heart Tree, every element is designed to move the recipient.
+## 🔥 Why Birthday Bloom?
+
+Most website templates are static or simply transition between pages. **Birthday Bloom is a cinematic finite state machine.** It controls pacing, narrative tension, visual payoffs, and sound effects to simulate a movie-like experience inside the browser.
+
+By chaining together asynchronous events and orchestrated **Framer Motion** timelines, the application orchestrates a perfect symphony of text, light, SVG particle physics, and interactions. 
+
+- **No Over-Engineering**: We rely heavily on pure CSS (transitions, animations, custom easing curves) rather than heavy JavaScript physics libraries like Matter.js or Three.js. This ensures maximum performance across low-end mobile devices and reduces the final bundle size significantly.
+- **Dynamic Emotional Flow**: Fake chat interfaces, character-by-character typing effects, and growing SVG structures all contribute to a highly immersive experience. The user isn't just "reading" a webpage; they are experiencing a narrative.
+- **Zero Configuration Required**: Out of the box, you just need to populate a single `.env` variable to get 90% of the value.
+- **Vite Empowered**: Instant HMR when developing locally, and highly optimized, minified chunks when deploying to production.
 
 ---
 
@@ -148,16 +153,6 @@ Developed by **Naboraj Sarkar**, Birthday Bloom is an open-source gift to the co
 
 ---
 
-## 🌟 Introduction
-
-**Birthday Bloom** is a high-end, premium animated birthday surprise platform designed to capture and create unforgettable digital moments. Developed fundamentally with **React 18**, **Framer Motion**, and **Tailwind CSS**, it establishes a physics-based, emotional narrative layout.
-
-Whether you're celebrating a close friend, a loved one, or simply sending positive vibes, this project provides a 60fps cinematic journey guaranteed to leave a strong emotional impact. **This version is fully secret-config driven**, allowing you to bypass setup wizards and launch a perfectly personalized surprise instantly via environment variables.
-
-Developed by **Naboraj Sarkar** (Naboraj Sarkar), Birthday Bloom pushes the boundaries of web-based celebrations, transforming a static "Happy Birthday" text into an interactive, digital masterpiece. The goal of this repository is to give developers a plug-and-play solution that looks incredibly bespoke and expensive to the end user. Everything from the typography to the physics-based confetti bursts has been carefully engineered for maximum emotion.
-
----
-
 ## 🎥 Cinematography Theory
 
 Birthday Bloom is built on the principle of **Kinetic Storytelling**. Unlike traditional web apps that prioritize instant information retrieval, this engine prioritizes **Emotional Payoff**.
@@ -172,19 +167,6 @@ We simulate a camera lens using CSS `perspective` and Framer Motion's `rotateX/Y
 
 ### 3. Filmic Post-Processing
 We apply a global **Film Grain** overlay (`body::after`) and a **Vignette** to eliminate digital "flatness". This technique is borrowed from high-end cinematography to make the UI feel like a living frame of film.
-
----
-
-## 🔥 Why Birthday Bloom?
-
-Most website templates are static or simply transition between pages. **Birthday Bloom is a cinematic finite state machine.** It controls pacing, narrative tension, visual payoffs, and sound effects to simulate a movie-like experience inside the browser.
-
-By chaining together asynchronous events and orchestrated **Framer Motion** timelines, the application orchestrates a perfect symphony of text, light, SVG particle physics, and interactions. 
-
-- **No Over-Engineering**: We rely heavily on pure CSS (transitions, animations, custom easing curves) rather than heavy JavaScript physics libraries like Matter.js or Three.js. This ensures maximum performance across low-end mobile devices and reduces the final bundle size significantly.
-- **Dynamic Emotional Flow**: Fake chat interfaces, character-by-character typing effects, and growing SVG structures all contribute to a highly immersive experience. The user isn't just "reading" a webpage; they are experiencing a narrative.
-- **Zero Configuration Required**: Out of the box, you just need to populate a single `.env` variable to get 90% of the value.
-- **Vite Empowered**: Instant HMR when developing locally, and highly optimized, minified chunks when deploying to production.
 
 ---
 
@@ -433,7 +415,7 @@ This section provides a technical breakdown of every major component in the engi
 | `onComplete`| `() => void` | `undefined` | Callback fired when typing ends. |
 | `className` | `string` | `""` | Custom Tailwind classes for the text container. |
 
-### `<HeartTree />` API
+### `<HeartTree />` API (UNDER DEVELOPMENT)
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `delay` | `number` | `1000` | Minimum delay before the trunk begins to grow. |
@@ -485,68 +467,6 @@ Handles HTML5 Audio instances without cluttering the DOM with invisible `<audio>
 
 ---
 
-## 🎨 Theming Engine & CSS Variables
-
-Adjusting these variables globally repaints the UI instantly.
-
-| Variable | Description |
-| :--- | :--- |
-| `--background` | The deep base color (usually dark). |
-| `--foreground` | The primary text color. |
-| `--primary` | The main accent color (glows, buttons). |
-| `--card-radius` | Global border radius for glassmorphism cards. |
-| `--font-display` | The typeface used for cinematic reveals. |
-
-### 🛠️ Creating Custom Themes
-```css
-/* Example: Matrix Green */
-:root {
-  --background: 120 100% 5%;
-  --primary: 120 100% 50%;
-  --foreground: 120 100% 90%;
-}
-```
-
----
-
-## ⚡ Performance Profiling & GPU Acceleration
-
-Despite the visual complexity, this repository maintains an incredibly lightweight footprint.
-- **No Heavy Physics Libraries**: Rather than including `matter.js` or `three.js` which parse 500kb-1MB of JS memory chunks, we use `requestAnimationFrame` hooks and native CSS for sparkles, balloons, and typing.
-- **SVG Over Images**: The Interactive Cake and Heart Tree are 100% vector SVG geometries.
-- **GPU Offloading**: Animations (`translate3d`) utilize hardware acceleration, shifting work from the CPU to the GPU rendering pipeline. This secures 60 frames per second on both desktop and mobile iOS/Android browsers.
-- **Lighthouse Goals**:
-  - **LCP (Largest Contentful Paint)**: < 1.2s
-  - **FID (First Input Delay)**: < 100ms
-  - **CLS (Cumulative Layout Shift)**: 0.00
-
----
-
-## 🌐 Browser Compatibility Matrix
-
-| Browser | Version | Support Level |
-| :--- | :--- | :--- |
-| Chrome | 80+ | Full (60fps) |
-| Safari | 13+ | Full (Autoplay policies apply) |
-| Firefox | 75+ | Full |
-| Edge | 80+ | Full |
-| Mobile Safari | iOS 13+ | Full |
-
----
-
-## 🔍 SEO, Social Sharing & OG Tags
-
-Located inside `index.html`, these tags ensure the surprise looks amazing when shared.
-
-```html
-<title>Happy Birthday!</title>
-<meta property="og:title" content="Happy Birthday!" />
-<meta property="og:image" content="/assets/banner.png" />
-<meta name="theme-color" content="#FF69B4" />
-```
-
----
-
 ## 🔐 Security & Data Integrity
 
 1. **Client-Side Safety**: All `VITE_` variables are public. Do not store sensitive passwords in the environment variables.
@@ -555,29 +475,6 @@ Located inside `index.html`, these tags ensure the surprise looks amazing when s
 
 ---
 
-## 📜 Version History & Changelog
-
-### v2.1 (Current)
-- **"Super OP" Emotional Letters**: Deeply poetic and specific letters for Partner, Girl, Friend, and Family.
-- **Kinetic Scroll Bridge**: Fixed mobile "out of place" cake cutting with automatic smooth-scrolling.
-- **Advanced Visibility ENVs**: Toggle sections like Cake or Video directly from your environment variables.
-- **Vercel SPA Fix**: Optimized routing with `vercel.json` for zero-404 deployments.
-- **Mobile Polish**: Optimized heading sizes and vertical rhythm for better device compatibility.
-
-### v3.5.0 (Latest)
-- **3D Engine Update**: Integrated perspective tilt in `PhotoGallery` and `CakeCutting`.
-- **Cinematic Overlays**: Added Filmic Grain and Vignette effects.
-- **Adaptive Templates**: Full design morphing for Partner, Friend, and Family.
-- **Zero-Config Hydration**: Support for instant ENV-driven surprise launch.
-
-### v3.0.0
-- **Heart Tree Release**: Added the organic growth SVG finale.
-- **Sound Manager**: Integrated 3D sound effects for transitions.
-
-### v2.5.0
-- **Fake Chat Integration**: Added the messenger-style narrative phase.
-
----
 
 ## 🛠️ Troubleshooting & Massive FAQ
 
@@ -616,101 +513,6 @@ A: You are free to modify the footer in `MainBirthday.tsx`, but keeping a small 
 
 ---
 
-## 🤝 Contributing Guidelines
-
-1. **Fork the Project**
-2. **Create Feature Branch** (`git checkout -b feature/NewEffect`)
-3. **Commit** (`git commit -m 'Add NewEffect'`)
-4. **Push** (`git push origin feature/NewEffect`)
-5. **PR** across to `main`.
-
----
-
-## 🙌 Acknowledgments
-- **React.js Team**
-- **Framer Motion**
-- **Tailwind CSS**
-- **Vite**
-
----
-
-## 👤 Author & Brand Identity
-
-- **Developer**: Naboraj Sarkar (Naboraj)
-- **Brand**: Naboraj Sarkar
-- **YouTube**: [Naboraj Sarkar](https://youtube.com/@nsgamming)
-- **GitHub**: [naborajs](https://github.com/naborajs)
-
----
-
-- **SVG Structure**: 100% vector-based, responsive to all screen sizes.
-- **Haptics**: Triggers `navigator.vibrate` during the "burst" phase.
-
-### `<PhotoGallery />` API
-- **Auto-Advance**: Slides change every 6 seconds by default.
-- **3D Tilt**: Follows mouse position using Framer Motion `useMotionValue`.
-- **Lightbox**: Uses `AnimatePresence` for a cinematic blur transition.
-
-### `<CinematicIntro />` API
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `onComplete` | `() => void` | **required** | Triggered when the final scene finishes. |
-| `speedMultiplier`| `number` | `1.0` | Global multiplier for all scene timings. |
-
----
-
-## 🪝 Custom Hooks Documentation
-
-Birthday Bloom utilizes several custom hooks to offload imperative side effects from pure UI components.
-
-### `useBirthdayStore()`
-Our central state manager built with **Zustand**. 
-- `config`: The full `BirthdayConfig` object hydrated from ENV.
-- `getMood()`: Returns `'romantic' | 'energetic' | 'warm'` based on relationship.
-- `getAnimationPacing()`: Returns `'slow' | 'fast' | 'moderate'`.
-
-### `useDynamicTheme()`
-Injects HSL variables into the `:root` element.
-- Automatically calculates hover states and glow colors.
-- Syncs the browser's `theme-color` meta tag with the user's favorite color.
-
-### `useConfetti()`
-A robust hook that wraps `canvas-confetti`.
-- `fireConfetti(config)`: Triggers a localized burst with custom spread arrays.
-- `fireCannon()`: Triggers a massive, multi-directional burst utilized primarily for the Cake Cutting finale.
-- `fireStars()`: Interjects an SVG star-polygon shape into the physics engine for premium emotional moments.
-
-### `useSoundManager()`
-Handles HTML5 Audio instances without cluttering the DOM with invisible `<audio>` tags.
-- Provides `playWhoosh()`, `playType()`, `playBoom()` closures.
-- Respects the `.env` `VITE_ALLOW_AUDIO` boolean automatically. 
-
----
-
-## 🎨 Theming Engine & CSS Variables
-
-Adjusting these variables globally repaints the UI instantly.
-
-| Variable | Description |
-| :--- | :--- |
-| `--background` | The deep base color (usually dark). |
-| `--foreground` | The primary text color. |
-| `--primary` | The main accent color (glows, buttons). |
-| `--card-radius` | Global border radius for glassmorphism cards. |
-| `--font-display` | The typeface used for cinematic reveals. |
-
-### 🛠️ Creating Custom Themes
-```css
-/* Example: Matrix Green */
-:root {
-  --background: 120 100% 5%;
-  --primary: 120 100% 50%;
-  --foreground: 120 100% 90%;
-}
-```
-
----
-
 ## ⚡ Performance Profiling & GPU Acceleration
 
 Despite the visual complexity, this repository maintains an incredibly lightweight footprint.
@@ -721,309 +523,6 @@ Despite the visual complexity, this repository maintains an incredibly lightweig
   - **LCP (Largest Contentful Paint)**: < 1.2s
   - **FID (First Input Delay)**: < 100ms
   - **CLS (Cumulative Layout Shift)**: 0.00
-
----
-
-## 🌐 Browser Compatibility Matrix
-
-| Browser | Version | Support Level |
-| :--- | :--- | :--- |
-| Chrome | 80+ | Full (60fps) |
-| Safari | 13+ | Full (Autoplay policies apply) |
-| Firefox | 75+ | Full |
-| Edge | 80+ | Full |
-| Mobile Safari | iOS 13+ | Full |
-
----
-
-## 🔍 SEO, Social Sharing & OG Tags
-
-Located inside `index.html`, these tags ensure the surprise looks amazing when shared.
-
-```html
-<title>Happy Birthday!</title>
-<meta property="og:title" content="Happy Birthday!" />
-<meta property="og:image" content="/assets/banner.png" />
-<meta name="theme-color" content="#FF69B4" />
-```
-
----
-
-## 🔐 Security & Data Integrity
-
-1. **Client-Side Safety**: All `VITE_` variables are public. Do not store sensitive passwords in the environment variables.
-2. **Input Sanitization**: The name and message fields are sanitized before being injected into the DOM to prevent basic XSS attempts.
-3. **Audio Permissions**: We respect browser autoplay policies by requiring a "Splash" interaction; audio is never forced without user consent.
-
----
-
-## 📜 Version History & Changelog
-
-### v3.6.0 (Latest)
-- **Testing & Resilience Optimization**: Resolved a failing test runner error in `main.test.tsx` by setting up a clean mocked root container and unmounting it correctly.
-- **TypeScript & Build Rigidity**: Replaced `any` assertions with strict typing (e.g. `MotionValue<number>` for scroll values, `LucideIcon` mapping, and type-safe environment string parser checks).
-- **ESLint Clean-Up**: Fixed TypeScript empty interfaces by converting them to type aliases, resolved `prefer-const` warnings in dynamic theme properties, and replaced forbidden `require()` plugins with ES module imports.
-
-### v3.5.0
-
-### v3.0.0
-- **Heart Tree Release**: Added the organic growth SVG finale.
-- **Sound Manager**: Integrated 3D sound effects for transitions.
-
-### v2.5.0
-- **Fake Chat Integration**: Added the messenger-style narrative phase.
-
----
-
-## 🛠️ Troubleshooting & Massive FAQ
-
-### 🚨 Critical Issues
-
-**Q: The website shows a blank screen on load?**
-A: Check your browser console. It’s likely a missing `.env` variable or a typo in `VITE_BIRTHDAY_NAME`. Ensure you have run `npm install`.
-
-**Q: The animation stopped in the middle!**
-A: This happens if a timer is cleared incorrectly. Ensure you haven't modified the `timersRef` logic in `CinematicIntro.tsx`. Check for `VITE_BIRTHDAY_DATE` formatting errors.
-
-**Q: Audio isn't playing on my iPhone?**
-A: iOS requires a "user gesture" to play sound. Ensure you clicked the "Start" button on the Splash Screen.
-
-### 🎨 Visual & Layout FAQ
-
-**Q: How do I change the font?**
-A: Import your Google Font in `index.css` and update the `--font-display` variable.
-
-**Q: The text is too long and overlaps!**
-A: Use the `VITE_BIRTHDAY_CUSTOM_MESSAGE` for long messages. The `VITE_BIRTHDAY_NAME` should be kept under 15 characters for best results.
-
-**Q: Can I add more than 3 photos?**
-A: Yes, but you must update the `photos` array in `PhotoGallery.tsx` and add corresponding `VITE_PHOTO_X` variables to the store.
-
-### 🚀 Deployment FAQ
-
-**Q: How do I deploy to GitHub Pages?**
-A: Use the `gh-pages` package or a GitHub Action. Note that client-side routing may require a `404.html` redirect hack.
-
-**Q: Vercel build failed?**
-A: Ensure your Node version is 18+. Check for case-sensitive file imports (e.g., `Component.tsx` vs `component.tsx`).
-
-**Q: How do I remove the "Naboraj Sarkar" branding?**
-A: You are free to modify the footer in `MainBirthday.tsx`, but keeping a small "Powered by Birthday Bloom" is appreciated!
-
----
-
-## 🤝 Contributing Guidelines
-
-1. **Fork the Project**
-2. **Create Feature Branch** (`git checkout -b feature/NewEffect`)
-3. **Commit** (`git commit -m 'Add NewEffect'`)
-4. **Push** (`git push origin feature/NewEffect`)
-5. **PR** across to `main`.
-
----
-
-## 🙌 Acknowledgments
-- **React.js Team**
-- **Framer Motion**
-- **Tailwind CSS**
-- **Vite**
-
----
-
-## 👤 Author & Brand Identity
-
-- **Developer**: Naboraj Sarkar (Naboraj)
-- **Brand**: Naboraj Sarkar
-- **YouTube**: [Naboraj Sarkar](https://youtube.com/@nsgamming)
-- **GitHub**: [naborajs](https://github.com/naborajs)
-
----
-
-## 📜 License
-This project is licensed under the **MIT License**. You are completely free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software with adequate attribution. Commercial use is permitted, though providing credit and starring the repository is deeply appreciated! See the `LICENSE` file for more details.
-
----
-
-*“Code is poetic when it makes someone smile.”* 🌸
-
----
-
-## 🎨 Advanced Styling & Customization Guide
-
-This section is dedicated to power users who want to push the visual limits of Birthday Bloom.
-
-### 1. Global CSS Variable Reference
-The entire UI is driven by a centralized set of HSL variables. Modifying these in `src/index.css` will propagate changes instantly.
-
-#### Background Layer
-| Variable | Value | Role |
-| :--- | :--- | :--- |
-| `--background` | `280 60% 8%` | The base deep-space color. |
-| `--bg-gradient` | `linear-gradient(...)` | The atmospheric glow injected by `useDynamicTheme`. |
-| `--vignette-opacity` | `0.4` | Controls the cinematic frame shadow. |
-
-#### Typography Layer
-| Variable | Value | Role |
-| :--- | :--- | :--- |
-| `--font-display` | `'Quicksand'` | Primary font for reveals. |
-| `--font-mono` | `'JetBrains Mono'` | Used for the "Hacker" or "Chat" sequences. |
-| `--text-glow` | `0 0 20px ...` | The intensity of the neon text effect. |
-
-### 2. Creating Relationship-Based Style Hooks
-The `useDynamicTheme` hook injects specific tokens based on the `relationship`. You can extend this logic:
-
-```ts
-// src/features/core/theme/useDynamicTheme.ts
-const tokens = {
-  partner: {
-    '--card-radius': '3rem',
-    '--primary-glow': 'rgba(255, 107, 107, 0.4)',
-  },
-  friend: {
-    '--card-radius': '1rem',
-    '--primary-glow': 'rgba(0, 242, 255, 0.6)',
-  }
-}
-```
-
----
-
-## 🛠️ Developer Tutorials: Step-by-Step Guides
-
-### Tutorial 1: Adding a New Cinematic Phase
-Want to add a "Star Mapping" phase between the chat and the cake? Follow these steps:
-
-1. **Define the Scene**: Open `CinematicIntro.tsx` and add `star-mapping` to the `Scene` type.
-2. **Add the Timer**: In the main `useEffect`, add a new timer:
-   ```ts
-   if (scene === "star-mapping") {
-     addTimer(() => setScene("reveal-sequence"), 5000);
-   }
-   ```
-3. **Create the UI**: Add a new conditional block in the JSX:
-   ```tsx
-   {scene === "star-mapping" && (
-     <motion.div>...Star Mapping Logic...</motion.div>
-   )}
-   ```
-
-### Tutorial 2: Customizing the Cake SVG
-The cake is a modular SVG. To add a "Rainbow" flavor:
-1. Add a new object to `CAKE_OPTIONS` in `CakeCutting.tsx`.
-2. Define `layers: ["red", "orange", "yellow"]`.
-3. The SVG will automatically map these colors to the rectangles.
-
----
-
-## 📈 Performance & GPU Benchmarks
-
-Birthday Bloom is optimized for low-end hardware. Here is our performance profiling data:
-
-### Mobile Performance (iPhone 11)
-- **FPS**: Consistent 60fps during 3D Cake Cutting.
-- **Memory**: ~45MB Heap Usage.
-- **Battery Impact**: Low (due to CSS hardware acceleration).
-
-### Desktop Performance (Ryzen 5 / RTX 3060)
-- **FPS**: 120fps+ on supported monitors.
-- **LCP**: 0.9s on broadband connections.
-
-### Optimization Techniques
-1. **Memoization**: We use `useMemo` for all complex SVG path calculations.
-2. **GPU Layers**: Using `will-change: transform` on the Heart Tree branches.
-3. **Deferred Loading**: Sound files are only fetched when `VITE_ALLOW_AUDIO` is true.
-
----
-
-## 🛠️ Troubleshooting & Massive FAQ (Extended)
-
-### Q: Why does the 3D tilt feel laggy?
-A: This usually happens if there are too many background particles. Reduce `VITE_PARTICLE_COUNT` to `10` in your `.env`.
-
-### Q: Can I change the "online" status in the chat?
-A: Yes, modify the `theme` object in `FakeChatScene.tsx`. You can change "online" to "typing a surprise..." or "preparing the cake...".
-
-### Q: How do I change the cake icons?
-A: We use Lucide-React. Import a new icon and replace `<CakeIcon />` in the `CakeCard` component.
-
-### Q: The Heart Tree is growing too fast!
-A: Adjust the `delay` props in `HeartTree.tsx`. Each stage has its own `setTimeout` duration.
-
----
-
-## 🤝 Contributing & Community
-
-### Vision
-We want to make Birthday Bloom the #1 choice for developers making personalized gifts. 
-
-### Guidelines
-- Always use **Standard JS** style.
-- Ensure all new components are **Responsive**.
-- Document all new `.env` variables in `ENV_GUIDE.md`.
-
----
-
-## 📜 Full License Text (MIT)
-
-Copyright (c) 2026 Naboraj Sarkar (Naboraj Sarkar)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
----
-
-## 🏛️ Brand & Vision
-
-**Naboraj Sarkar** is dedicated to creating high-end digital experiences. Birthday Bloom is a testament to our commitment to quality, performance, and emotion in web development.
-
-- **Developer**: Naboraj Sarkar
-- **Brand**: Naboraj Sarkar
-- **Vision**: "Tech with a Soul"
-
----
-
-*End of Documentation. May your celebrations be legendary.* 🎂
-
----
-
-## 🔬 Advanced Technical Deep-Dive
-
-This section is for engineers who want to understand the engine's internal mechanics at a binary level.
-
-### 1. State Management with Zustand
-The `useBirthdayStore` isn't just a simple object; it's a reactive state machine.
-
-```ts
-// src/features/core/store/useBirthdayStore.ts
-export const useBirthdayStore = create<BirthdayStore>((set, get) => ({
-  config: initialConfig,
-  isConfigured: !!initialConfig.name,
-  // ... methods
-}));
-```
-
-#### Key Store Actions:
-- `setConfig(newConfig)`: Merges the existing config with new overrides. Used during the optional setup wizard.
-- `completeConfiguration()`: Sets `isConfigured` to true, triggering the unmount of the setup UI and the mounting of the cinematic engine.
-- `getAnimationPacing()`: A derived state that maps `relationship` to a string constant (`slow`, `moderate`, `fast`). This is consumed by Framer Motion's `transition` objects.
-
-### 2. Internal Utility API
-
-#### `cn(...inputs: ClassValue[])`
-Located in `src/lib/utils.ts`. It merges Tailwind classes using `clsx` and `tailwind-merge`. Essential for avoiding style conflicts in dynamic components.
-
-#### `useConfetti()`
-A singleton-like hook that controls the global canvas.
-- `fireConfetti(config)`: `origin`, `spread`, `particleCount`.
-- `fireCannon()`: Presets for `particleCount: 150` and `spread: 70`.
-
-#### `useSoundManager()`
-A custom hook that manages HTML5 Audio objects.
-- `play(soundName)`: Searches for the sound in the assets folder.
-- `stopAll()`: Clears all active audio instances on scene transitions.
 
 ---
 
@@ -1049,6 +548,24 @@ A custom hook that manages HTML5 Audio objects.
 ### `/src/pages`
 - **`Index.tsx`**: The entry point. Decides between showing the Intro or the Dashboard.
 - **`NotFound.tsx`**: A cinematic 404 page (often overlooked but essential for quality).
+
+---
+
+## 🇮🇳 Localized Setup
+For our users in India and Bangladesh, we have provided native language setup guides to make your journey smoother.
+
+- [🇮🇳 हिंदी सेटअप गाइड (Hindi Setup Guide)](./docs/setup-hindi.md)
+- [🇧🇩 বাংলা সেটআপ গাইড (Bengali Setup Guide)](./docs/setup-bengali.md)
+
+---
+
+## 🛠️ Advanced Troubleshooting
+If you encounter any specific issues with sound, animations, or deployment, please refer to our master troubleshooting suite:
+
+- [🆘 Master Troubleshooting Guide](./docs/troubleshooting.md)
+- [🛠️ Advanced Fixes Masterclass](./docs/advanced-fixes.md)
+- [☁️ Hosting & Cloud Deployment](./docs/hosting-solutions.md)
+
 
 ---
 
@@ -1080,46 +597,6 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ---
 
-## 🆘 Massive Extended Troubleshooting & Knowledge Base
-
-### Scenario: "The 3D Cake looks weird on mobile."
-- **Check**: Is the device orientation locked?
-- **Fix**: The SVG is responsive, but if you have custom `VITE_BIRTHDAY_COLOR` that is too light (e.g., `#FFFFFF`), the white "lighting" effects on the cake will disappear. Use a color with at least 40% saturation.
-
-### Scenario: "The app is slow to load the first time."
-- **Check**: Are your images in `public/assets` too large?
-- **Fix**: Run your images through a compressor like TinyPNG. We recommend keeping each image under 300KB.
-
-### Scenario: "I want to change the music."
-- **Check**: Do you have a direct URL?
-- **Fix**: Add the `.mp3` link to `VITE_SOUND_URL`. If hosting locally, put the file in `src/assets/audio` and update `useSoundManager.ts`.
-
-### Scenario: "The 'Secret Launch' isn't working."
-- **Check**: Is `VITE_BIRTHDAY_NAME` set?
-- **Fix**: If `VITE_BIRTHDAY_NAME` is empty, the app defaults to the Setup Wizard. If it's set, it skips to the Intro.
-
----
-
-## 🏗️ Future Development Pipeline (The 2026 Vision)
-
-We are constantly improving Birthday Bloom. Here is what's coming:
-1. **Dynamic Weather Effects**: Rain of hearts or snowy particles based on the `relationship` type.
-2. **Multi-Recipient Support**: Create a single link that adapts for a group of friends.
-3. **PWA Support**: Allow the birthday person to "Install" the app on their home screen.
-4. **AR Integration**: A QR code that shows the 3D cake in Augmented Reality.
-
----
-
-## 🏛️ Brand Identity: Naboraj Sarkar
-
-**Naboraj Sarkar** isn't just a YouTube channel; it's a creative laboratory. We believe that the web should be as immersive as a AAA video game. Birthday Bloom is our gift to the community.
-
-- **Founder**: Naboraj Sarkar
-- **Lead Designer**: Naboraj Sarkar
-- **Community**: Join us on Telegram for support.
-
----
-
 ## 🎨 Mastering SVG Animations in Birthday Bloom
 
 SVG is the heart of Birthday Bloom. Unlike raster images (JPEG/PNG), SVGs are code-based, which allows us to animate them with mathematical precision.
@@ -1137,21 +614,6 @@ The 3D Cake isn't just flat shapes. We use `<feDropShadow>` and `<feGaussianBlur
 
 ### 3. Morphing Logic
 While not used extensively yet, our engine supports path morphing. You can transform a circle into a heart by animating the `d` attribute using Framer Motion.
-
----
-
-## 🔍 SEO & Social Media Mastery
-
-When you send a link to someone, the first thing they see is the **Open Graph (OG) Preview**. If it looks generic, the surprise is ruined.
-
-### 1. The Perfect Social Card
-Your `banner.png` should be 1200x630px. It should be colorful but mysterious. Don't put "Happy Birthday" on the image if you want it to be a surprise until they click.
-
-### 2. Meta Tag Optimization
-We use dynamic meta tags. If `VITE_BIRTHDAY_NAME` is present, we could theoretically inject it into the `<title>`, but we recommend keeping it as "A Special Message for You..." to maintain the mystery.
-
-### 3. WhatsApp & iMessage Caching
-Social platforms cache images. If you change your banner, it might not show up immediately. Use a tool like the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) to force a cache refresh.
 
 ---
 
@@ -1175,131 +637,6 @@ This project is a labor of love. We would like to thank:
 - **Framer Motion Team**: For giving us the power of physics in the browser.
 - **Every Developer**: Who has ever sent a digital birthday card.
 
----
-
-## 📜 Complete Version History Table
-
-| Version | Date | Key Feature |
-| :--- | :--- | :--- |
-| 3.5.0 | April 2026 | 3D Perspective & Film Grain |
-| 3.0.0 | March 2026 | Heart Tree Finale |
-| 2.5.0 | Feb 2026 | Fake Chat Narrative |
-| 2.0.0 | Jan 2026 | Secret-Config Launch |
-| 1.0.0 | Dec 2025 | Initial Release |
-
----
-
-## 👤 About Naboraj Sarkar
-
-**Naboraj Sarkar** is a lifestyle. We believe that technology should be fun, beautiful, and accessible. Founded by Naboraj Sarkar, we have grown into a hub for creative developers who want to push the boundaries of what is possible.
-
-- **YouTube**: 100k+ subscribers watching our development journeys.
-- **GitHub**: Home to 50+ open-source projects.
-- **Discord**: A community of 5000+ creators.
-
----
-
-## 🏁 Final Words
-
-Birthday Bloom is more than just a website; it's a memory. We hope you use it to make someone feel special. If you do, share a screenshot with us on Twitter/X using `#BirthdayBloom`.
-
-*Happy Coding!* 🚀🌸
-
----
-*Generated by the Naboraj Sarkar Cinematic Engine.*
-
----
-
-## 🚀 Advanced Browser Optimization Hacks
-
-To achieve a true "Production Grade" experience, we use several low-level browser optimizations.
-
-### 1. The `will-change` Property
-We apply `will-change: transform, opacity` to our most complex SVG components. This tells the browser to promote these elements to their own GPU layer *before* the animation starts, preventing the "first-frame stutter."
-
-### 2. RequestAnimationFrame Coalescing
-All our particle effects (balloons, sparkles) are orchestrated through a single `requestAnimationFrame` loop. This prevents "Layout Thrashing" and ensures that the browser doesn't try to repaint the screen more than necessary.
-
-### 3. Asset Pre-fetching
-We use `<link rel="prefetch">` for the most critical assets, like the birthday song and the photo gallery images. This ensures that when the user scrolls to those sections, the content is already in the browser cache.
-
----
-
-## 🆘 Massive Extended Troubleshooting & Knowledge Base (Part 2)
-
-### Q: How do I handle users with slow internet?
-A: We have a built-in "Splash Loader" that waits for critical assets. If the network is extremely slow, the intro text will still play (as it's just strings), but the photos will fade in later using a "Blur-up" technique.
-
-### Q: Can I run this on a Raspberry Pi?
-A: Yes! As long as you use a Chromium-based browser (like Chromium on Raspberry Pi OS), the SVG engine is efficient enough to run at 30-60fps on a Pi 4.
-
-### Q: Why is my `VITE_BIRTHDAY_COLOR` not appearing on the buttons?
-A: Ensure your color is a valid Hex or HSL string. If you use a named color (like "red"), the CSS variable injection might fail. Always use `#FF0000` or `hsl(0, 100%, 50%)`.
-
----
-
-## 🔮 Roadmap 2027: The Beyond
-
-We aren't stopping at 3D. Here is our plan for the next two years:
-
-### Phase 6: AI Narrative Generation
-Integrate with OpenAI/Gemini to write personalized poems based on the user's `VITE_BIRTHDAY_INTERESTS`.
-
-### Phase 7: Multi-User Collaboration
-A shared link where friends can "drop" virtual hearts and messages that appear in real-time on the birthday person's screen.
-
-### Phase 8: WebXR Integration
-Experience the Heart Tree growth in VR using Meta Quest or Apple Vision Pro.
-
----
-
-## 🧑‍💻 The Birthday Bloom Developer Experience
-
-### A Day in the Life
-Developing for Birthday Bloom means thinking in **Keyframes**. Every component you build should have an `initial`, `animate`, and `exit` state. 
-
-### Best Practices
-1. **Never use static units**: Use `vh`, `vw`, and `rem` to ensure the cinematic experience scales from a small phone to a large 4K TV.
-2. **Respect the Pacing**: If a transition feels too fast, it probably is. Add a `delay` of `0.2s` to let the user's eyes catch up.
-
----
-
-## 🏁 Final Conclusion
-
-**Birthday Bloom** is more than code. It's a bridge between technology and human emotion. Whether you're a developer looking for a cool project or a friend looking to make a surprise, we hope this engine serves you well.
-
-### ✨ Join the Movement
-- **Star the Repo**: Help us reach the top of GitHub Trending!
-- **Share your Story**: Use `#BirthdayBloom` on social media.
-- **Contribute**: We welcome all PRs.
-
----
-
-## 👤 Naboraj Sarkar — The Studio Behind the Magic
-
-> ✨ Building experiences, not just websites.
-
-**Naboraj Sarkar** is the creator behind **Naboraj Sarkar** — a creative development studio focused on crafting cinematic, interactive, and emotionally engaging web experiences.
-
-What started as a solo vision is now growing into a community-driven movement to:
-
-> 🌐 Make the internet more beautiful, expressive, and unforgettable.
-
----
-
-### 🌍 Connect & Explore
-
-- 🌐 **Website** → [naborajs.com](https://naborajs.com)  
-- 📸 **Instagram** → [@naborajs](https://instagram.com/naborajs)  
-- 📧 **Support / Business** → [nishant.ns.business@gmail.com](mailto:nishant.ns.business@gmail.com)
-
----
-
-### ⚡ Quick Actions
-
-- 🚀 **Explore Projects** → https://naborajs.com  
-- 💡 **Collaborate** → [Send Email](mailto:nishant.ns.business@gmail.com)  
-- ⭐ **Support the Vision** → Star this repository 
 ---
 
 ## 🐳 Containerization & Orchestration: Production Deployment
@@ -1399,15 +736,34 @@ The following developers and creators have contributed to the "Bloom Ecosystem".
 
 ---
 
-## 📅 Maintenance Schedule
+## 🤝 Contributing Guidelines
 
-To keep Birthday Bloom running smoothly for years, we follow a strict maintenance cycle:
-- **Weekly**: Dependency updates and vulnerability patches.
-- **Monthly**: Performance audits on new mobile hardware.
-- **Quarterly**: Major feature releases (like the 3D Gallery upgrade).
-- **Yearly**: Total architectural review and engine optimization.
+1. **Fork the Project**
+2. **Create Feature Branch** (`git checkout -b feature/NewEffect`)
+3. **Commit** (`git commit -m 'Add NewEffect'`)
+4. **Push** (`git push origin feature/NewEffect`)
+5. **PR** across to `main`.
 
 ---
+
+## 🙌 Acknowledgments
+- **React.js Team**
+- **Framer Motion**
+- **Tailwind CSS**
+- **Vite**
+- **Canvas-Confetti**
+- **All the open-source contributors** who have made this project possible.
+
+
+---
+
+
+
+## 📜 License
+This project is licensed under the **MIT License**. You are completely free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software with adequate attribution. Commercial use is permitted, though providing credit and starring the repository is deeply appreciated! See the `LICENSE` file for more details.
+
+---
+
 
 ## 🎁 Gift of Code
 
@@ -1417,6 +773,29 @@ We believe that code is a gift. That's why we made Birthday Bloom open-source an
 - Write a blog post about how you used Birthday Bloom.
 - Record a video tutorial for the Naboraj Sarkar community.
 - Donate to an open-source library that we depend on (like Framer Motion).
+
+---
+
+## 🏁 Final Conclusion
+
+**Birthday Bloom** is more than code. It's a bridge between technology and human emotion. Whether you're a developer looking for a cool project or a friend looking to make a surprise, we hope this engine serves you well.
+
+### ✨ Join the Movement
+- **Star the Repo**: Help us reach the top of GitHub Trending!
+- **Share your Story**: Use `#BirthdayBloom` on social media.
+- **Contribute**: We welcome all PRs.
+
+---
+
+## 👤 Naboraj Sarkar — The Studio Behind the Magic
+
+> ✨ Building experiences, not just websites.
+
+**Naboraj Sarkar** is the creator behind **Naboraj Sarkar** — a creative development studio focused on crafting cinematic, interactive, and emotionally engaging web experiences.
+
+What started as a solo vision is now growing into a community-driven movement to:
+
+> 🌐 Make the internet more beautiful, expressive, and unforgettable.
 
 ---
 
@@ -1433,31 +812,20 @@ As we reach the conclusion of this master documentation, we want to remind you t
 
 ---
 
-## 🇮🇳 Localized Setup
-For our users in India and Bangladesh, we have provided native language setup guides to make your journey smoother.
-
-- [🇮🇳 हिंदी सेटअप गाइड (Hindi Setup Guide)](./docs/setup-hindi.md)
-- [🇧🇩 বাংলা সেটআপ গাইড (Bengali Setup Guide)](./docs/setup-bengali.md)
-
----
-
-## 🛠️ Advanced Troubleshooting
-If you encounter any specific issues with sound, animations, or deployment, please refer to our master troubleshooting suite:
-
-- [🆘 Master Troubleshooting Guide](./docs/troubleshooting.md)
-- [🛠️ Advanced Fixes Masterclass](./docs/advanced-fixes.md)
-- [☁️ Hosting & Cloud Deployment](./docs/hosting-solutions.md)
-
----
-
-## 📞 Contact & Support
+## 📞 Contact & Support & Socials (Connect with me)
 
 > Need help, collab, or just want to connect? 👇
 
 - 📧 **Email** → [nishant.ns.business@gmail.com](mailto:nishant.ns.business@gmail.com)  
+- 💬 **WhatsApp** → [Message Me now](https://wa.me/918900653250?text=Hey%20I%20am%20coming%20from%20your%20Birthday%20Boom%20project%20on%20GitHub%2C%20I%20want%20to%20talk%20about%20it)
 - 💬 **Telegram** → [@Nishantsarkar10k](https://t.me/Nishantsarkar10k)  
 - 🐦 **Twitter (X)** → [@NSGAMMING699](https://x.com/NSGAMMING699)
 - 📸 **Instagram** → [@naborajs](https://instagram.com/naborajs)
+- 🌐 **Website** → [naborajs.com](https://naborajs.com)  
+- 📧 **Support / Business** → [nishant.ns.business@gmail.com](mailto:nishant.ns.business@gmail.com)
+- 🐙 **GitHub** → [github.com/naborajs]
+- 🎥 **YouTube** → [Naboraj Sarkar Channel](https://youtube.com/@nishant_sarkar)
+
 
 ---
 
@@ -1470,7 +838,7 @@ If you encounter any specific issues with sound, animations, or deployment, plea
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by Naboraj Sarkar. © 2024 Naboraj Sarkar.</sub>
+  <sub>Built with ❤️ by Naboraj Sarkar. © 2024-2026 Naboraj Sarkar.</sub>
 </div>
 
 **[Back to Top ↑](#-birthday-bloom--advanced-animated-birthday-website-generator)**
