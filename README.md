@@ -121,7 +121,7 @@ By chaining together asynchronous events and orchestrated **Framer Motion** time
 
 #### 5. **Specialized Emotional Letters**
 - Enhanced templates with deeper personalization
-- Brother & Sister specific messages
+- Brother & Sister & friend & partner specific messages
 - Relationship-aware phrasing
 - Gender-sensitive content
 
@@ -513,7 +513,7 @@ Handles HTML5 Audio instances without cluttering the DOM with invisible `<audio>
 
 <div align="center">
   <figure>
-    <img src="src/assets/faq.png" alt="Birthday Bloom cake cutting screenshot" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 72px rgba(0,0,0,0.24);" />
+    <img src="src/assets/faq.png" alt="Birthday Bloom troubleshooting guide" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 72px rgba(0,0,0,0.24);" />
     <figcaption><em>Interactive Cake Cutting stage captured directly from the app experience.</em></figcaption>
   </figure>
 </div>
@@ -567,6 +567,12 @@ Despite the visual complexity, this repository maintains an incredibly lightweig
   - **CLS (Cumulative Layout Shift)**: 0.00
 
 ---
+<div align="center">
+  <figure>
+    <img src="src/assets/file-by-file.png" alt="Birthday Bloom complete file-by-file responsibility map" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 72px rgba(0,0,0,0.24);" />
+    <figcaption><em>Interactive Cake Cutting stage captured directly from the app experience.</em></figcaption>
+  </figure>
+</div>
 
 ## 📁 Complete File-by-File Responsibility Map
 
