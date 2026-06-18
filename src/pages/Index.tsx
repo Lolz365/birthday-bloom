@@ -16,12 +16,14 @@ import { FloatingOrbs } from "@/components/birthday/FloatingOrbs";
 import { ShootingStars } from "@/components/birthday/ShootingStars";
 import { AnimatedGradient } from "@/components/birthday/AnimatedGradient";
 import { EmojiCursorTrail } from "@/components/birthday/EmojiCursorTrail";
+import { PremiumFireworks } from "@/components/birthday/PremiumFireworks";
 import { isPasswordRequired } from "@/utils/password";
 
 type Phase = "splash" | "unlock" | "intro" | "main";
 
 const Index = () => {
   const [phase, setPhase] = useState<Phase>("splash");
+  const [fireworksRunKey, setFireworksRunKey] = useState(0);
   const isMobile = useIsMobile();
   const config = useBirthdayStore((state) => state.config);
   
@@ -35,6 +37,7 @@ const Index = () => {
     >
       {/* Multi-layer Background System */}
       <EmojiCursorTrail />
+      <PremiumFireworks runKey={fireworksRunKey} />
       <FloatingElements />
       <MorphingElements />
       <EnhancedFloatingElements />
@@ -99,7 +102,10 @@ const Index = () => {
             exit={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
             transition={{ duration: 1 }}
           >
-            <CinematicIntro onComplete={() => setPhase("main")} />
+            <CinematicIntro onComplete={() => {
+              setPhase("main");
+              setFireworksRunKey((key) => key + 1);
+            }} />
           </motion.div>
         )}
 

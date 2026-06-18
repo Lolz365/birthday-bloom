@@ -1,4 +1,7 @@
+import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { getTemplateEmojiKit } from "@/config/emojiKits";
+import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
 
 interface FloatingElement {
   id: number;
@@ -11,69 +14,28 @@ interface FloatingElement {
   opacity: number;
 }
 
+const slots = [
+  { startX: 15, startY: 20, size: 32, opacity: 0.6 },
+  { startX: 85, startY: 30, size: 28, opacity: 0.7 },
+  { startX: 25, startY: 75, size: 36, opacity: 0.5 },
+  { startX: 70, startY: 80, size: 30, opacity: 0.6 },
+  { startX: 50, startY: 15, size: 26, opacity: 0.65 },
+  { startX: 10, startY: 60, size: 34, opacity: 0.55 },
+];
+
 export const EnhancedFloatingElements = () => {
-  const elements: FloatingElement[] = [
-    {
-      id: 1,
-      emoji: "🎉",
-      delay: 0,
-      duration: 4,
-      startX: 15,
-      startY: 20,
-      size: 32,
-      opacity: 0.6,
-    },
-    {
-      id: 2,
-      emoji: "✨",
-      delay: 0.3,
-      duration: 5,
-      startX: 85,
-      startY: 30,
-      size: 28,
-      opacity: 0.7,
-    },
-    {
-      id: 3,
-      emoji: "🎊",
-      delay: 0.6,
-      duration: 6,
-      startX: 25,
-      startY: 75,
-      size: 36,
-      opacity: 0.5,
-    },
-    {
-      id: 4,
-      emoji: "🌟",
-      delay: 0.9,
-      duration: 4.5,
-      startX: 70,
-      startY: 80,
-      size: 30,
-      opacity: 0.6,
-    },
-    {
-      id: 5,
-      emoji: "💫",
-      delay: 1.2,
-      duration: 5.5,
-      startX: 50,
-      startY: 15,
-      size: 26,
-      opacity: 0.65,
-    },
-    {
-      id: 6,
-      emoji: "🎈",
-      delay: 1.5,
-      duration: 6,
-      startX: 10,
-      startY: 60,
-      size: 34,
-      opacity: 0.55,
-    },
-  ];
+  const config = useBirthdayStore((state) => state.config);
+  const emojiKit = useMemo(() => getTemplateEmojiKit(config), [config]);
+
+  const elements: FloatingElement[] = useMemo(() => (
+    slots.map((slot, index) => ({
+      id: index + 1,
+      emoji: emojiKit.accent[index % emojiKit.accent.length],
+      delay: index * 0.3,
+      duration: 4 + (index % 3) * 0.75,
+      ...slot,
+    }))
+  ), [emojiKit.accent]);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
