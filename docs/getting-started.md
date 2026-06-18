@@ -1,78 +1,292 @@
-# 🚀 Getting Started with Naboraj Sarkar Birthday Bloom
+<div align="center">
 
-Welcome to the **Naboraj Sarkar** Cinematic Engine. You are about to build a premium, digital surprise that pushes the boundaries of web interactivity. This guide will take you from a fresh clone to a production-ready cinematic launch.
+# 🚀 Getting Started with Birthday Bloom
+
+### Build a cinematic birthday experience in minutes.
+
+From a fresh clone to a fully personalized celebration — this guide will get you running as quickly as possible.
+
+</div>
+
+---
+
+> [!IMPORTANT]
+>
+> Birthday Bloom is an **Environment-First Platform**.
+>
+> Before modifying source code, always check whether the customization can be achieved through `.env.local`.
 
 ---
 
 ## 🏁 The 5-Minute Launch
 
-### 1. Prerequisite Check
-Ensure you have the following installed on your machine:
-- **Node.js**: v18.0.0 or higher (LTS recommended).
-- **npm**: v9.0.0 or higher.
-- **Git**: For version control and deployment.
+### Step 1 — Verify Your Environment
 
-### 2. Installation & Boot
+Birthday Bloom requires:
+
+| Tool    | Required Version |
+| ------- | ---------------- |
+| Node.js | 18+              |
+| npm     | 9+               |
+| Git     | Latest           |
+
+Verify installation:
+
 ```bash
-# Clone the repository
+node -v
+npm -v
+git --version
+```
+
+---
+
+### Step 2 — Clone & Install
+
+```bash
+# Clone repository
 git clone https://github.com/naborajs/birthday-bloom.git
+
+# Enter project
 cd birthday-bloom
 
-# Install dependencies with Naboraj Sarkar precision
+# Install dependencies
 npm install
+```
 
-# Start the dev server
+---
+
+### Step 3 — Create Your First Bloom
+
+Create:
+
+```text
+.env.local
+```
+
+Add the minimum configuration:
+
+```env
+VITE_BIRTHDAY_NAME="Naboraj"
+
+VITE_BIRTHDAY_RELATIONSHIP="friend"
+
+VITE_BIRTHDAY_COLOR="#FF6B6B"
+```
+
+Supported relationship templates include:
+
+```text
+friend
+brother
+sister
+father
+mother
+grandfather
+grandmother
+guardian
+partner
+boyfriend
+girlfriend
+custom
+```
+
+---
+
+### Step 4 — Launch Development Server
+
+```bash
 npm run dev
 ```
 
-### 3. The "Secret" Personalization
-This engine is designed for **Zero-Config Launch**. It skips all setup wizards and starts the experience immediately using your environment variables.
+Open:
 
-1. Create a `.env` file in the root.
-2. Add the mandatory variables:
-   ```env
-   VITE_BIRTHDAY_NAME="Naboraj"
-   VITE_BIRTHDAY_RELATIONSHIP="friend"
-   VITE_BIRTHDAY_COLOR="#FF6B6B"
-   ```
-3. Restart your dev server to apply the secrets.
+```text
+http://localhost:5173
+```
+
+If everything is configured correctly, Birthday Bloom will automatically generate a personalized experience using your environment variables.
 
 ---
 
-## 🛡️ Error Handling & Troubleshooting (Pre-Flight)
+## 🎨 Quick Personalization
 
-Before you send the link, run these checks to ensure a flawless experience.
+Change the recipient:
 
-### Common Runtime Errors
-| Issue | Cause | Fix |
-| :--- | :--- | :--- |
-| **Blank Screen** | Missing `VITE_BIRTHDAY_NAME` | Ensure your `.env` contains the mandatory name variable. |
-| **Animations Stutter** | High memory usage / Large images | Keep photos under 500KB and avoid heavy background processes. |
-| **No Sound** | Browser Autoplay Policy | The engine requires a "Splash" interaction. Ensure the user clicks the "Start" button. |
+```env
+VITE_BIRTHDAY_NAME="Priya"
+```
 
-### Diagnostic Mode
-If things look wrong, check the browser console (`F12` -> `Console`). The Naboraj Sarkar engine logs its state machine transitions. If a scene fails to load, it will be logged there with a specific error code.
+Change the relationship:
+
+```env
+VITE_BIRTHDAY_RELATIONSHIP="sister"
+```
+
+Change the primary theme color:
+
+```env
+VITE_BIRTHDAY_COLOR="#FF69B4"
+```
+
+Add a custom message:
+
+```env
+VITE_BIRTHDAY_CUSTOM_MESSAGE="You make every day brighter."
+```
+
+---
+
+> [!TIP]
+>
+> Most customizations can be completed without editing source code.
+>
+> Explore `ENV_GUIDE.md` before modifying components.
 
 ---
 
-## 🎭 Design Philosophy: The CODEX Standard
+## 🎂 What Comes Built In?
 
-Every "Bloom" instance should feel bespoke. When configuring your instance, keep these **Naboraj Sarkar** standards in mind:
+Birthday Bloom ships with:
 
-1. **Color Harmony**: Use a color that matches the recipient's personality. Our engine will automatically generate glows and gradients based on your hex code.
-2. **Pacing**: Don't rush the narrative. The default timings are optimized for emotional impact.
-3. **Typography**: If you modify fonts, ensure they support the `italic` and `bold` variants used in the kinetic typography layers.
+```text
+✓ Cinematic Intro
+
+✓ Countdown Experience
+
+✓ Interactive Cake Cutting
+
+✓ Fireworks Celebration
+
+✓ Cursor Effects
+
+✓ Music Player
+
+✓ Personalized Letters
+
+✓ Memory Gallery
+
+✓ Birthday Quiz
+
+✓ Hidden Gift System
+
+✓ Heart Tree
+
+✓ Password Protection
+
+✓ Family Templates
+
+✓ Final Surprise Video
+```
 
 ---
 
-## 📖 Deep Dive Documentation
-- [🇮🇳 सेटअप गाइड (Hindi)](./setup-hindi.md)
-- [🇧🇩 সেটআপ গাইড (Bengali)](./setup-bengali.md)
-- [🛠️ Advanced Fixes & Troubleshooting](./advanced-fixes.md)
-- [☁️ Hosting & Deployment Solutions](./hosting-solutions.md)
-- [⚙️ Full Configuration Guide](./ENV_GUIDE.md)
-- [🏛️ System Architecture](./architecture.md)
-- [🎥 Animation Principles](./animations.md)
+## 🛡️ Pre-Launch Checklist
+
+Before sharing your celebration:
+
+* [ ] Application builds successfully
+* [ ] No console errors
+* [ ] Photos load correctly
+* [ ] Videos play correctly
+* [ ] Mobile layout tested
+* [ ] Environment variables configured
+* [ ] Audio tested
+* [ ] Relationship template verified
+
+Production build:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
 
 ---
-*“In the garden of the internet, may your digital memories always bloom.”* 🌸
+
+## 🛠 Common Issues
+
+### Blank Screen
+
+Check:
+
+```env
+VITE_BIRTHDAY_NAME
+```
+
+Make sure it exists and restart the development server.
+
+---
+
+### Audio Does Not Play
+
+Modern browsers block autoplay until user interaction.
+
+This is expected behavior.
+
+---
+
+### Images Not Loading
+
+Verify:
+
+* URL is public
+* URL is correct
+* Image format is supported
+
+Recommended formats:
+
+```text
+jpg
+png
+webp
+```
+
+---
+
+### Environment Changes Not Updating
+
+Restart:
+
+```bash
+npm run dev
+```
+
+after modifying `.env.local`.
+
+---
+
+## 📚 Next Steps
+
+### Configuration
+
+→ ENV_GUIDE.md
+
+### Family Templates
+
+→ family-system.md
+
+### Architecture
+
+→ architecture.md
+
+### Animation Systems
+
+→ animations.md
+
+### Contributing
+
+→ CONTRIBUTING.md
+
+---
+
+<div align="center">
+
+### 🌸 Happy Building
+
+Create something memorable.
+
+</div>
