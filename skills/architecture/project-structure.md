@@ -1,98 +1,144 @@
-# Project Architecture & Patterns
+# Birthday Bloom Current Architecture
 
-Scalable applications require a deliberate structure. If you just throw everything into `src/components`, the project will become unmaintainable.
+## Actual Repository Structure
 
-## 1. Directory Structure: Feature-Based over Type-Based
+The AI must always work with the current repository structure before suggesting refactors.
 
-As projects grow, organizing by type (`/components`, `/hooks`, `/api`) becomes painful. You end up jumping across 5 folders to understand one feature.
-
-**Use Feature-Driven Architecture:** Group files by their domain.
+Current structure:
 
 ```text
 src/
+├── assets/
+├── components/
+│   ├── birthday/
+│   └── ui/
+├── config/
 ├── features/
-│   ├── auth/                # Everything related to Authentication
-│   │   ├── api/             # API calls (e.g., login.ts, register.ts)
-│   │   ├── components/      # Auth specific UI (LoginForm.tsx)
-│   │   ├── hooks/           # useAuth.ts
-│   │   ├── store/           # Auth state slice
-│   │   └── index.ts         # Public API for this feature
-│   ├── dashboard/           # Dashboard feature
-│   └── birthday-core/       # Birthday specific logic
-├── components/              # ONLY generic, shared UI (Buttons, Inputs, Modals)
-├── lib/                     # Setup for third-party libraries (axios setup, formatters)
-├── hooks/                   # ONLY generic hooks (useWindowSize, useClickOutside)
-└── store/                   # Global store config (root reducer)
+│   ├── cinematic-story/
+│   └── core/
+├── hooks/
+├── lib/
+├── pages/
+├── services/
+├── test/
+├── utils/
 ```
 
-**Rule of Thumb**: A feature folder should act like its own mini-library. It exports what it needs to via `index.ts` and keeps internal components private.
+## Repository Rules
 
-## 2. Advanced Component Patterns
+Do NOT assume architecture.
 
-### Compound Components
-Used to create highly flexible UI components that share state implicitly, avoiding prop drilling. Think of `<select>` and `<option>`.
+Inspect existing folders before creating new ones.
 
-```tsx
-import React, { createContext, useContext, useState } from 'react';
+Prefer existing locations.
 
-const AccordionContext = createContext();
+Examples:
 
-export const Accordion = ({ children }) => {
-  const [activeItem, setActiveItem] = useState(null);
-  return (
-    <AccordionContext.Provider value={{ activeItem, setActiveItem }}>
-      <div className="accordion-wrapper">{children}</div>
-    </AccordionContext.Provider>
-  );
-};
+Birthday-specific UI:
+→ components/birthday
 
-Accordion.Item = ({ id, title, children }) => {
-  const { activeItem, setActiveItem } = useContext(AccordionContext);
-  const isOpen = activeItem === id;
+Reusable UI:
+→ components/ui
 
-  return (
-    <div>
-      <button onClick={() => setActiveItem(isOpen ? null : id)}>{title}</button>
-      {isOpen && <div>{children}</div>}
-    </div>
-  );
-};
+Configuration:
+→ config
 
-// Usage:
-<Accordion>
-  <Accordion.Item id="1" title="Section 1">Content 1</Accordion.Item>
-  <Accordion.Item id="2" title="Section 2">Content 2</Accordion.Item>
-</Accordion>
-```
+Business Logic:
+→ features
 
-### Custom Hooks for Logic Separation
-Never put complex business logic or data fetching directly inside a UI component. The component should only care about rendering data and firing events.
+Hooks:
+→ hooks
 
-```tsx
-// ❌ BAD: UI and Logic mixed
-const UserProfile = ({ userId }) => {
-  const [user, setUser] = useState(null);
-  useEffect(() => { fetchUser(userId).then(setUser) }, [userId]);
-  return <div>{user.name}</div>;
-}
+Utilities:
+→ utils
 
-// ✅ GOOD: Logic separated into a hook
-const useUserData = (userId) => {
-  // TanStack Query is perfect here
-  return useQuery({ queryKey: ['user', userId], queryFn: () => fetchUser(userId) });
-};
+Services:
+→ services
 
-const UserProfile = ({ userId }) => {
-  const { data: user, isLoading } = useUserData(userId);
-  if (isLoading) return <Spinner />;
-  return <div>{user.name}</div>;
-}
-```
+Libraries:
+→ lib
 
-## 3. State Management Strategy
+Pages:
+→ pages
 
-Do not default to Redux for everything. Scale your state management to the problem.
+Tests:
+→ test
 
-1.  **Local State (`useState`, `useReducer`)**: For UI state that only one component cares about (e.g., is a modal open? what is in this text input?).
-2.  **Server State (`TanStack React Query`, `SWR`)**: For anything that comes from an API. Do not use Redux to cache API responses. React Query handles caching, background updates, loading states, and retries automatically.
-3.  **Global UI State (`Zustand`, `Jotai`, `Context`)**: For state that must be accessed across the entire app but isn't from the server (e.g., Dark Mode toggle, current language, active user session). Zustand is highly recommended over Redux for its simplicity and lack of boilerplate.
+## Refactoring Rules
+
+Do NOT perform large architectural rewrites unless explicitly requested.
+
+Avoid:
+
+* Moving hundreds of files
+* Rebuilding folder structures
+* Renaming major systems
+* Breaking imports
+
+Prefer:
+
+* Incremental improvements
+* Small focused changes
+* Existing conventions
+
+## Birthday Bloom Decision Tree
+
+When a request arrives:
+
+1. Check existing feature.
+2. Check existing component.
+3. Check existing env variable.
+4. Check existing template support.
+5. Check family system compatibility.
+6. Implement using current structure.
+7. Create new files only when necessary.
+
+## Feature Awareness
+
+Current major systems include:
+
+* Cinematic Story System
+* Countdown System
+* Fireworks System
+* Cursor Emoji Trail
+* Music Player
+* Cake Cutting
+* Quiz Engine
+* Memory Gallery
+* Hidden Gift System
+* Family Template System
+* Password Protection
+* Final Video Reveal
+* Relationship Templates
+* Environment Configuration
+
+Always integrate with existing systems instead of creating parallel implementations.
+
+## Coding Priority
+
+Priority Order:
+
+1. Fix existing implementation.
+2. Extend existing implementation.
+3. Reuse existing component.
+4. Reuse existing hook.
+5. Reuse existing utility.
+6. Create new component.
+7. Create new feature.
+
+Never duplicate functionality already present in the project.
+
+## Goal
+
+Birthday Bloom is an env-first, template-driven, cinematic celebration platform.
+
+The AI should optimize for:
+
+* Maintainability
+* Reusability
+* Performance
+* Mobile support
+* Customization
+* Consistency
+
+Every change should make the project easier to customize and easier to extend.
