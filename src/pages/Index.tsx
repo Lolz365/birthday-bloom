@@ -15,6 +15,7 @@ import { FireflyEffect } from "@/components/birthday/FireflyEffect";
 import { FloatingOrbs } from "@/components/birthday/FloatingOrbs";
 import { ShootingStars } from "@/components/birthday/ShootingStars";
 import { AnimatedGradient } from "@/components/birthday/AnimatedGradient";
+import { EmojiCursorTrail } from "@/components/birthday/EmojiCursorTrail";
 import { isPasswordRequired } from "@/utils/password";
 
 type Phase = "splash" | "unlock" | "intro" | "main";
@@ -33,6 +34,7 @@ const Index = () => {
       style={{ background: 'var(--bg-gradient, #000)' }}
     >
       {/* Multi-layer Background System */}
+      <EmojiCursorTrail />
       <FloatingElements />
       <MorphingElements />
       <EnhancedFloatingElements />
