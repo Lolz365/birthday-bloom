@@ -1,338 +1,229 @@
-# 🌸 Contributing to Birthday Bloom
+# Contributing to Birthday Bloom
 
-First of all, thank you for taking the time to contribute to Birthday Bloom.
+Thank you for considering a contribution to Birthday Bloom. Whether you're fixing a bug, improving documentation, polishing UI, enhancing accessibility, or building new features — your help is appreciated.
 
-Whether you're fixing a bug, improving performance, enhancing animations, refining accessibility, improving documentation, or building new features, your contribution is appreciated.
-
-Birthday Bloom is more than a birthday website.
-
-It is a **template-driven, family-aware, highly customizable celebration platform** designed to create meaningful experiences for people across different relationships, personalities, and cultures.
+> **Before writing code:** Please read the [ARCHITECTURE.md](./ARCHITECTURE.md) and [STYLEGUIDE.md](./STYLEGUIDE.md) to understand how the project is structured.
 
 ---
 
-> 💡 **Before writing code, understand the existing architecture.**
->
-> Birthday Bloom already includes templates, family systems, environment-based customization, animation systems, personalization engines, and reusable UI components.
->
-> Most contributions should extend existing systems instead of creating new isolated implementations.
+## Table of Contents
+
+- [Project Philosophy](#project-philosophy)
+- [Development Setup](#development-setup)
+- [Finding Work](#finding-work)
+- [Making Changes](#making-changes)
+- [Commit Guidelines](#commit-guidelines)
+- [Pull Request Process](#pull-request-process)
+- [Testing Requirements](#testing-requirements)
+- [Documentation Standards](#documentation-standards)
+- [Ways to Contribute Beyond Code](#ways-to-contribute-beyond-code)
+- [First-Time Contributors](#first-time-contributors)
 
 ---
 
-# 🎯 Project Philosophy
+## Project Philosophy
 
-Birthday Bloom follows several important principles:
+### 1. Environment First
 
-### Environment First
+The project is env-driven. Before hardcoding a value, ask: *should this be configurable?*
 
-Whenever possible:
-
-* Use configuration.
-* Use templates.
-* Use environment variables.
-* Reuse existing systems.
-
-Avoid hardcoded values.
-
-Good:
-
+**Good:**
 ```env
 VITE_BIRTHDAY_NAME=Priya
 ```
 
-Bad:
-
+**Avoid:**
 ```ts
 const name = "Priya";
 ```
 
----
+New env variables should be added to `.env.example`, parsed in `useBirthdayStore.ts`, and documented in `docs/ENV_GUIDE.md`.
 
-### Build For Everyone
+### 2. Build for Everyone
 
-One of the most important rules in this project:
+Features should work across all relationship types — partner, friend, sibling, parent, grandparent, and more. Avoid relationship-specific hardcoding. Think in systems, not one-off implementations.
 
-> **Do not build features that only work for one template.**
+### 3. Extend Existing Systems
 
-If you add:
+Before creating something new, check if an existing component, template, hook, or env variable can be extended. Prefer extension over duplication.
 
-* Animations
-* Emojis
-* Messages
-* Quizzes
-* Gifts
-* UI sections
-* Story elements
+### 4. Respect the Architecture
 
-They should work across:
-
-* Partner
-* Girlfriend
-* Boyfriend
-* Friend
-* Best Friend
-* Brother
-* Sister
-* Father
-* Mother
-* Grandfather
-* Grandmother
-* Guardian
-* Custom
-
-Avoid relationship-specific hardcoding whenever possible.
-
-Think in systems, not one-off implementations.
+The repo uses a three-layer architecture: **data** (Zustand store + env parsing), **design** (CSS variable injection + Tailwind), **execution** (scene state machine). Understand these layers before making architectural changes. Incremental improvements are preferred over large rewrites.
 
 ---
 
-### Extend Existing Systems
-
-Before creating something new:
-
-Ask yourself:
-
-* Does this already exist?
-* Can I extend an existing feature?
-* Can I use existing templates?
-* Can I use existing environment variables?
-* Can I reuse an existing component?
-
-Prefer extension over duplication.
-
----
-
-# 🏗️ Development Setup
-
-Clone the repository:
+## Development Setup
 
 ```bash
-git clone <repository-url>
+# Clone
+git clone https://github.com/naborajs/birthday-bloom.git
 cd birthday-bloom
-```
 
-Install dependencies:
-
-```bash
+# Install dependencies
 npm install
-```
 
-Run locally:
+# Copy env template
+cp .env.example .env.local
 
-```bash
+# Start dev server
 npm run dev
+
+# Run in another terminal for builds
+npm run build      # production build
+npm run lint       # check lint
+npm test           # run tests
 ```
 
-Create production build:
-
-```bash
-npm run build
-```
+The dev server runs on `http://localhost:5000` by default.
 
 ---
 
-# 🧪 Testing Requirements
+## Finding Work
 
-Before submitting a Pull Request:
+- **Good first issues**: [Filter by label](https://github.com/naborajs/birthday-bloom/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+- **Docs improvements**: [docs_improvement template](https://github.com/naborajs/birthday-bloom/issues/new?template=docs_improvement.yml)
+- **Feature requests**: [feature_request template](https://github.com/naborajs/birthday-bloom/issues/new?template=feature_request.yml)
+- **Bug fixes**: [bug_report template](https://github.com/naborajs/birthday-bloom/issues/new?template=bug_report.yml)
 
-### Required
+If you want to work on something, comment on the issue first so others know it's claimed.
 
-* Run the project locally.
-* Verify the application builds successfully.
-* Verify there are no TypeScript errors.
-* Verify there are no console errors.
-* Verify there are no obvious visual issues.
+---
 
-### Template Validation
+## Making Changes
+
+### Branch Naming
+
+```
+feat/add-emoji-trail-system
+fix/mobile-fireworks-cleanup
+docs/improve-env-guide
+refactor/simplify-store-parsing
+perf/optimize-particle-render
+```
+
+### Coding Standards
+
+See [STYLEGUIDE.md](./STYLEGUIDE.md) for detailed conventions. Key points:
+
+- Components: PascalCase, one per file
+- Hooks: `use` prefix, camelCase
+- Env variables: `VITE_UPPER_SNAKE_CASE`
+- Prefer interfaces over types for object shapes
+- Use Tailwind utility classes for styling
+- Clean up timeouts and event listeners on unmount
+
+### What to Check Before Submitting
+
+1. Application runs locally (`npm run dev`)
+2. Production build succeeds (`npm run build`)
+3. No TypeScript errors (`npx tsc --noEmit`)
+4. Lint passes (`npm run lint`)
+5. Existing tests pass (`npm test`)
+6. Mobile responsiveness is reasonable
+7. If the change affects UI, test with multiple relationship types
+8. Documentation is updated if behavior changes
+
+---
+
+## Commit Guidelines
+
+Use [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add template-aware emoji trail system
+fix: resolve mobile fireworks cleanup issue
+docs: improve family system documentation
+refactor: simplify birthday template configuration
+perf: optimize particle rendering
+chore: update dependencies
+```
+
+Keep the first line under 72 characters. Reference issues in the body if applicable.
+
+---
+
+## Pull Request Process
+
+1. **Open early, even as a draft** — feedback is welcome
+2. **Link the issue** your PR addresses
+3. **Describe what changed and why**
+4. **Include screenshots** for UI changes
+5. **Complete the PR checklist** in the template
+6. **Keep PRs focused** — one logical change per PR
+7. **Respond to review feedback** promptly
+
+Reviewers will check for:
+- Correctness
+- Consistency with project conventions
+- Accessibility considerations
+- Documentation completeness
+- No visual regressions
+
+---
+
+## Testing Requirements
+
+### Required for All PRs
+
+- [ ] Project runs locally
+- [ ] Production build succeeds
+- [ ] No TypeScript errors
+- [ ] No console errors
+- [ ] No merge conflicts
+
+### For UI/Animation Changes
+
+- [ ] Mobile layout tested
+- [ ] Multiple relationship types tested (partner, friend, sibling at minimum)
+- [ ] Reduced motion respected if applicable
+- [ ] Performance is not regressed (check FPS on lower-end devices)
+
+---
+
+## Documentation Standards
 
 If your change affects:
 
-* UI
-* Animations
-* Messages
-* Personalization
-* Family system
-* Templates
-
-Please test with multiple relationship types.
-
-At minimum:
-
-* Friend
-* Partner
-* Brother or Sister
-
-Do not assume a feature works everywhere because it works in one template.
+- **Behavior** — update relevant docs
+- **Env configuration** — update `ENV_GUIDE.md` and `.env.example`
+- **Architecture** — update `ARCHITECTURE.md`
+- **UI** — update `FAQ.md` or `README.md` if user-facing
+- **Contribution workflow** — update `CONTRIBUTING.md`
 
 ---
 
-# 📱 Mobile Support
+## Ways to Contribute Beyond Code
 
-Birthday Bloom supports:
-
-* Desktop
-* Tablet
-* Mobile
-
-Before submitting:
-
-* Check responsiveness.
-* Check touch interactions.
-* Check animations on mobile devices.
-* Ensure no important content becomes inaccessible.
-* If you dont have any spefic mobile device then its okay, Just verify it in your mobile/Laptop
+- **Documentation** — improve guides, fix typos, add examples
+- **Issue triage** — help reproduce bugs, ask clarifying questions
+- **Design feedback** — suggest UI/UX improvements
+- **Accessibility review** — audit components for screen readers and keyboard navigation
+- **Performance profiling** — identify janky interactions on various devices
+- **Translation** — help localize docs into more languages
+- **Community** — answer questions in issues and discussions
 
 ---
 
-# ⚡ Performance Guidelines
+## First-Time Contributors
 
-Performance matters.
+Welcome! Here's how to get started:
 
-Please avoid:
+1. **Find a `good first issue`** — these are labeled and scoped for newcomers
+2. **Read the [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+3. **Set up the project** using the [Development Setup](#development-setup) section
+4. **Ask questions** — comment on the issue if something is unclear
+5. **Submit a draft PR** — we'll help you polish it
 
-* Memory leaks
-* Infinite loops
-* Excessive particle generation
-* Unnecessary re-renders
-* Large dependencies
-
-New animations should:
-
-* Clean themselves up properly
-* Respect reduced motion settings
-* Remain smooth on lower-end devices
-
-Target:
-
-> Smooth user experience over visual complexity.
+We appreciate every contribution, no matter how small. A typo fix, a clearer sentence in the docs, or a better error message all make a difference.
 
 ---
 
-# 🔐 Security Guidelines
+## Final Note
 
-Please:
-
-* Validate inputs.
-* Sanitize user content.
-* Treat environment variables as public.
-* Follow secure coding practices.
-
-Never:
-
-* Commit secrets.
-* Commit API keys.
-* Commit credentials.
-* Store sensitive data inside client code.
-
----
-
-# 🎨 Design Guidelines
-
-Birthday Bloom should feel:
-
-* Personal
-* Emotional
-* Premium
-* Elegant
-* Memorable
-
-When improving UI:
-
-Prefer:
-
-* Smooth transitions
-* Clean layouts
-* Readable typography
-* Meaningful animations
-
-Avoid:
-
-* Visual clutter
-* Excessive effects
-* Distracting interactions
-
-```IF YOU WANT TO ADD A NEW FEATURE, DO IT I WILL DEFENTLY SEE IT AND IF ITS GOOD I WILL APPROVE IT.```
----
-
-# 📝 Commit Message Convention
-
-Examples:
-
-```text
-feat: add template-aware emoji trail system
-
-fix: resolve mobile fireworks cleanup issue
-
-perf: optimize particle rendering
-
-docs: improve family system documentation
-
-refactor: simplify birthday template configuration
-```
-
-Avoid:
-
-```text
-update
-
-fixed bug
-
-changes
-
-test
-```
-
----
-
-# 🚀 Pull Request Checklist
-
-Before opening a Pull Request:
-
-* [ ] Project runs locally
-* [ ] Production build succeeds
-* [ ] No TypeScript errors
-* [ ] No console errors
-* [ ] No merge conflicts
-* [ ] Mobile layout tested
-* [ ] Existing functionality preserved
-* [ ] Multiple templates tested
-* [ ] Documentation updated when required
-
----
-
-# 💭 Feature Requests
-
-When proposing a feature:
-
-Please explain:
-
-1. What problem it solves.
-2. Why it belongs in Birthday Bloom.
-3. Which templates it supports.
-4. Whether it should be configurable.
-5. Whether it impacts performance.
-
-Features that benefit all users are more likely to be accepted.
-
----
-
-# ❤️ Respect Existing Architecture
-
-Birthday Bloom has evolved through many iterations.
-
-Please avoid:
-
-* Large unnecessary rewrites.
-* Massive architectural changes.
-* Breaking existing customization systems.
-* Replacing stable implementations without strong justification.
-
-Incremental improvements are preferred.
-
----
-
-> 🌸 "Build features that scale across templates, relationships, and future versions—not just your own use case."
+> *"Build features that scale across templates, relationships, and future versions — not just your own use case."*
 
 Thank you for helping make Birthday Bloom better for everyone.
 
-— Naboraj Sarkar
-Maintainer, Birthday Bloom
+— Naboraj Sarkar  
+Maintainer

@@ -32,7 +32,7 @@ Birthday Bloom is now **env-first**: names, relationship type, messages, colors,
 
 Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom)
 
-**Important:** when this project says “env”, it means environment variables, usually stored in `.env.local` during local development or in the hosting provider’s Environment Variables/Secrets panel during deployment. These values are the intended customization layer. For normal changes, do not rewrite the app code.
+**Important:** when this project says "env", it means environment variables, usually stored in `.env.local` during local development or in the hosting provider's Environment Variables/Secrets panel during deployment. These values are the intended customization layer. For normal changes, do not rewrite the app code.
 
 If you ask an AI coding agent to customize Birthday Bloom, tell it this first:
 
@@ -49,6 +49,37 @@ Direct docs:
 - [Documentation index](./docs/DOCUMENTATION_INDEX.md)
 
 Copy `.env.example` to `.env.local`, change values, restart the dev server, and the experience updates without component edits.
+
+---
+
+## 📚 Documentation Map
+
+Everything you need to get the most out of Birthday Bloom:
+
+| If you want to... | Start here |
+| --- | --- |
+| Customize names, colors, photos, sections | [ENV_GUIDE.md](./docs/ENV_GUIDE.md) |
+| Run the project locally | [QUICK_START.md](./QUICK_START.md) |
+| Understand the codebase | [ARCHITECTURE.md](./ARCHITECTURE.md) |
+| Deploy to Vercel / Netlify / Docker | [docs/deployment.md](./docs/deployment.md) |
+| Set up family profiles (brother, sister, etc.) | [docs/family-system.md](./docs/family-system.md) |
+| Troubleshoot issues | [docs/troubleshooting.md](./docs/troubleshooting.md) |
+| Contribute to the project | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+| See what's coming next | [ROADMAP.md](./ROADMAP.md) |
+| Browse community standards | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
+| Report a security issue | [SECURITY.md](./SECURITY.md) |
+| Get help | [SUPPORT.md](./SUPPORT.md) / [FAQ.md](./FAQ.md) |
+| View version history | [CHANGELOG.md](./CHANGELOG.md) |
+| Explore all docs | [docs/DOCUMENTATION_INDEX.md](./docs/DOCUMENTATION_INDEX.md) |
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/naborajs/birthday-bloom/ci.yml?branch=main&style=for-the-badge&color=ff69b4&logo=github" alt="CI">
+  <img src="https://img.shields.io/github/commit-activity/m/naborajs/birthday-bloom?style=for-the-badge&color=ff69b4" alt="Commit Activity">
+  <img src="https://img.shields.io/github/last-commit/naborajs/birthday-bloom?style=for-the-badge&color=4169e1" alt="Last Commit">
+  <img src="https://img.shields.io/badge/PRs-welcome-ff69b4?style=for-the-badge" alt="PRs Welcome">
+</p>
 
 ---
 
@@ -481,7 +512,7 @@ Handles HTML5 Audio instances without cluttering the DOM with invisible `<audio>
 ### 🚨 Critical Issues
 
 **Q: The website shows a blank screen on load?**
-A: Check your browser console. It’s likely a missing `.env` variable or a typo in `VITE_BIRTHDAY_NAME`. Ensure you have run `npm install`.
+A: Check your browser console. It's likely a missing `.env` variable or a typo in `VITE_BIRTHDAY_NAME`. Ensure you have run `npm install`.
 
 **Q: The animation stopped in the middle!**
 A: This happens if a timer is cleared incorrectly. Ensure you haven't modified the `timersRef` logic in `CinematicIntro.tsx`. Check for `VITE_BIRTHDAY_DATE` formatting errors.
@@ -749,13 +780,61 @@ The following developers and creators have contributed to the "Bloom Ecosystem".
 
 ---
 
-## 🤝 Contributing Guidelines
+## 🤝 Contributing
 
-1. **Fork the Project**
-2. **Create Feature Branch** (`git checkout -b feature/NewEffect`)
-3. **Commit** (`git commit -m 'Add NewEffect'`)
-4. **Push** (`git push origin feature/NewEffect`)
-5. **PR** across to `main`.
+Birthday Bloom welcomes contributions of all kinds — bug fixes, documentation improvements, UI polish, accessibility enhancements, performance optimizations, and new features.
+
+### Quick Start for Contributors
+
+1. **Read [CONTRIBUTING.md](./CONTRIBUTING.md)** for the full workflow
+2. **Read [STYLEGUIDE.md](./STYLEGUIDE.md)** for code conventions
+3. **Read [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+4. **Check [good first issues](https://github.com/naborajs/birthday-bloom/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** for beginner-friendly tasks
+5. **Fork, branch, commit, push, and PR** — see the [PR template](.github/pull_request_template.md)
+
+### Contribution Areas
+
+- 🐛 **Bug fixes** — Report and fix issues
+- 📖 **Documentation** — Improve guides, fix typos, add examples
+- ✨ **UI & Animations** — Polish the cinematic experience
+- ♿ **Accessibility** — Make Birthday Bloom work for everyone
+- ⚡ **Performance** — Keep it smooth on all devices
+- 💡 **Features** — Extend existing systems, don't duplicate them
+
+### Community Standards
+
+All contributors are expected to follow our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md). Please be respectful, inclusive, and constructive.
+
+---
+
+## 🛣️ Roadmap
+
+### Now — Quality & Community Foundation
+- ✅ Community health files (CODE_OF_CONDUCT, SECURITY, SUPPORT)
+- ✅ Issue and PR templates for structured contributions
+- ✅ CI pipeline with lint, typecheck, build, and test
+- ✅ Dependabot for dependency updates
+- ✅ Comprehensive documentation suite
+
+### Next — Features & Polish
+- [ ] Celebration mode presets (anniversary, graduation)
+- [ ] YouTube/Vimeo native embed support
+- [ ] Spotify playlist integration
+- [ ] Screen reader pass on all interactive sections
+- [ ] Offline support via service worker
+- [ ] PWA manifest for installable experience
+- [ ] Storybook for component development
+- [ ] Expanded test coverage
+
+### Later — Ecosystem & Scale
+- [ ] CLI tool (`npx create-birthday-bloom`)
+- [ ] Online preview configurator
+- [ ] Community template gallery
+- [ ] Guest book with optional backend
+- [ ] i18n / localization framework
+
+**Full roadmap:** [ROADMAP.md](./ROADMAP.md)  
+**Have ideas?** Open a [feature request](https://github.com/naborajs/birthday-bloom/issues/new?template=feature_request.yml)
 
 ---
 
@@ -786,6 +865,42 @@ We believe that code is a gift. That's why we made Birthday Bloom open-source an
 - Write a blog post about how you used Birthday Bloom.
 - Record a video tutorial for the Naboraj Sarkar community.
 - Donate to an open-source library that we depend on (like Framer Motion).
+
+---
+
+## 📖 Open Source Ecosystem
+
+Birthday Bloom comes with a complete open-source operating system to make contributing, maintaining, and collaborating easy.
+
+### Repository Health Files
+
+| File | Purpose |
+| --- | --- |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Full contribution workflow |
+| [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Community standards and expectations |
+| [SECURITY.md](./SECURITY.md) | Vulnerability reporting process |
+| [SUPPORT.md](./SUPPORT.md) | Where to get help |
+| [STYLEGUIDE.md](./STYLEGUIDE.md) | Code, docs, and design conventions |
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | System architecture deep dive |
+| [CHANGELOG.md](./CHANGELOG.md) | Version history and release notes |
+| [ROADMAP.md](./ROADMAP.md) | Planned features and direction |
+| [FAQ.md](./FAQ.md) | Frequently asked questions |
+
+### GitHub Automation
+
+- **Issue Templates** — Structured forms for bugs, features, docs improvements, and performance reports
+- **PR Template** — Contributor checklist to ensure quality
+- **CI Pipeline** — Automated lint, typecheck, build, and test on every PR
+- **Dependabot** — Weekly automated dependency updates
+- **CODEOWNERS** — Clear ownership map for the repository
+
+### Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full version history.
+
+### Versioning
+
+This project follows [Semantic Versioning](https://semver.org/). Major releases are tracked in releases and summarized in the changelog.
 
 ---
 

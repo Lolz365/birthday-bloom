@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/naborajs/birthday-bloom/blob/main/docs/DOCUMENTATION_INDEX.md
+    about: Check the documentation index first
+  - name: ENV Configuration Guide
+    url: https://github.com/naborajs/birthday-bloom/blob/main/docs/ENV_GUIDE.md
+    about: Most customization questions are answered here
+  - name: Troubleshooting
+    url: https://github.com/naborajs/birthday-bloom/blob/main/docs/troubleshooting.md
+    about: Common issues and fixes
+  - name: GitHub Security
+    url: https://github.com/naborajs/birthday-bloom/security/policy
+    about: Report security vulnerabilities here
