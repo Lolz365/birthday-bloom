@@ -1,338 +1,208 @@
-# 📚 Birthday Bloom v3.0 - Documentation Index
+# Birthday Bloom v3.0 — Documentation Index
 
-**Complete Documentation Guide**  
-**Version**: 3.0  
-**Last Updated**: May 2026
+**Complete documentation guide for Birthday Bloom**, an env-first cinematic birthday surprise engine built with React, Framer Motion, and Tailwind CSS.
+
+> **Note:** Duplicate and stale documentation has been consolidated. See this file for the current structure.
 
 Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom)
 
-Env-first customization is the default path. Names, media, relationships, colors, sections, animation settings, accessibility, and family template metadata should be changed with `.env.local` whenever possible.
+---
 
-## Essential Current Docs
+## Essential Docs
 
-- [Complete env customization guide](./ENV_GUIDE.md)
-- [Family system](./family-system.md)
-- [Template architecture](./template-architecture.md)
-- [Developer guide](./developer-guide.md)
-- [Migration guide](./migration-guide.md)
-- [Troubleshooting](./troubleshooting.md)
+| Document | Purpose | Read Time |
+|---|---|---|
+| [QUICK_START.md](../QUICK_START.md) | Get running in 5 minutes | 5 min |
+| [ENV_GUIDE.md](./ENV_GUIDE.md) | Full env customization reference with 15+ recipes | 15 min |
+| [ARCHITECTURE.md](../ARCHITECTURE.md) | System architecture overview | 10 min |
+| [developer-guide.md](./developer-guide.md) | Component API reference and extension patterns | 15 min |
+| [family-system.md](./family-system.md) | Family template system | 10 min |
+| [template-architecture.md](./template-architecture.md) | Template and config architecture | 8 min |
+| [troubleshooting.md](./troubleshooting.md) | Common issues and solutions | 10 min |
+| [migration-guide.md](./migration-guide.md) | Version-by-version migration v1→v2→v3 | 8 min |
+| [deployment.md](./deployment.md) | All deployment options + testing checklists | 10 min |
+| [seo-guide.md](./seo-guide.md) | SEO, sitemap, meta tags optimization | 5 min |
+| [llm-access.md](./llm-access.md) | AI-first documentation guide | 5 min |
 
 ---
 
-## Quick Navigation
+## By Use Case
 
-### 🚀 Getting Started
-- **[COMPLETE_SETUP_GUIDE.md](./COMPLETE_SETUP_GUIDE.md)** ⭐ **START HERE**
-  - 5-minute installation
-  - Configuration guide
-  - Quick start examples
-  - 12 section guide with examples
+### New to Birthday Bloom?
 
-### 📖 API & Developer Reference
-- **[API_REFERENCE.md](./API_REFERENCE.md)**
-  - Store API (useBirthdayStore)
-  - Component API (MainBirthday, PhotoGallery, etc.)
-  - Utilities API (Validators, Factories)
-  - Type definitions
-  - Complete examples
+1. [QUICK_START.md](../QUICK_START.md) — Install and run locally
+2. [ENV_GUIDE.md](./ENV_GUIDE.md) — Learn what you can customize
+3. [FAQ.md](../FAQ.md) — Common questions
+4. Customize `.env.local` and restart
 
-### 📊 Upgrade Information
-- **[UPGRADE_SUMMARY.md](./UPGRADE_SUMMARY.md)**
-  - What's new in v3.0
-  - Feature comparison (v2.5 vs v3.0)
-  - Breaking changes (none!)
-  - Migration guide
+### Customizing for Someone
 
-### 📋 Additional Documentation
+1. [ENV_GUIDE.md](./ENV_GUIDE.md) — Full env reference with situation recipes
+2. [family-system.md](./family-system.md) — Family profile setup
+3. [template-architecture.md](./template-architecture.md) — How templates work
+4. [SUPPORT.md](../SUPPORT.md) — Getting help
 
-#### Architecture & System Design
-- **[architecture.md](./architecture.md)** - System architecture and structure
-- **[project-structure.md](./project-structure.md)** - Folder organization
+### Contributing Code
 
-#### Features & Customization
-- **[customization.md](./customization.md)** - Customization guide
-- **[animations.md](./animations.md)** - Animation documentation
-- **[features-summary.md](./features-summary.md)** - Feature overview
+1. [CONTRIBUTING.md](../CONTRIBUTING.md) — Contribution workflow
+2. [STYLEGUIDE.md](../STYLEGUIDE.md) — Code conventions
+3. [ARCHITECTURE.md](../ARCHITECTURE.md) — System architecture
+4. [developer-guide.md](./developer-guide.md) — Developer reference
+5. [ROADMAP.md](../ROADMAP.md) — Planned features
 
-#### Setup & Localization
-- **[setup-bengali.md](./setup-bengali.md)** - Bengali setup guide
-- **[setup-hindi.md](./setup-hindi.md)** - Hindi setup guide
-- **[ENV_GUIDE.md](./ENV_GUIDE.md)** - Environment variables guide
+### Deploying to Production
 
-#### Advanced Topics
-- **[advanced-customization.md](./advanced-customization.md)** - Advanced customization
-- **[advanced-fixes.md](./advanced-fixes.md)** - Advanced fixes and troubleshooting
-- **[performance.md](./performance.md)** - Performance optimization (from skills/)
+1. [deployment.md](./deployment.md) — Deployment guide (Vercel, Netlify, AWS, mobile)
+2. [ENV_GUIDE.md](./ENV_GUIDE.md) — Environment variable setup
+3. [troubleshooting.md](./troubleshooting.md) — Deployment troubleshooting
 
-#### Deployment & Hosting
-- **[deployment.md](./deployment.md)** - Deployment guide
-- **[deployment-troubleshooting.md](./deployment-troubleshooting.md)** - Deployment issues
-- **[deployment-testing.md](./deployment-testing.md)** - Testing before deployment
-- **[hosting-solutions.md](./hosting-solutions.md)** - Hosting options
-- **[hosting-aws.md](./hosting-aws.md)** - AWS hosting guide
-- **[mobile-deployment.md](./mobile-deployment.md)** - Mobile deployment
-- **[termux-hosting.md](./termux-hosting.md)** - Termux hosting
+### Troubleshooting
 
-#### SEO & LLM Support
-- **[seo.md](./seo.md)** - SEO optimization
-- **[seo-guide.md](./seo-guide.md)** - SEO guide
-- **[llm-guide.md](./llm-guide.md)** - LLM integration guide
-- **[llm-access.md](./llm-access.md)** - LLM access documentation
-
-#### Troubleshooting & FAQ
-- **[troubleshooting.md](./troubleshooting.md)** - Common issues and solutions
-
-#### Version History
-- **[v2-upgrade-guide.md](./v2-upgrade-guide.md)** - Upgrade from v2 to v3
-- **[UPGRADE_SUMMARY.md](./UPGRADE_SUMMARY.md)** - Detailed upgrade info
+1. [troubleshooting.md](./troubleshooting.md) — Common issues
+2. [ENV_GUIDE.md](./ENV_GUIDE.md) — Env configuration help
+3. [FAQ.md](../FAQ.md) — Frequently asked questions
+4. [GitHub Issues](https://github.com/naborajs/birthday-bloom/issues) — Report bugs
 
 ---
 
-## Documentation by Use Case
+## All Docs
 
-### 👶 New to Birthday Bloom?
-1. Read: [COMPLETE_SETUP_GUIDE.md](./COMPLETE_SETUP_GUIDE.md) - Overview section
-2. Follow: Installation & Setup section
-3. Try: Quick Start section
-4. Explore: Configuration Guide section
+### Root Docs
 
-### 💻 Developer Getting Started
-1. Read: [API_REFERENCE.md](./API_REFERENCE.md) - Complete API overview
-2. Check: Type Definitions section for TypeScript support
-3. Reference: Component API section for components
-4. Study: Complete Example section
+| File | Purpose |
+|---|---|
+| [QUICK_START.md](../QUICK_START.md) | 5-minute setup guide |
+| [ARCHITECTURE.md](../ARCHITECTURE.md) | Architecture overview |
+| [CONTRIBUTING.md](../CONTRIBUTING.md) | Contribution workflow |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Code, docs, and design conventions |
+| [CHANGELOG.md](../CHANGELOG.md) | Version history |
+| [ROADMAP.md](../ROADMAP.md) | Planned features |
+| [FAQ.md](../FAQ.md) | Frequently asked questions |
+| [SUPPORT.md](../SUPPORT.md) | Support and contact |
+| [SECURITY.md](../SECURITY.md) | Security policy |
+| [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) | Community standards |
+| [LICENSE](../LICENSE) | MIT License |
 
-### 🎨 Customizing for Your Use Case
-1. Read: [customization.md](./customization.md)
-2. Explore: [COMPLETE_SETUP_GUIDE.md](./COMPLETE_SETUP_GUIDE.md) - Customization section
-3. Check: [advanced-customization.md](./advanced-customization.md) for advanced options
-4. Review: [config.example.ts](../src/config.example.ts) for full configuration examples
+### Docs (Configuration & Customization)
 
-### 👥 Creating Family Profiles
-1. Read: [family-system.md](./family-system.md) for the current scalable family schema.
-2. Read: [template-architecture.md](./template-architecture.md) to understand inheritance and overrides.
-3. Use [ENV_GUIDE.md](./ENV_GUIDE.md) to customize relationship type, family metadata, and privacy from env.
-4. Reference: [config.example.ts](../src/config.example.ts) for typed examples.
+| File | Purpose |
+|---|---|
+| [ENV_GUIDE.md](./ENV_GUIDE.md) | Complete environment variable reference with 15+ recipes |
+| [family-system.md](./family-system.md) | Family template system |
+| [template-architecture.md](./template-architecture.md) | Template data flow and types |
+| [migration-guide.md](./migration-guide.md) | v1→v2→v3 migration |
 
-### 🚀 Deploying to Production
-1. Read: [deployment.md](./deployment.md)
-2. Choose hosting: [hosting-solutions.md](./hosting-solutions.md)
-3. Provider-specific:
-   - Vercel: [deployment.md](./deployment.md) - Vercel section
-   - AWS: [hosting-aws.md](./hosting-aws.md)
-   - Mobile: [mobile-deployment.md](./mobile-deployment.md)
-4. Test: [deployment-testing.md](./deployment-testing.md)
-5. Troubleshoot: [deployment-troubleshooting.md](./deployment-troubleshooting.md)
+### Docs (Development)
 
-### 🐛 Troubleshooting Issues
-1. Check: [troubleshooting.md](./troubleshooting.md)
-2. Advanced: [advanced-fixes.md](./advanced-fixes.md)
-3. Deployment: [deployment-troubleshooting.md](./deployment-troubleshooting.md)
-4. Ask: Open issue on GitHub
+| File | Purpose |
+|---|---|
+| [developer-guide.md](./developer-guide.md) | Component API reference and extension patterns |
+| [troubleshooting.md](./troubleshooting.md) | Common issues and solutions |
 
-### 🔤 Setting Up in Your Language
-- Bengali: [setup-bengali.md](./setup-bengali.md)
-- Hindi: [setup-hindi.md](./setup-hindi.md)
-- English: [COMPLETE_SETUP_GUIDE.md](./COMPLETE_SETUP_GUIDE.md)
+### Docs (Deployment)
 
-### 📱 Going Mobile
-1. Read: [mobile-deployment.md](./mobile-deployment.md)
-2. Check: Responsive design in [customization.md](./customization.md)
-3. Test: Use browser dev tools
+| File | Purpose |
+|---|---|
+| [deployment.md](./deployment.md) | All deployment options + testing checklists |
+
+### Docs (SEO & LLM)
+
+| File | Purpose |
+|---|---|
+| [seo-guide.md](./seo-guide.md) | SEO, sitemap, meta tags optimization |
+| [llm-access.md](./llm-access.md) | AI-first documentation guide |
+
+### Docs (Localized)
+
+| File | Language |
+|---|---|
+| [setup-hindi.md](./setup-hindi.md) | हिंदी (Hindi) |
+| [setup-bengali.md](./setup-bengali.md) | বাংলা (Bengali) |
 
 ---
 
-## File Organization
+## File Map
 
-### 📂 docs/ Directory Structure
 ```
-docs/
-├── COMPLETE_SETUP_GUIDE.md          ⭐ Main setup guide (NEW)
-├── API_REFERENCE.md                 ⭐ Complete API docs (NEW)
-├── UPGRADE_SUMMARY.md               ⭐ v3.0 upgrade info (NEW)
-├── DOCUMENTATION_INDEX.md           ⭐ This file (NEW)
-│
-├── getting-started.md               - Quick start
-├── architecture.md                  - System architecture
-├── project-structure.md             - Project structure
-│
-├── customization.md                 - Customization guide
-├── advanced-customization.md        - Advanced customization
-├── animations.md                    - Animation documentation
-├── features-summary.md              - Feature overview
-│
-├── ENV_GUIDE.md                     - Environment variables
-├── env-system.md                    - Env system documentation
-│
-├── setup-bengali.md                 - Bengali setup
-├── setup-hindi.md                   - Hindi setup
-│
-├── deployment.md                    - Deployment guide
-├── deployment-testing.md            - Deployment testing
-├── deployment-troubleshooting.md    - Deployment issues
-│
-├── hosting-solutions.md             - Hosting options
-├── hosting-aws.md                   - AWS hosting
-├── mobile-deployment.md             - Mobile deployment
-├── termux-hosting.md                - Termux hosting
-│
-├── seo.md                           - SEO guide
-├── seo-guide.md                     - SEO documentation
-│
-├── llm-guide.md                     - LLM integration
-├── llm-access.md                    - LLM access docs
-│
-├── troubleshooting.md               - Troubleshooting guide
-├── advanced-fixes.md                - Advanced fixes
-│
-├── v2-upgrade-guide.md              - v2 to v3 migration
-│
-└── configuration-examples.md        - Configuration examples
-```
-
-### 📂 src/ Configuration Files
-```
-src/
-├── config/
-│   ├── templates.ts                 - Emotional letter templates
-│   └── birthday.ts                  - Birthday configuration
-│
-└── features/
-    └── core/
-        └── models/
-            ├── familyTemplates.ts   - Scalable family template registry
-            ├── dataModels.ts        - Enhanced data models (NEW)
-            └── validators.ts        - Validation system
-```
-
-### 📂 Root Configuration Files
-```
-/
-├── config.example.ts                - Complete configuration example (NEW)
-├── .env.example                     - Environment variables template
-├── README.md                        - Main README (Updated for v3.0)
-├── QUICK_START.md                   - Quick start guide
-└── package.json                     - Dependencies
+birthday-bloom/
+├── .env.example              # Environment template
+├── README.md                 # Project introduction
+├── QUICK_START.md            # 5-minute setup
+├── ARCHITECTURE.md           # Architecture overview
+├── CONTRIBUTING.md           # Contribution workflow
+├── STYLEGUIDE.md             # Code conventions
+├── CHANGELOG.md              # Version history
+├── ROADMAP.md                # Planned features
+├── FAQ.md                    # Frequently asked questions
+├── SUPPORT.md                # Support and contact
+├── SECURITY.md               # Security policy
+├── CODE_OF_CONDUCT.md        # Community standards
+├── LICENSE                   # MIT License
+├── docs/
+│   ├── DOCUMENTATION_INDEX.md  # This file
+│   ├── ENV_GUIDE.md            # Env customization reference
+│   ├── family-system.md        # Family templates
+│   ├── template-architecture.md# Template architecture
+│   ├── developer-guide.md      # Developer reference
+│   ├── troubleshooting.md      # Troubleshooting
+│   ├── migration-guide.md      # Migration guide
+│   ├── deployment.md           # Deployment
+│   ├── seo-guide.md            # SEO optimization
+│   ├── llm-access.md           # LLM access documentation
+│   ├── setup-hindi.md          # Hindi setup
+│   └── setup-bengali.md        # Bengali setup
 ```
 
 ---
 
-## Documentation Statistics
+## Consolidation Notes
 
-| File | Lines | Purpose | Status |
-| --- | --- | --- | --- |
-| COMPLETE_SETUP_GUIDE.md | 800+ | Main setup guide | ✅ NEW |
-| API_REFERENCE.md | 600+ | API documentation | ✅ NEW |
-| UPGRADE_SUMMARY.md | 500+ | Upgrade information | ✅ NEW |
-| DOCUMENTATION_INDEX.md | 300+ | Documentation index | ✅ NEW |
-| config.example.ts | 600+ | Configuration examples | ✅ NEW |
-| customization.md | 400+ | Customization guide | ✅ Updated |
-| troubleshooting.md | 350+ | Troubleshooting | ✅ Existing |
-| deployment.md | 300+ | Deployment guide | ✅ Existing |
+The following files have been consolidated or removed:
 
-**Total New Documentation**: 2,800+ lines
-
----
-
-## Key Changes in v3.0 Documentation
-
-### New Sections Added
-- ✅ Family Templates documentation
-- ✅ Brother Profile guide (15 sections)
-- ✅ Sister Profile guide (15 sections)
-- ✅ Enhanced data model documentation
-- ✅ Validation system documentation
-- ✅ Type definitions reference
-- ✅ Configuration examples with full details
-- ✅ Migration guide (v2.5 → v3.0)
-
-### Documentation Improvements
-- ✅ More comprehensive examples
-- ✅ Better code organization
-- ✅ Clear section hierarchy
-- ✅ Type-safe code examples
-- ✅ Complete API reference
-- ✅ Troubleshooting expanded
+| Deleted File | Merged Into |
+|---|---|
+| COMPLETE_SETUP_GUIDE.md | QUICK_START.md, ENV_GUIDE.md |
+| API_REFERENCE.md | developer-guide.md |
+| UPGRADE_SUMMARY.md | migration-guide.md |
+| v2-upgrade-guide.md | migration-guide.md |
+| customization.md | ENV_GUIDE.md |
+| advanced-customization.md | ENV_GUIDE.md |
+| configuration-examples.md | ENV_GUIDE.md |
+| env-system.md | ENV_GUIDE.md |
+| getting-started.md | QUICK_START.md |
+| project-structure.md | architecture.md |
+| animations.md | architecture.md |
+| features-summary.md | developer-guide.md |
+| hosting-solutions.md | deployment.md |
+| hosting-aws.md | deployment.md |
+| mobile-deployment.md | deployment.md |
+| termux-hosting.md | deployment.md |
+| deployment-testing.md | deployment.md |
+| deployment-troubleshooting.md | deployment.md |
+| seo.md | seo-guide.md |
+| llm-guide.md | llm-access.md |
+| advanced-fixes.md | Deleted (empty) |
+| DOCUMENTATION_AUDIT.md | Deleted (internal audit) |
 
 ---
 
-## How to Contribute to Documentation
+## Documentation Conventions
 
-1. **Report Issues**: Found an error? Open a GitHub issue.
-2. **Suggest Improvements**: PRs welcome!
-3. **Add Examples**: Share your configurations
-4. **Translations**: Help translate to more languages
-
----
-
-## Support & Resources
-
-### Getting Help
-- 📧 Email: support@birthday-bloom.dev
-- 🐛 Issues: [GitHub Issues](https://github.com/naborajs/birthday-bloom/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/naborajs/birthday-bloom/discussions)
-- 📚 Docs: [birthday-bloom.dev/docs](https://docs.birthday-bloom.dev)
-
-### Community
-- 🌟 Star on GitHub
-- 🔗 Share with friends
-- 👥 Join Discord community (coming soon)
+- **Env values** are shown as `VITE_EXAMPLE_NAME` with inline code formatting
+- **File paths** are relative to the project root
+- **Links** between docs use relative paths
+- **Code examples** use TypeScript/JSX
 
 ---
 
-## Quick Reference: Most Useful Documents
+## Contributing to Docs
 
-| Need | Document | Read Time |
-| --- | --- | --- |
-| Get started quickly | COMPLETE_SETUP_GUIDE.md | 15 min |
-| Understand API | API_REFERENCE.md | 20 min |
-| See what's new | UPGRADE_SUMMARY.md | 10 min |
-| Setup family profiles | COMPLETE_SETUP_GUIDE.md (Family section) | 15 min |
-| Configure everything | config.example.ts | 15 min |
-| Deploy to production | deployment.md | 15 min |
-| Fix issues | troubleshooting.md | 10 min |
-| Understand types | API_REFERENCE.md (Type Definitions) | 10 min |
+1. Found an error? Open a [GitHub issue](https://github.com/naborajs/birthday-bloom/issues)
+2. Suggest improvements via PR
+3. When adding new env variables, update both `ENV_GUIDE.md` and `.env.example`
+4. When adding new components, update `developer-guide.md` with the component table
 
 ---
 
-## Version History
-
-### v3.0 (Current) ✅
-- Complete family templates
-- Enhanced data models
-- Full documentation suite
-- Production-ready
-
-### v2.5
-- Video gallery
-- Improved accessibility
-- Performance optimizations
-
-### v2.0
-- Zustand store integration
-- Multiple themes
-
-### v1.0
-- Initial release
-- Core birthday experience
-
----
-
-## Next Steps
-
-1. **Start Here**: [COMPLETE_SETUP_GUIDE.md](./COMPLETE_SETUP_GUIDE.md)
-2. **Explore Examples**: [config.example.ts](../src/config.example.ts)
-3. **Reference API**: [API_REFERENCE.md](./API_REFERENCE.md)
-4. **Deploy**: [deployment.md](./deployment.md)
-5. **Celebrate**: 🎉
-
----
-
-**Made with ❤️ by Naboraj Sarkar**  
-*In the garden of the internet, may your digital memories always bloom.* 🌸
-
----
-
-**Last Updated**: May 22, 2026  
-**Documentation Version**: 3.0  
-**Status**: Complete ✅
+**Made with ❤️ by Naboraj Sarkar**
+*In the garden of the internet, may your digital memories always bloom.*

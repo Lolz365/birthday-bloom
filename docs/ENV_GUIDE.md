@@ -1,196 +1,282 @@
-# Complete Env Customization Guide
+﻿# Complete Env Customization Guide
 
-Birthday Bloom is env-first. You should be able to change names, relationship type, messages, colors, media, sections, animation behavior, accessibility, and family-template metadata from `.env.local` without editing component code.
+Birthday Bloom is **env-first**. Names, relationship type, messages, colors, photos, videos, audio, visible sections, animation behavior, accessibility, and family-template metadata are all controlled through environment variables.
 
-Repo: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom)
+**Important**: "Env" means environment variables. Locally, these live in `.env.local`. On hosting platforms, they live in the provider's Environment Variables dashboard (Vercel, Netlify, AWS Amplify, etc.).
 
-## What "Env" Means Here
-
-In this project, "env" means environment variables.
-
-Locally, those values usually live in:
-
-```text
-.env.local
-```
-
-On hosting platforms, they usually live in the provider dashboard:
-
-- Vercel: Project Settings -> Environment Variables
-- Netlify: Site configuration -> Environment variables
-- AWS Amplify: App settings -> Environment variables
-
-Some users were changing the full codebase just to rename the birthday person, replace photos, hide sections, or switch Brother to Sister/Father/Mother. That is not needed for normal customization. Birthday Bloom is designed so those changes happen through env values first.
-
-Use code edits only when you are adding new behavior that does not already exist.
-
-## Instruction For AI Coding Agents
-
-If a user asks an AI coding agent to customize this project, the agent should first check whether the request can be solved with env values.
-
-Recommended agent response before editing code:
-
-> Birthday Bloom is already ready for this customization. You can update the environment variables instead of changing the app code. I will first map your requested changes to `.env.local` keys using `.env.example` and `docs/ENV_GUIDE.md`. I will edit source code only if the requested behavior is not supported by env.
-
-Examples:
-
-| User Request | First Action |
-| --- | --- |
-| "Change the name to Priya" | Set `VITE_BIRTHDAY_NAME=Priya` |
-| "Make this for my sister" | Set `VITE_BIRTHDAY_RELATIONSHIP=sister` and `VITE_FAMILY_MEMBER_TYPE=sister` |
-| "Use my own photos" | Set `VITE_PHOTOS` or `VITE_PHOTO_1..6` |
-| "Hide the quiz" | Set `VITE_SHOW_QUIZ_SECTION=false` |
-| "Make it calmer for grandma" | Set `VITE_REDUCED_MOTION=true`, `VITE_TEXT_SIZE=large`, `VITE_PARTICLE_COUNT=8` |
-| "Add a brand-new section type" | Code change may be needed |
-
-Start here:
-
-- [Quick start](../QUICK_START.md)
-- [Family system](./family-system.md)
-- [Template architecture](./template-architecture.md)
-- [Developer guide](./developer-guide.md)
-- [Migration guide](./migration-guide.md)
-- [Troubleshooting](./troubleshooting.md)
+---
 
 ## How Env Works
 
-Vite exposes browser-safe variables that start with `VITE_`.
+Vite exposes browser-safe variables prefixed with `VITE_`. The app parses them in `src/features/core/store/useBirthdayStore.ts` at module load time.
 
-Priority order:
+**Priority order**:
+1. Host environment variables (production)
+2. `.env.local` values (development)
+3. `src/config.ts` fallback (basic static defaults)
+4. Built-in constants
 
-1. `.env.local` values
-2. Deployed host environment variables
-3. `src/config.ts` fallback values
-4. Built-in defaults
-
-After changing `.env.local`, restart the dev server.
-
+After changing `.env.local`, **restart the dev server**:
 ```bash
-npm run dev
+npm run dev      # macOS/Linux
+npm.cmd run dev  # PowerShell
 ```
 
-PowerShell users can run:
+**All `VITE_` values are public** â€” they ship to the browser. Keep passwords, tokens, and secrets out of env values.
 
-```bash
-npm.cmd run dev
-```
+### Hydration & Verification
+
+On boot, `useBirthdayStore` parses all env variables starting with `VITE_BIRTHDAY_*`, stores them in a reactive **Zustand** store, and auto-sets `isConfigured: true` when `VITE_BIRTHDAY_NAME` is present â€” this skips the setup wizard and triggers the cinematic intro immediately.
+
+To verify env is loaded:
+1. Ensure `.env` or `.env.local` exists in the project root.
+2. Restart the dev server after creating/editing the file.
+3. Open the browser console; the app logs `"Personalization Loaded"` on success.
+
+---
 
 ## Core Identity
 
-| Variable | Type | Example | Purpose |
-| --- | --- | --- | --- |
-| `VITE_BIRTHDAY_NAME` | string | `Riya` | Main displayed name. Setting it personalizes the whole app. |
-| `VITE_BIRTHDAY_AGE` | number | `25` | Shows `Happy 25th Birthday` and helps docs/examples choose age tone. |
-| `VITE_BIRTHDAY_GENDER` | enum | `female` | Supports `male`, `female`, `other`. |
-| `VITE_BIRTHDAY_DATE` | date | `2026-10-15T00:00:00` | Birthday date in ISO format. |
-| `VITE_BIRTHDAY_RELATIONSHIP` | enum/string | `sister` | Drives mood and relationship-aware content. |
-| `VITE_BIRTHDAY_WISHER_NAME` | string | `Alex` | Adds the sender name to the letter signoff. |
+| Variable | Type | Default | Purpose |
+|---|---|---|---|
+| `VITE_BIRTHDAY_NAME` | string | `""` | Main displayed name. Setting it personalizes the whole app and sets `isConfigured=true`. |
+| `VITE_BIRTHDAY_AGE` | number (optional) | `null` | Displays "Happy Nth Birthday" and affects story tone. |
+| `VITE_BIRTHDAY_GENDER` | enum | `other` | `male`, `female`, or `other`. Affects pronouns, letter content, theme subtle shifts. |
+| `VITE_BIRTHDAY_DATE` | date | `null` | ISO format date, e.g. `2026-10-15` or `2026-10-15T00:00:00`. Used for password generation and birthday age. Handles `TH` typo correction. |
+| `VITE_BIRTHDAY_RELATIONSHIP` | enum/string | `friend` | Drives mood, pacing, emoji kits, chat messages, letter content, theme, and color palette. |
+| `VITE_BIRTHDAY_WISHER_NAME` | string | `""` | Sender name appended to letter signoff. Also accepted as `VITE_WISHER_NAME` for backward compatibility. |
 
-Supported relationship values:
+**Supported relationship values**: `partner`, `friend`, `family`, `sibling`, `brother`, `sister`, `father`, `mother`, `grandfather`, `grandmother`, `uncle`, `aunt`, `cousin`, `son`, `daughter`, `guardian`, `colleague`, `mentor`, `custom`.
 
-`partner`, `friend`, `family`, `sibling`, `brother`, `sister`, `father`, `mother`, `grandfather`, `grandmother`, `uncle`, `aunt`, `cousin`, `son`, `daughter`, `guardian`, `colleague`, `mentor`.
+The store normalizes aliases: e.g., `"love"` â†’ `partner`, `"mom"` â†’ `mother`, `"bestie"` â†’ `friend`, `"work"` â†’ `colleague`.
 
-## Message And Theme
+---
 
-| Variable | Type | Example | Purpose |
-| --- | --- | --- | --- |
-| `VITE_BIRTHDAY_CUSTOM_MESSAGE` | string | `You mean the world to me.` | Main message in the letter card. |
-| `VITE_BIRTHDAY_LETTER_TITLE` | string | `A Letter For You` | Letter section heading. |
-| `VITE_BIRTHDAY_LETTER_OVERRIDE` | escaped string | `Dear Riya,\n\nHappy birthday...` | Full custom letter body. Use `\n` for new lines. |
-| `VITE_BIRTHDAY_COLOR` | hex | `#FF69B4` | Primary accent color for buttons, glows, and cards. |
-| `VITE_THEME` | enum | `romantic` | Theme hint for examples and config. |
-| `VITE_BIRTHDAY_INTERESTS` | CSV/list | `music,coding,travel` | Drives icons, quiz content, gift code, and emoji choices. |
-| `VITE_FAVORITE_EMOJIS` | CSV/list | `party,sparkle,star` | Adds custom burst emojis when the user taps interactive elements. |
+## Message and Theme
 
-Theme values:
+| Variable | Type | Default | Purpose |
+|---|---|---|---|
+| `VITE_BIRTHDAY_CUSTOM_MESSAGE` | string | `""` | Custom message displayed in the letter card. When set, replaces the auto-generated message. |
+| `VITE_BIRTHDAY_LETTER_TITLE` | string | `"A Special Letter Just for You 💌"` | Letter section heading. |
+| `VITE_BIRTHDAY_LETTER_OVERRIDE` | escaped string | `""` | Full custom letter body. Use `\n` for newlines. The `\n` is converted to actual newlines in `useBirthdayStore`. |
+| `VITE_BIRTHDAY_COLOR` | hex | `#FF6B6B` | Primary accent color. Also accepted as `VITE_FAVORITE_COLOR`. Used for buttons, glows, cards, gradients. |
+| `VITE_THEME` | enum | `fun` | Theme hint: `romantic`, `fun`, `energetic`, `elegant`, `playful`, `nostalgic`. |
+| `VITE_BIRTHDAY_INTERESTS` | CSV/list | `""` | Drives interest icons (lucide-react icons in hero), quiz questions, gift code generation, emoji injection. Also accepted as `VITE_FAVORITE_ITEMS`. |
+| `VITE_FAVORITE_EMOJIS` | CSV/list | `""` | Custom burst emojis when tapping interactive elements. Also accepted as `VITE_BIRTHDAY_EMOJIS`. |
+| `VITE_CUSTOM_MESSAGE` | string | `""` | Backward-compatible alias for `VITE_BIRTHDAY_CUSTOM_MESSAGE`. |
 
-`romantic`, `fun`, `energetic`, `elegant`, `playful`, `nostalgic`.
+**Supported interests**: `car`, `music`, `art`, `coding`, `gaming`, `nature`, `travel`, `food`, `sport`, `space` â€” each maps to a lucide-react icon and interest-specific emojis.
+
+### Curated Theme Palettes
+
+The engine generates a full UI palette from a single `VITE_BIRTHDAY_COLOR`. These curated hex codes achieve specific looks:
+
+- **"Midnight Bloom"**: `#00C2FF` (Vibrant Cyan)
+- **"Rose Quartz"**: `#FF6B6B` (Soft Coral)
+- **"Golden Legacy"**: `#FFD700` (Classic Gold)
+- **"Neon Cyber"**: `#A855F7` (Deep Purple)
+
+Each theme ships with a full color palette:
+
+| Theme | Primary | Secondary | Accent |
+|---|---|---|---|
+| Romantic | `#FF1493` | `#FFB6C1` | `#FF69B4` |
+| Fun | `#FFD700` | `#FF6347` | `#00CED1` |
+| Energetic | `#FF4500` | `#00FF00` | `#00FFFF` |
+| Elegant | `#C0C0C0` | `#DAA520` | `#696969` |
+| Playful | `#FF69B4` | `#00FFFF` | `#FFD700` |
+| Nostalgic | `#8B4513` | `#DAA520` | `#CD5C5C` |
+
+### CSS Variable Overrides
+
+For manual CSS overrides in `index.css`:
+```css
+:root {
+  --primary-glow: 0 0 40px rgba(var(--color-primary-rgb), 0.6);
+}
+```
+
+---
 
 ## Photos
 
-Use `VITE_PHOTOS` for unlimited photo URLs:
+Two modes â€” `VITE_PHOTOS` (unlimited, pipe-separated) wins when set:
 
 ```env
 VITE_PHOTOS=https://example.com/one.jpg|https://example.com/two.jpg|https://example.com/three.jpg
 VITE_PHOTO_CAPTIONS=First memory|Favorite trip|Best smile
 ```
 
-For simple setups, use numbered variables:
+For simple setups (easier in hosting dashboards):
 
 ```env
 VITE_PHOTO_1=https://example.com/one.jpg
 VITE_PHOTO_2=https://example.com/two.jpg
 VITE_PHOTO_3=https://example.com/three.jpg
+VITE_PHOTOS=                    # Leave empty so numbered vars are used
 VITE_PHOTO_CAPTIONS=First memory|Favorite trip|Best smile
 ```
 
-`VITE_PHOTOS` wins when it is set. Numbered photos are easier for Vercel and Netlify dashboards.
+The store builds the photos array: if `VITE_PHOTOS` is set, it splits on `|`. Otherwise it collects non-empty `VITE_PHOTO_1..6` values. Fallback defaults from `src/config/birthday.ts` and static imports (`src/assets/photo-1.jpg` etc.) are used when no env values are provided.
 
-## Videos And Audio
+### Media Optimization Standards
+
+To maintain 60fps cinematic flow:
+
+- **Format**: Prefer `.webp`, then `.jpg`. Avoid `.png` â€” too heavy.
+- **Size**: Keep each image under **500KB**.
+- **Dimensions**: Use **16:9** aspect ratio for the gallery to avoid black bars in the 3D tilt view.
+- **Mobile**: The gallery auto-disables tilt on phones and uses smoother transitions.
+- **Recommended sizes**: 800x600px or larger.
+
+### Error Handling
+
+```env
+# INCORRECT (may cause broken loading)
+VITE_PHOTO_1="https://random-site.com/broken-link"
+
+# CORRECT (direct image URL)
+VITE_PHOTO_1="https://images.unsplash.com/photo-1530101121243-c99ff3cdca42?auto=format&fit=crop&w=800&q=80"
+```
+
+The photo gallery supports lazy loading and falls back gracefully if a memory image fails.
+
+---
+
+## Videos and Audio
 
 | Variable | Type | Purpose |
-| --- | --- | --- |
-| `VITE_VIDEO_1`, `VITE_VIDEO_2`, `VITE_VIDEO_3` | URL | Adds memory videos to the video gallery. YouTube, MP4, and WebM are supported. |
-| `VITE_FINAL_VIDEO_URL` | URL | Adds a closing video in the final surprise. |
-| `VITE_SOUND_URL` | URL | Background music URL. |
-| `VITE_BGM_URL` | URL | Backward-compatible background music alias. |
-| `VITE_SONG_URL` | URL | Optional audio-system song URL. |
-| `VITE_VOICE_MESSAGE_URL` | URL | Optional voice message URL. |
-| `VITE_SOUND_EFFECTS` | boolean | Enables or disables sound effects. |
+|---|---|---|
+| `VITE_VIDEO_1`, `VITE_VIDEO_2`, `VITE_VIDEO_3` | URL | Memory videos in the video gallery. Supports YouTube (watch, embed, short URL) and direct MP4/WebM files. |
+| `VITE_FINAL_VIDEO_URL` | URL | Closing video in the FinalSurprise component. |
+| `VITE_SOUND_URL` | URL | Background music (falls back to built-in Pixabay audio if unset). |
+| `VITE_BGM_URL` | URL | Backward-compatible alias for sound URL. |
+| `VITE_SONG_URL` | URL | Optional song URL (reserved for future audio system). |
+| `VITE_VOICE_MESSAGE_URL` | URL | Optional voice message URL (reserved for future use). |
+| `VITE_SOUND_EFFECTS` | boolean | Enables/disables sound effects (default: `true`). |
+
+**Audio resolution**: `AUDIO_ASSETS.bgmUrl` in `src/config/birthday.ts` checks `VITE_BGM_URL` first, then `VITE_SOUND_URL`. The `SoundManager` uses this for background music. Individual sound effects are hosted on Pixabay CDN.
+
+**Audio best practices**:
+- Always use HTTPS URLs for audio/video sources.
+- Ensure CORS is enabled on your audio host.
+- For YouTube final videos, use the `/embed/` link format for the best cinematic experience.
+- Browser autoplay policies require user interaction before audio plays â€” clicking "Start" triggers it.
+
+---
 
 ## Sections
 
-Every major rendered section has an env switch.
+Every rendered section has an env toggle:
 
 | Variable | Default | Controls |
-| --- | --- | --- |
+|---|---|---|
 | `VITE_SHOW_PHOTO_SECTION` | `true` | Photo gallery |
 | `VITE_SHOW_QUIZ_SECTION` | `true` | Birthday quiz |
-| `VITE_SHOW_GIFT_SECTION` | `true` | Hidden gift code |
-| `VITE_SHOW_HEART_TREE_SECTION` | `true` | Heart tree |
+| `VITE_SHOW_GIFT_SECTION` | `true` | Hidden gift code section |
+| `VITE_SHOW_HEART_TREE_SECTION` | `true` | Heart tree finale |
 | `VITE_SHOW_VIDEO_SECTION` | `true` | Video gallery |
-| `VITE_SHOW_CAKE_SECTION` | `true` | Cake cutting |
-| `VITE_SHOW_FINAL_SURPRISE` | `true` | Final message/video |
+| `VITE_SHOW_CAKE_SECTION` | `true` | Cake cutting experience |
+| `VITE_SHOW_FINAL_SURPRISE` | `true` | Final surprise (memories + video) |
 | `VITE_SHOW_SKIP_BUTTON` | `true` | Intro skip button |
 
-Boolean values can be `true`, `false`, `1`, `0`, `yes`, `no`, `on`, or `off`.
+Also accepted: `VITE_SHOW_PHOTOS_SECTION` (alias for photo section).
 
-## Animation And Accessibility
+**Supported boolean values**: `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`, `enabled`, `disabled`.
 
-| Variable | Values | Recommended Use |
-| --- | --- | --- |
-| `VITE_ANIMATION_SPEED` | `slow`, `moderate`, `fast` | Slow for romantic/family, fast for energetic friends. |
-| `VITE_ANIMATION_INTENSITY` | `low`, `medium`, `high` | Lower this for older phones. |
-| `VITE_PARTICLE_COUNT` | number | Use `8-15` on mobile, `25-60` for desktop. |
-| `VITE_REDUCED_MOTION` | boolean | Use `true` for motion-sensitive users. |
-| `VITE_TEXT_SIZE` | `small`, `normal`, `large` | Use `large` for parents/grandparents. |
-| `VITE_HIGH_CONTRAST` | boolean | Use `true` when readability matters more than subtle styling. |
+| Variable | Type | Default | Purpose |
+|---|---|---|---|
+| `VITE_DURATION` | enum | `normal` | `quick`, `normal`, or `extended`. Controls overall experience pacing. |
+
+---
+
+## Animation and Accessibility
+
+| Variable | Values | Default | Recommended Use |
+|---|---|---|---|
+| `VITE_ANIMATION_SPEED` | `slow`, `moderate`, `fast` | based on relationship | Slow for romantic/family, fast for energetic friends |
+| `VITE_ANIMATION_INTENSITY` | `low`, `medium`, `high` | `high` | Lower for older phones or reduced motion needs |
+| `VITE_PARTICLE_COUNT` | number | `25` | Higher for desktop (`25-60`), lower for mobile (`8-15`) |
+| `VITE_REDUCED_MOTION` | boolean | `false` | Set `true` for motion-sensitive users |
+| `VITE_TEXT_SIZE` | `small`, `normal`, `large` | `normal` | Use `large` for parents/grandparents |
+| `VITE_HIGH_CONTRAST` | boolean | `false` | Improves readability at the cost of subtle styling |
+
+### Responsive Breakpoints
+
+| Device | Width | Default Particles | Base Font | Animations |
+|---|---|---|---|---|
+| Mobile | 480px | 10 | 14px | Medium |
+| Tablet | 481-768px | 15 | 15px | Medium-High |
+| Laptop | 769-1024px | 25 | 16px | High |
+| Desktop | 1025-1280px | 40 | 17px | High |
+| Ultrawide | 1281px+ | 60 | 18px | Max |
+
+### Performance vs Quality
+
+| Variable | Low-End Value | High-End Value |
+|---|---|---|
+| `VITE_PARTICLE_COUNT` | `10` (old phones) | `100` (high-end PCs) |
+| `VITE_ANIMATION_SPEED` | `slow` (emotional pacing) | `fast` (party vibe) |
+| `VITE_ANIMATION_INTENSITY` | `low` | `high` |
+
+### Accessibility Features
+
+- **Reduced Motion**: Honors system preferences via `VITE_REDUCED_MOTION`
+- **Text Scaling**: `small`, `normal`, `large` via `VITE_TEXT_SIZE`
+- **High Contrast**: `VITE_HIGH_CONTRAST` for enhanced visibility
+- **Touch Targets**: 44x44px minimum for all interactive elements
+- **Keyboard Navigation**: Full support throughout the experience
+- **Screen Reader**: Compatible with semantic HTML and ARIA labels
+
+### Animation Effects (15 total)
+
+The engine includes 15 distinct animation effects tuned through env variables:
+
+1. **ParticleBurst** â€” Physics-based explosions on cake clicks
+2. **MorphingElements** â€” Fluid background shapes (4 animated orbs)
+3. **EnhancedFloatingElements** â€” Floating emoji elements
+4. **SparkleRain** â€” Cascading sparkle effect
+5. **FireflyEffect** â€” Glowing flying lights (15 configurable fireflies)
+6. **FloatingOrbs** â€” Blurred color orbs (8 spheres)
+7. **ShootingStars** â€” Streaking stars with comet trails
+8. **AnimatedGradient** â€” Rotating conic gradient layers
+9. **RibbonEffect** â€” Banner animation with bouncing motion
+10. **WaveEffect** â€” Expanding concentric rings
+11. **LiquidSwirl** â€” Organic fluid SVG shape
+12. **DigitalRain** â€” Matrix-style falling character columns
+13. **GlitchEffect** â€” RGB offset glitch
+14. **TextRevealEffect** â€” Staggered character reveal with spring physics
+15. **TunnelEffect** â€” Zooming tunnel with depth
+
+---
 
 ## Special Memories
 
-Format:
+Format for the FinalSurprise component's memory grid:
 
 ```env
 VITE_SPECIAL_MEMORIES=First celebration;https://example.com/one.jpg|Favorite trip;https://example.com/two.jpg
 ```
 
-Each item is `text;imageUrl`. Separate multiple memories with `|`.
+Each item is `text;imageUrl`. Separate multiple memories with `|`. Images are optional â€” without a URL, a camera placeholder icon is shown.
+
+---
 
 ## Family Template Env
 
-The family system can be bootstrapped from env.
+See [family-system.md](./family-system.md) for the full schema. Env bootstrap:
 
-| Variable | Example | Purpose |
-| --- | --- | --- |
-| `VITE_FAMILY_MEMBER_TYPE` | `sister` | Selects a family template. |
-| `VITE_FAMILY_PREFERRED_NAME` | `Pri` | Preferred display name. |
-| `VITE_FAMILY_NICKNAMES` | `Pri,Star` | Comma-separated nicknames. |
-| `VITE_FAMILY_RELATIONSHIP_LABEL` | `Younger Sister` | Human label for the relationship. |
-| `VITE_FAMILY_CLOSENESS` | `9` | Closeness from 1 to 10. |
-| `VITE_FAMILY_YEARS_KNOWN` | `24` | Years of shared history. |
-| `VITE_FAMILY_SIDE` | `maternal` | `maternal`, `paternal`, `both`, `chosen`, `unknown`. |
-| `VITE_FAMILY_PRIVACY` | `family` | `public`, `family`, or `private`. |
-| `VITE_FAMILY_ALLOW_EXPORT` | `true` | Allows future export flows. |
+| Variable | Type | Example | Purpose |
+|---|---|---|---|
+| `VITE_FAMILY_MEMBER_TYPE` | enum | `sister` | Selects template: `brother`, `sister`, `father`, `mother`, `grandfather`, `grandmother`, `uncle`, `aunt`, `cousin`, `son`, `daughter`, `guardian`, `friend`, `custom` |
+| `VITE_FAMILY_PREFERRED_NAME` | string | `Pri` | Display name override |
+| `VITE_FAMILY_NICKNAMES` | CSV | `Pri,Star` | Comma-separated nicknames |
+| `VITE_FAMILY_RELATIONSHIP_LABEL` | string | `Younger Sister` | Human-readable relationship label |
+| `VITE_FAMILY_CLOSENESS` | number (1-10) | `9` | Closeness level |
+| `VITE_FAMILY_YEARS_KNOWN` | number | `24` | Years of shared history |
+| `VITE_FAMILY_SIDE` | enum | `maternal` | `maternal`, `paternal`, `both`, `chosen`, `unknown` |
+| `VITE_FAMILY_PRIVACY` | enum | `family` | `public`, `family`, `private` |
+| `VITE_FAMILY_ALLOW_EXPORT` | boolean | `true` | Allow profile export |
 
 For full control, paste a complete JSON profile:
 
@@ -198,32 +284,148 @@ For full control, paste a complete JSON profile:
 VITE_FAMILY_PROFILE_JSON={"schemaVersion":"3.0.0","id":"sister-1","memberType":"sister","basicInfo":{"fullName":"Priya","nicknames":["Pri"],"gender":"female","ageGroup":"young-adult"}}
 ```
 
-Use JSON only when you need every field. For normal projects, use the simpler family variables.
+`VITE_FAMILY_PROFILE_JSON` wins when set. Otherwise, the store constructs a profile from the individual env variables.
 
-## Cinematic Password Unlock (v3.1)
+For code-level profile creation, use the factory functions in `src/features/core/models/familyTemplates`:
+```typescript
+import { createDefaultBrotherProfile, createDefaultSisterProfile } from '@/features/core/models/familyTemplates';
+const profile = createDefaultSisterProfile("Priya", new Date('2000-07-22'));
+profile.relationshipDynamics.bondStrength = 10;
+```
 
-You can protect the birthday surprise using a cinematic frosted-glass password lock.
+See `src/features/core/models/dataModels.ts` for `ConfigValidator` (validate, sanitize, mergeWithDefaults) and `DataValidator` (isValidEmail, isValidHexColor, isValidPhoneNumber).
+
+---
+
+## Cinematic Password Unlock
+
+Protect the surprise with a frosted-glass passcode screen:
 
 | Variable | Type | Default | Purpose |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | `VITE_PASSWORD_REQUIRED` | boolean | `false` | Force enables the password lock page. |
-| `VITE_PASSWORD` | string | `""` | Set a manual password override (e.g. `love` or `1234`). |
-| `VITE_PASSWORD_HINT` | string | `""` | Customized emotional hint displayed if the user gets stuck. |
-| `VITE_PASSWORD_FORMAT` | enum | `MMDD` | Format to auto-generate password from `VITE_BIRTHDAY_DATE` if `VITE_PASSWORD` is not set. |
+| `VITE_PASSWORD` | string | `""` | Manual password override (case-insensitive). |
+| `VITE_PASSWORD_HINT` | string | `""` | Custom hint message. Without it, a dynamic hint based on format is shown. |
+| `VITE_PASSWORD_FORMAT` | enum | `MMDD` | Format to generate password from `VITE_BIRTHDAY_DATE` when `VITE_PASSWORD` is not set. |
 
-Supported `VITE_PASSWORD_FORMAT` values:
-- `MMDD` (default, e.g. `0424` for April 24th)
-- `DDMM` (e.g. `2404` for April 24th)
-- `YYYYMMDD` (e.g. `20010424`)
-- `YYYY-MM-DD` (e.g. `2001-04-24`)
-- `MM-DD` (e.g. `04-24`)
-- `DD-MM` (e.g. `24-04`)
-- `YYYY` (e.g. `2001`)
+**Supported formats**:
+- `MMDD` (default) â€” e.g., `0424` for April 24th
+- `DDMM` â€” e.g., `2404`
+- `YYYYMMDD` â€” e.g., `20010424`
+- `YYYY-MM-DD` â€” e.g., `2001-04-24`
+- `MM-DD` â€” e.g., `04-24`
+- `DD-MM` â€” e.g., `24-04`
+- `YYYY` â€” e.g., `2001`
+
+**Password resolution** (`getEffectivePassword` in `src/utils/password.ts`):
+1. If `VITE_PASSWORD` is set and non-empty, use it
+2. If `VITE_BIRTHDAY_DATE` is set, generate password per format
+3. If neither, fall back to raw `import.meta.env.VITE_BIRTHDAY_DATE`
+
+---
+
+## Debug and Integrations
+
+| Variable | Type | Purpose |
+|---|---|---|
+| `VITE_DEBUG` | boolean | Enables debug logging (default: `false`) |
+| `VITE_ANALYTICS_ID` | string | Optional analytics integration ID |
+
+---
+
+## Interactive Quiz System
+
+The quiz automatically adapts based on env configuration:
+
+- `VITE_BIRTHDAY_INTERESTS`: Adds questions about the person's hobbies.
+- `VITE_FAVORITE_ITEMS`: Alias for interests.
+- `VITE_BIRTHDAY_RELATIONSHIP`: Adds emotional or funny questions about your bond.
+- `VITE_BIRTHDAY_GENDER`: Adjusts pronoun usage.
+
+Example:
+```env
+VITE_BIRTHDAY_INTERESTS=coding,cars,music
+VITE_BIRTHDAY_RELATIONSHIP=partner
+```
+
+Result: the quiz asks about coding habits, car preferences, favorite music, and relationship-themed questions.
+
+---
+
+## Interactive Cake Cutting Engine
+
+The cake system in `src/components/birthday/CakeCutting.tsx` includes:
+
+- **Personalized Name Plaque**: The recipient's name auto-renders on a premium frosting plaque.
+- **Procedural Textures**: Grain and drip effects for a realistic bakery look.
+- **Kinetic Splitting**: The cake splits with physics-based cut sparks and 3D depth filters.
+- **Auto-Scroll Interaction**: Smooth-scrolls the "Blow & Cut" UI into view on mobile.
+
+Customize cake options by editing the `CAKE_OPTIONS` array in `src/components/birthday/CakeCutting.tsx` â€” update `name`, `flavorColor`, and `description`.
+
+Four default designs: Chocolate, Strawberry, Royal Velvet, Floral Garden.
+
+---
+
+## Kinetic Storytelling (Cinematic Intro)
+
+The intro scene's narrative script lives in `src/components/birthday/CinematicIntro.tsx`. Customize storylines per relationship:
+
+```typescript
+// Custom storylines for a friend
+const friendLines = [
+  "They say legends aren't born every day...",
+  "But on this day, one definitely was.",
+  "Ready for the epicness?"
+];
+
+// Custom storylines for a partner
+const romanticLines = [
+  "In a world of billions...",
+  "My eyes always find you.",
+  "Today is about our favorite person."
+];
+```
+
+---
+
+## Performance & Mobile Optimization
+
+The engine auto-detects mobile devices and applies these adjustments:
+
+- **Reduced animation intensity** â€” confetti, spark effects, and glow effects are quieter.
+- **Photo gallery tilt disabled** â€” smoother scrolling on touch devices.
+- **Cake cutting interactions** â€” tuned for responsive touch.
+- **Lower particle counts** â€” mobile gets 10-15 vs desktop 25-60.
+- **Simplified hover states** â€” no persistent hover effects.
+
+### Build Optimization
+
+```bash
+# Always test production build locally
+npm run build
+npm run preview
+
+# Check bundle size
+npm run build -- --analyze
+```
+
+**Production bundle sizes** (gzipped):
+- Total: ~180-220KB
+- JS: ~140-160KB
+- CSS: ~20-30KB
+
+**Performance targets** (Lighthouse):
+- Performance: 90
+- Accessibility: 95
+- Best Practices: 90
+- LCP: <2.5s | FID: <100ms | CLS: <0.1
+
+---
 
 ## Situation Recipes
 
 ### Romantic Partner
-
 ```env
 VITE_BIRTHDAY_NAME=Riya
 VITE_BIRTHDAY_AGE=25
@@ -237,7 +439,6 @@ VITE_BIRTHDAY_CUSTOM_MESSAGE=You make ordinary days feel like magic.
 ```
 
 ### Best Friend
-
 ```env
 VITE_BIRTHDAY_NAME=Alex
 VITE_BIRTHDAY_RELATIONSHIP=friend
@@ -250,7 +451,6 @@ VITE_FAVORITE_EMOJIS=party,fire,star
 ```
 
 ### Sister
-
 ```env
 VITE_BIRTHDAY_NAME=Priya
 VITE_BIRTHDAY_RELATIONSHIP=sister
@@ -262,8 +462,7 @@ VITE_BIRTHDAY_COLOR=#FF69B4
 VITE_THEME=playful
 ```
 
-### Father Or Mother
-
+### Father or Mother
 ```env
 VITE_BIRTHDAY_NAME=Dad
 VITE_BIRTHDAY_RELATIONSHIP=father
@@ -275,8 +474,7 @@ VITE_TEXT_SIZE=large
 VITE_ANIMATION_INTENSITY=medium
 ```
 
-### Grandparent Or Low Motion
-
+### Grandparent or Low Motion
 ```env
 VITE_BIRTHDAY_NAME=Grandma
 VITE_BIRTHDAY_RELATIONSHIP=grandmother
@@ -290,18 +488,14 @@ VITE_PARTICLE_COUNT=8
 ```
 
 ### Media-Heavy Celebration
-
 ```env
 VITE_PHOTOS=https://example.com/1.jpg|https://example.com/2.jpg|https://example.com/3.jpg|https://example.com/4.jpg
 VITE_PHOTO_CAPTIONS=School days|The trip|Family dinner|Favorite smile
 VITE_VIDEO_1=https://www.youtube.com/watch?v=example
 VITE_FINAL_VIDEO_URL=https://example.com/finale.mp4
-VITE_SHOW_VIDEO_SECTION=true
-VITE_SHOW_FINAL_SURPRISE=true
 ```
 
 ### Minimal Private Link
-
 ```env
 VITE_BIRTHDAY_NAME=Sam
 VITE_BIRTHDAY_RELATIONSHIP=friend
@@ -312,33 +506,346 @@ VITE_SHOW_FINAL_SURPRISE=false
 VITE_FAMILY_PRIVACY=private
 ```
 
+### Romantic Girlfriend (Vercel)
+```env
+VITE_BIRTHDAY_NAME=Sarah
+VITE_BIRTHDAY_AGE=26
+VITE_BIRTHDAY_GENDER=female
+VITE_BIRTHDAY_RELATIONSHIP=partner
+VITE_BIRTHDAY_COLOR=#FF1493
+VITE_BIRTHDAY_CUSTOM_MESSAGE=My beautiful Sarah, thank you for being the love of my life.
+VITE_THEME=romantic
+VITE_ANIMATION_INTENSITY=high
+VITE_ANIMATION_SPEED=moderate
+VITE_PHOTO_1=https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=800
+VITE_PHOTO_2=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800
+VITE_PHOTO_3=https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800
+VITE_SOUND_URL=https://assets.mixkit.co/active_storage/music/2869/2869-preview.mp3
+VITE_FAVORITE_EMOJIS=loved,bouquet,rose,heart,gift,ribbon
+VITE_TEXT_SIZE=normal
+```
+
+### Best Friend Party (Firebase)
+```env
+VITE_BIRTHDAY_NAME=Alex
+VITE_BIRTHDAY_AGE=24
+VITE_BIRTHDAY_GENDER=male
+VITE_BIRTHDAY_RELATIONSHIP=friend
+VITE_BIRTHDAY_COLOR=#00FFFF
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Hey my bro! Another year older but still awesome.
+VITE_THEME=fun
+VITE_ANIMATION_INTENSITY=high
+VITE_ANIMATION_SPEED=fast
+VITE_PARTICLE_COUNT=30
+VITE_PHOTO_1=https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800
+VITE_PHOTO_2=https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800
+VITE_PHOTO_3=https://images.unsplash.com/photo-1507539803526-19b419cd3b5d?w=800
+VITE_FAVORITE_EMOJIS=party,clink,fire,star,confetti,balloon
+VITE_SHOW_SKIP_BUTTON=true
+```
+
+### Mom's Birthday (Self-Hosted)
+```env
+VITE_BIRTHDAY_NAME=Mom
+VITE_BIRTHDAY_AGE=58
+VITE_BIRTHDAY_GENDER=female
+VITE_BIRTHDAY_RELATIONSHIP=family
+VITE_BIRTHDAY_COLOR=#FFD700
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Dear Mom,\n\nThank you for all your love, care, and sacrifices.
+VITE_THEME=elegant
+VITE_ANIMATION_INTENSITY=medium
+VITE_ANIMATION_SPEED=slow
+VITE_PARTICLE_COUNT=15
+VITE_PHOTO_1=https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800
+VITE_PHOTO_2=https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800
+VITE_PHOTO_3=https://images.unsplash.com/photo-1507539803526-19b419cd3b5d?w=800
+VITE_FAVORITE_EMOJIS=heart,family,rose,star,gift,ribbon
+VITE_TEXT_SIZE=large
+VITE_REDUCED_MOTION=false
+```
+
+### Colleague Birthday (Mobile-Optimized)
+```env
+VITE_BIRTHDAY_NAME=John
+VITE_BIRTHDAY_AGE=32
+VITE_BIRTHDAY_GENDER=male
+VITE_BIRTHDAY_RELATIONSHIP=colleague
+VITE_BIRTHDAY_COLOR=#0047AB
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Happy Birthday John! Wishing you success and happiness this year.
+VITE_THEME=energetic
+VITE_ANIMATION_INTENSITY=medium
+VITE_ANIMATION_SPEED=moderate
+VITE_PARTICLE_COUNT=12
+VITE_FAVORITE_EMOJIS=party,confetti,star,rocket,briefcase,sparkle
+VITE_SHOW_SKIP_BUTTON=true
+```
+
+### Kid's Birthday (Accessible)
+```env
+VITE_BIRTHDAY_NAME=Emma
+VITE_BIRTHDAY_AGE=8
+VITE_BIRTHDAY_GENDER=female
+VITE_BIRTHDAY_RELATIONSHIP=family
+VITE_BIRTHDAY_COLOR=#FF1493
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Happy Birthday Emma! You are an amazing girl!
+VITE_THEME=playful
+VITE_ANIMATION_INTENSITY=high
+VITE_ANIMATION_SPEED=fast
+VITE_PARTICLE_COUNT=20
+VITE_FAVORITE_EMOJIS=balloon,party,confetti,unicorn,sparkle,star,rainbow,ribbon
+VITE_TEXT_SIZE=large
+```
+
+### Brother's Birthday Bash
+```env
+VITE_BIRTHDAY_NAME=Raj
+VITE_BIRTHDAY_AGE=30
+VITE_BIRTHDAY_GENDER=male
+VITE_BIRTHDAY_RELATIONSHIP=brother
+VITE_FAMILY_MEMBER_TYPE=brother
+VITE_FAMILY_PREFERRED_NAME=Raj
+VITE_FAMILY_RELATIONSHIP_LABEL=Older Brother
+VITE_FAMILY_CLOSENESS=9
+VITE_FAMILY_YEARS_KNOWN=30
+VITE_BIRTHDAY_COLOR=#0047AB
+VITE_THEME=energetic
+VITE_ANIMATION_SPEED=fast
+VITE_PARTICLE_COUNT=35
+VITE_BIRTHDAY_INTERESTS=coding,gaming,sport
+```
+
+### Super OP Full Experience
+```env
+VITE_BIRTHDAY_NAME=Nishant
+VITE_BIRTHDAY_AGE=24
+VITE_BIRTHDAY_GENDER=male
+VITE_BIRTHDAY_RELATIONSHIP=friend
+VITE_BIRTHDAY_COLOR=#FFD700
+VITE_BIRTHDAY_INTERESTS=gaming,cars,music
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Stay Legendary, Bro!
+VITE_BIRTHDAY_LETTER_TITLE=A Message for the Icon
+VITE_FINAL_VIDEO_URL=https://www.youtube.com/embed/example
+VITE_SPECIAL_MEMORIES=The LAN Party;url|Road Trip 2023;url
+VITE_SHOW_CAKE_SECTION=true
+VITE_SHOW_VIDEO_SECTION=true
+VITE_PARTICLE_COUNT=60
+VITE_ANIMATION_INTENSITY=high
+```
+
+### Partner Anniversary-Style
+```env
+VITE_BIRTHDAY_NAME=Ananya
+VITE_BIRTHDAY_AGE=28
+VITE_BIRTHDAY_GENDER=female
+VITE_BIRTHDAY_RELATIONSHIP=partner
+VITE_BIRTHDAY_COLOR=#B76E79
+VITE_THEME=romantic
+VITE_ANIMATION_SPEED=slow
+VITE_REDUCED_MOTION=false
+VITE_BIRTHDAY_INTERESTS=music,art,travel
+VITE_BIRTHDAY_CUSTOM_MESSAGE=Every moment with you is a treasure.
+VITE_BIRTHDAY_LETTER_TITLE=To My Forever Valentine
+VITE_BIRTHDAY_LETTER_OVERRIDE=My Dearest Ananya,\n\nFrom the day we met, my world has been brighter...
+VITE_BIRTHDAY_WISHER_NAME=Your Partner
+VITE_SHOW_HEART_TREE_SECTION=true
+VITE_ANIMATION_INTENSITY=medium
+```
+
+---
+
+## Best Practices
+
+### Environment Variables
+
+**DO:**
+- Use `.env.local` for local development (never commit it to git).
+- Add variables in your hosting provider's dashboard for production.
+- Validate all variables before deployment.
+- Prefix all custom variables with `VITE_`.
+
+**DON'T:**
+- Store sensitive info (passwords, API keys, tokens) in `VITE_` variables â€” they ship to the browser.
+- Commit `.env` or `.env.local` files to version control.
+- Forget to add variables to hosting after deployment.
+
+### Image Optimization
+
+```
+Recommended Image Sizes: 800x600px (or larger)
+Formats: WebP (best compression), JPEG (universal fallback)
+Services: Unsplash (free), Imgix (CDN), AWS S3 + CloudFront (self-hosted)
+```
+
+### Animation Tuning
+
+**Mobile**:
+```env
+VITE_ANIMATION_INTENSITY=medium
+VITE_PARTICLE_COUNT=10-15
+VITE_ANIMATION_SPEED=moderate
+```
+
+**Desktop**:
+```env
+VITE_ANIMATION_INTENSITY=high
+VITE_PARTICLE_COUNT=25-60
+VITE_ANIMATION_SPEED=fast
+```
+
+### Accessibility
+
+```env
+# For seniors or accessibility needs
+VITE_TEXT_SIZE=large
+VITE_HIGH_CONTRAST=true
+VITE_REDUCED_MOTION=true
+```
+
+### Deployment Checklist
+
+- [ ] Lighthouse score 90
+- [ ] First Contentful Paint < 1.5s
+- [ ] Largest Contentful Paint < 2.5s
+- [ ] Cumulative Layout Shift < 0.1
+- [ ] All `VITE_` variables set in hosting dashboard
+- [ ] Production build tested locally (`npm run build && npm run preview`)
+
+---
+
 ## Deployment Notes
 
-Vercel:
+**Prerequisites**:
+- Node.js >= 18.0.0
+- npm >= 9.0.0
 
-1. Open the project settings.
-2. Go to Environment Variables.
-3. Add every required `VITE_` key.
+### Vercel
+1. Push code to GitHub.
+2. Import repo in Vercel.
+3. Project Settings â†’ Environment Variables â€” add every `VITE_` key from your `.env.local`.
 4. Redeploy after changing values.
 
-Netlify:
-
-1. Open Site configuration.
-2. Go to Environment variables.
-3. Add the same keys from `.env.local`.
+### Netlify
+1. Build command: `npm run build`
+2. Publish directory: `dist`
+3. Site configuration â†’ Environment variables â€” add the same keys.
 4. Trigger a fresh deploy.
+
+### AWS S3 + CloudFront
+```bash
+npm run build
+aws s3 sync dist/ s3://my-birthday-bloom/
+aws cloudfront create-invalidation --distribution-id E1234ABC --paths "/*"
+```
+
+### Docker
+```dockerfile
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+ARG VITE_BIRTHDAY_NAME=Guest
+ARG VITE_BIRTHDAY_RELATIONSHIP=friend
+ARG VITE_BIRTHDAY_COLOR=#FF6B6B
+RUN npm run build
+
+FROM node:18-alpine
+WORKDIR /app
+RUN npm install -g http-server
+COPY --from=0 /app/dist ./dist
+EXPOSE 8080
+CMD ["http-server", "dist", "-p", "8080"]
+```
+
+```bash
+docker build -t birthday-bloom \
+  --build-arg VITE_BIRTHDAY_NAME=Guest \
+  --build-arg VITE_BIRTHDAY_RELATIONSHIP=friend \
+  --build-arg VITE_BIRTHDAY_COLOR=#FF6B6B \
+  .
+docker run -p 8080:8080 birthday-bloom
+```
+
+---
 
 ## Troubleshooting
 
 | Problem | Fix |
-| --- | --- |
-| Name did not change | Check spelling: `VITE_BIRTHDAY_NAME`, then restart dev server or redeploy. |
-| Env works locally but not hosted | Add variables in the hosting dashboard and rebuild. |
-| Photos do not load | Use direct image URLs ending in `.jpg`, `.png`, `.webp`, or an image CDN URL. |
-| Too much motion | Set `VITE_REDUCED_MOTION=true`, `VITE_ANIMATION_INTENSITY=low`, and `VITE_PARTICLE_COUNT=8`. |
-| Relationship mood looks wrong | Use a supported relationship value or set `VITE_THEME` explicitly. |
-| JSON family profile fails | Validate JSON with quotes around every key and string. |
+|---|---|
+| Name did not change | Check spelling of `VITE_BIRTHDAY_NAME`, restart dev server or redeploy |
+| Env works locally but not hosted | Add variables in hosting dashboard and rebuild |
+| Photos do not load | Use direct image URLs (`.jpg`, `.png`, `.webp`) or CDN URLs |
+| Too much motion | Set `VITE_REDUCED_MOTION=true`, `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=8` |
+| Relationship mood looks wrong | Use a supported relationship value or set `VITE_THEME` explicitly |
+| JSON family profile fails | Validate JSON â€” all keys and strings must be in double quotes |
+| Blank screen | Check console (F12), verify `VITE_BIRTHDAY_NAME` is set, ensure `.env` is in root, restart dev server |
+| Animations stutter on mobile | Set `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=5`, `VITE_REDUCED_MOTION=true` |
+| Audio does not play | Verify `VITE_SOUND_URL` is valid HTTPS, CORS enabled on host, browser allows autoplay (click Start first) |
+| Build error: "Cannot find module" | Run `rm -rf node_modules && npm install && npm run build` |
+| Old version showing after deploy | Clear CDN cache â€” Vercel uses content hashes automatically |
+| Animations lag | Lower `VITE_PARTICLE_COUNT`, set `VITE_ANIMATION_INTENSITY=low` |
+
+---
+
+## FAQ
+
+**Q: Can I use this for non-birthday celebrations?**  
+A: Yes â€” set `VITE_BIRTHDAY_RELATIONSHIP=custom` and customize the message.
+
+**Q: What is the maximum image file size?**  
+A: Recommended: < 500KB. Maximum: 5MB.
+
+**Q: Can I add custom video content?**  
+A: Yes â€” provide MP4/WebM URLs via `VITE_VIDEO_1`, `VITE_VIDEO_2`, `VITE_VIDEO_3`.
+
+**Q: Is there a mobile version?**  
+A: Yes â€” Birthday Bloom is fully responsive with mobile-specific optimizations.
+
+**Q: Can I customize the emojis?**  
+A: Yes â€” set `VITE_FAVORITE_EMOJIS` with comma-separated emoji keywords.
+
+**Q: How do I add multiple recipients?**  
+A: Deploy multiple instances with different env variable sets.
+
+**Q: Is data saved to a backend?**  
+A: No â€” it is fully client-side. No backend or database required.
+
+**Q: Can I use custom fonts?**  
+A: Yes â€” modify `index.css` and import custom font files.
+
+**Q: What video formats are supported for memory videos?**  
+A: YouTube URLs (watch, embed, short) and direct MP4/WebM files.
+
+---
 
 ## Safety
 
-All `VITE_` values are public because they ship to the browser. Keep passwords, tokens, private API keys, and personal secrets out of env values.
+All `VITE_` values are public in the browser bundle. Do not store actual passwords, tokens, private API keys, or personal secrets in environment variables. The password unlock is a cinematic feature, not a security boundary.
+
+---
+
+## Easter Eggs
+
+- Click the cake 7 times for a MEGA SURPRISE.
+- The gift code is generated from the recipient's relationship + interests.
+- Emotional reactions shift based on gender and relationship settings.
+- Hidden animation triggers across the experience.
+
+---
+
+## See Also
+
+- [QUICK_START.md](../QUICK_START.md) â€” Quick start
+- [docs/developer-guide.md](./developer-guide.md) â€” Adding new env variables
+- [docs/family-system.md](./family-system.md) â€” Family profile configuration
+- [docs/template-architecture.md](./template-architecture.md) â€” Template system
+- [docs/troubleshooting.md](./troubleshooting.md) â€” Troubleshooting guide
+- [docs/deployment.md](./deployment.md) â€” Deployment guide
+- [docs/configuration-examples.md](./configuration-examples.md) â€” Pre-built configs
+- [src/features/core/store/useBirthdayStore.ts](../src/features/core/store/useBirthdayStore.ts) â€” Env parsing logic
+- [src/config/birthday.ts](../src/config/birthday.ts) â€” Audio defaults and fallback config
+- [src/utils/password.ts](../src/utils/password.ts) â€” Password generation logic
+- [src/components/birthday/CinematicIntro.tsx](../src/components/birthday/CinematicIntro.tsx) â€” Intro script customization
+- [src/components/birthday/CakeCutting.tsx](../src/components/birthday/CakeCutting.tsx) â€” Cake options customization
+- [src/features/core/models/familyTemplates.ts](../src/features/core/models/familyTemplates.ts) â€” Family profile factory functions
+- [src/features/core/models/dataModels.ts](../src/features/core/models/dataModels.ts) â€” ConfigValidator and DataValidator

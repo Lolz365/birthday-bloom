@@ -1,95 +1,194 @@
-# 🆘 Naboraj Sarkar: Master Troubleshooting & Diagnostic Guide
+# Troubleshooting Guide
 
-If your "Cinematic Surprise" isn't running at 60fps or the secrets aren't loading, use this guide to diagnose and repair the engine.
+Common issues and solutions for Birthday Bloom.
 
 ---
 
-## 🔬 Diagnostic Command Center
+## Local Setup Issues
 
-Before deep-diving into specific errors, run this "Sanity Check" in your terminal:
-```bash
-# 1. Clean the cache
-rm -rf node_modules/.vite
+### Blank screen on load
 
-# 2. Reinstall (if logic feels broken)
-npm install
+**Causes**: Missing `.env.local`, typo in `VITE_BIRTHDAY_NAME`, failed `npm install`, or browser extension blocking.
 
-# 3. Check for TS errors (Production Pre-flight)
-npm run build
+**Fixes**:
+1. Check browser console for errors
+2. Verify `.env.local` exists (copy from `.env.example`)
+3. Run `npm install` to ensure dependencies
+4. Try incognito/private mode (extensions can interfere)
+
+### "Module not found" errors
+
+Windows/macOS are case-insensitive, but Linux servers (Vercel, Netlify) are case-sensitive.
+
+**Fix**: Ensure all import paths match filenames EXACTLY. `CakeCutting.tsx` must be imported as `'./CakeCutting'`, not `'./cakecutting'`.
+
+### Dev server port conflict
+
+The dev server runs on `http://localhost:5000`. If that port is in use, edit `vite.config.ts`:
+```ts
+server: { port: 5001 }
 ```
 
----
+### "process is not defined" error
 
-## 🔴 Critical Failures & Recovery
+**Cause**: Using `process.env` instead of `import.meta.env` (Vite standard).
 
-### 1. The "Infinite Loader" Syndrome
-- **Symptoms**: The splash screen shows a loading spinner forever.
-- **Cause**: The engine is waiting for a critical asset (usually a `VITE_PHOTO_X` URL) that is unreachable or 404.
-- **Example**: `VITE_PHOTO_1="https://invalid-link.com/img.jpg"`
-- **Fix**: Check the browser console (`Network` tab). If a request is red (404/Timeout), fix the URL in your `.env`. The engine will now auto-inject a placeholder if a request takes longer than 10 seconds.
-
-### 2. "Uncaught ReferenceError: process is not defined"
-- **Cause**: Using `process.env` instead of `import.meta.env` (Vite standard).
-- **Fix**: Ensure all your environment access follows the Vite pattern:
-  - **❌ Wrong**: `process.env.VITE_BIRTHDAY_NAME`
-  - **✅ Correct**: `import.meta.env.VITE_BIRTHDAY_NAME`
-
-### 3. "Module not found" on Deployment (Vercel/Netlify)
-- **Cause**: Case-sensitivity. Your local machine (Windows/Mac) might ignore `cakecutting.tsx` vs `CakeCutting.tsx`, but Linux servers will fail.
-- **Fix**: Audit all imports. Ensure `import { CakeCutting } from './CakeCutting'` matches the filename EXACTLY.
+**Fix**: Replace `process.env.VITE_*` with `import.meta.env.VITE_*`.
 
 ---
 
-## 🟠 Performance & 3D Engine Issues
+## Env Configuration Issues
 
-### 1. Jittery 3D Tilts (Low FPS)
-- **Check**: Are you on a Low Power Mode device?
-- **Optimization Example**:
-  ```env
-  # Reduce particle load for low-end devices
-  VITE_PARTICLE_COUNT=10
-  VITE_ANIMATION_SPEED="fast"
-  ```
-- **Pro-Tip**: Avoid high-resolution transparent PNGs. Use WebP for all images.
+### Env changes not reflected
 
-### 2. SVG Artifacts or "Invisible" Cake
-- **Cause**: Hardware acceleration bugs in specific GPU drivers.
-- **Fix**: Open `src/index.css` and ensure the `--color-primary` has a high enough contrast. If the cake is invisible, it’s often because the HSL values calculated from your Hex code resulted in `lightness: 100%`.
+**Fix**: Restart the dev server. Vite caches `import.meta.env` values at startup.
 
----
+### Env works locally but not in production
 
-## 🟡 Browser-Specific "Gotchas"
+**Fix**: Add the variables in your hosting provider's Environment Variables dashboard and trigger a fresh deploy.
 
-| Browser | Known Issue | Resolution |
-| :--- | :--- | :--- |
-| **Safari (iOS)** | Audio stops when screen locks. | The engine now auto-resumes the `AudioContext` on the first touch after a lock event. |
-| **Chrome (Mobile)** | Address bar hides/shows, causing layout jumps. | We use `100dvh` (Dynamic Viewport Height) to prevent "UI Bouncing" during the intro. |
-| **Firefox** | SVG filters look slightly "blurry". | This is a native rendering difference. The engine applies a `sharpness` boost filter specifically for Gecko browsers. |
+### Boolean values not parsed correctly
 
----
+Supported values: `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`, `enabled`, `disabled`.
 
----
+### Photos not loading
 
-## 🟢 Common Questions (FAQ)
+- Use direct image URLs ending in `.jpg`, `.png`, `.webp`
+- URLs from image CDNs usually work
+- Check browser Network tab for 404s
+- The PhotoGallery component has fallback logic but unreachable URLs may cause delays
 
-### How do I change the music?
-Replace the files in `public/assets/audio/` with your own MP3 files. Make sure to keep the filenames the same (e.g., `bg-music.mp3`) or update the `SoundManager.tsx`.
+### Relationship mood looks wrong
 
-### The "I Love You" message isn't showing up?
-Check if `VITE_BIRTHDAY_RELATIONSHIP` is set to `partner`. This triggers the romantic narrative branch.
+- Use a supported relationship value (see [ENV_GUIDE.md](./ENV_GUIDE.md))
+- Set `VITE_THEME` explicitly to override: `romantic`, `fun`, `energetic`, `elegant`, `playful`, `nostalgic`
 
-### How to add more photos?
-Go to `src/components/birthday/PhotoGallery.tsx` and add more URLs to the `PHOTOS` array, or use the `VITE_PHOTO_1`, `VITE_PHOTO_2` etc. variables in your `.env`.
+### JSON family profile fails
 
-### Can I change the theme colors?
-Yes! Use `VITE_BIRTHDAY_COLOR` in your `.env` with any Hex code (like `#FF0000` for Red). The engine will automatically generate a matching palette.
+Validate JSON — all keys and strings must be in double quotes. Use a JSON validator before pasting.
 
 ---
 
-## 🛡️ "Never Fail" Strategy
-Birthday Bloom is designed with a **Fail-Safe Architecture**. If an animation fails to load, the engine will automatically:
-1.  **Skip the stuck phase** after 5 seconds.
-2.  **Use fallback colors** if your custom color is invalid.
-3.  **Use placeholder names** if `VITE_BIRTHDAY_NAME` is missing.
+## Audio Issues
 
-*Maintained by the Naboraj Sarkar Reliability Engineering Team.* 🛠️
+### No sound / music doesn't play
+
+- iOS requires a user gesture (tap) to start audio — the SplashScreen handles this
+- Check browser autoplay policies — the app has a fallback listener for first click
+- Verify `VITE_SOUND_URL` or `VITE_BGM_URL` points to an accessible audio file
+- The app falls back to a built-in Pixabay URL if no env URL is set
+
+### Audio stops when screen locks (iOS)
+
+This is an iOS limitation. Audio resumes on the next touch interaction via the AudioContext resume handler.
+
+---
+
+## Animation and Performance
+
+### Jittery animations (low FPS)
+
+**Fixes**:
+```env
+VITE_PARTICLE_COUNT=10
+VITE_ANIMATION_INTENSITY=low
+VITE_REDUCED_MOTION=true
+```
+
+Also check: low power mode, browser GPU acceleration settings, and avoid high-resolution transparent PNGs (use WebP).
+
+### SVG artifacts or invisible elements
+
+Hardware acceleration bugs in specific GPU drivers can cause SVG rendering issues. Ensure `--color-primary` HSL values have sufficient contrast — the cake and heart tree are entirely SVG-based.
+
+### Animation stops mid-sequence
+
+The cinematic intro uses `setTimeout` chains stored in `timersRef`. If a timer is cleared incorrectly (e.g., component unmounts), the sequence can freeze. Check that you haven't modified the timer logic in `CinematicIntro.tsx`.
+
+---
+
+## Browser-Specific Issues
+
+| Browser | Issue | Resolution |
+|---|---|---|
+| Safari (iOS) | Audio stops on screen lock | Auto-resumes AudioContext on next touch |
+| Chrome (Mobile) | Address bar causing layout jumps | App uses `100dvh` (Dynamic Viewport Height) |
+| Firefox | SVG filters look blurry | Native rendering difference — no action needed |
+
+---
+
+## Build and Deployment
+
+### Vercel build fails
+
+- Ensure Node.js 18+ (check `.nvmrc`)
+- Check for case-sensitive imports
+- Verify environment variables are set in Vercel dashboard
+- Build command: `npm run build`, output: `dist`
+
+### White screen after deployment
+
+Usually caused by a failed import. Check the hosting provider's build logs for "Module not found" errors.
+
+### Lighthouse performance goals
+
+- **LCP**: < 1.2s
+- **FID**: < 100ms
+- **CLS**: 0.00
+
+---
+
+## Common Questions
+
+### How do I change the background music?
+
+Set `VITE_SOUND_URL` or `VITE_BGM_URL` in `.env.local` to an MP3/audio file URL. The app falls back to a built-in Pixabay track if unset.
+
+### The romantic message isn't showing?
+
+Set `VITE_BIRTHDAY_RELATIONSHIP=partner` to trigger the romantic narrative branch and partner-specific letter content.
+
+### How do I add more than 3 photos?
+
+Use `VITE_PHOTOS` with pipe-separated URLs for unlimited photos, or use the numbered variables `VITE_PHOTO_1` through `VITE_PHOTO_6`.
+
+### How do I remove sections?
+
+Set the corresponding `VITE_SHOW_*` variable to `false`. See [ENV_GUIDE.md](./ENV_GUIDE.md) for the full list.
+
+### How do I change theme colors?
+
+Set `VITE_BIRTHDAY_COLOR` in `.env.local` with any hex code (e.g., `#FF0000`). The engine generates a matching HSL palette automatically.
+
+---
+
+## Debug Mode
+
+Set `VITE_DEBUG=true` in `.env.local` to enable debug logging. Check the browser console for detailed diagnostic information.
+
+---
+
+## Fail-Safe Behavior
+
+Birthday Bloom is designed to never show a blank screen:
+1. If an asset fails to load, fallback placeholders are used
+2. If a phase gets stuck, it auto-skips after 5 seconds
+3. If `VITE_BIRTHDAY_NAME` is missing, placeholder names are used
+4. If a custom color is invalid, fallback colors are applied
+
+---
+
+## Still Stuck?
+
+- Open a [GitHub issue](https://github.com/naborajs/birthday-bloom/issues)
+- Check [FAQ.md](../FAQ.md)
+- Read the [ENV_GUIDE.md](./ENV_GUIDE.md) for environment variable details
+- See [SUPPORT.md](../SUPPORT.md) for contact options
+
+---
+
+## See Also
+
+- [ENV_GUIDE.md](./ENV_GUIDE.md) — Environment variable reference
+- [deployment.md](./deployment.md) — Deployment guide (includes expanded troubleshooting section)
+- [developer-guide.md](./developer-guide.md) — Developer reference

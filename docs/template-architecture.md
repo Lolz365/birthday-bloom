@@ -64,3 +64,13 @@ Backward-compatible exports are preserved:
 - `createDefaultSisterProfile()`
 
 New specialized factories are also available for parents, grandparents, relatives, children, guardians, and friends.
+
+---
+
+## See Also
+
+- [docs/family-system.md](./family-system.md) — Family template reference
+- [docs/ENV_GUIDE.md](./ENV_GUIDE.md) — Env configuration for templates
+- [docs/developer-guide.md](./developer-guide.md) — Developer extension patterns
+- [ARCHITECTURE.md](../ARCHITECTURE.md) — System architecture overview
+- [QUICK_START.md](../QUICK_START.md) — Getting started

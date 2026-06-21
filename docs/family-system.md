@@ -167,3 +167,12 @@ Known legacy Brother/Sister members migrate to their dedicated types. Unknown le
 ## Performance Notes
 
 The registry is static and lightweight. Profile creation is synchronous and suitable for forms, import flows, tests, and client-side configuration. Large media files should remain URL-based instead of being embedded directly in profile objects.
+
+---
+
+## See Also
+
+- [docs/ENV_GUIDE.md](./ENV_GUIDE.md) — Family template env variables
+- [docs/template-architecture.md](./template-architecture.md) — Template inheritance model
+- [docs/developer-guide.md](./developer-guide.md) — Adding new family templates
+- [QUICK_START.md](../QUICK_START.md) — Getting started
