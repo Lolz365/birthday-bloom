@@ -398,7 +398,7 @@ For developers wanting to run this locally, clone, and fork:
 
 ### Software Requirements
 - Node.js `v18.0.0` or higher
-- npm `v9.0.0` or higher, or `bun` `v1.0.0`
+- npm `v9.0.0` or higher
 - Git
 
 ### Step-by-Step Local Deployment
@@ -410,8 +410,6 @@ For developers wanting to run this locally, clone, and fork:
 2. **Install local dependencies:**
    ```bash
    npm install
-   # Or using bun:
-   # bun install
    ```
 3. **Environment Setup:**
    ```bash
