@@ -7,60 +7,27 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "America/New_York"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     labels:
       - "dependencies"
     commit-message:
       prefix: "chore"
     groups:
-      react-ecosystem:
-        patterns:
-          - "react*"
-          - "@types/react*"
-          - "@hookform/*"
-          - "@tanstack/*"
-          - "recharts"
-        update-types:
-          - "minor"
-          - "patch"
       radix-ui:
         patterns:
           - "@radix-ui/*"
         update-types:
           - "minor"
           - "patch"
-      runtime-utilities:
-        patterns:
-          - "clsx"
-          - "class-variance-authority"
-          - "tailwind-merge"
-          - "tailwindcss-animate"
-          - "date-fns"
-          - "zod"
-          - "zustand"
-          - "next-themes"
-          - "sonner"
-          - "vaul"
-          - "cmdk"
-          - "input-otp"
-          - "canvas-confetti"
-        update-types:
-          - "minor"
-          - "patch"
-      ui-libraries:
-        patterns:
-          - "framer-motion"
-          - "lucide-react"
-          - "embla-carousel-react"
-        update-types:
-          - "minor"
-          - "patch"
-      linting:
+      linting-testing:
         patterns:
           - "eslint*"
           - "@eslint/*"
           - "typescript-eslint"
           - "globals"
+          - "@testing-library/*"
+          - "vitest*"
+          - "jsdom"
         update-types:
           - "minor"
           - "patch"
@@ -76,16 +43,14 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      testing:
+      all-other:
         patterns:
-          - "@testing-library/*"
-          - "vitest*"
-          - "jsdom"
+          - "*"
         update-types:
           - "minor"
           - "patch"
     ignore:
-      - dependency-name: "@types/node"
+      - dependency-name: "@types/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
