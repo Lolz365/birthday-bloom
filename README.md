@@ -101,7 +101,6 @@ Everything you need to get the most out of Birthday Bloom:
 
 ---
 
-
 ## 🔥 Why Birthday Bloom?
 
 Most website templates are static or simply transition between pages. **Birthday Bloom is a cinematic finite state machine.** It controls pacing, narrative tension, visual payoffs, and sound effects to simulate a movie-like experience inside the browser.
