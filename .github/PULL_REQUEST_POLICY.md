@@ -85,11 +85,26 @@ graph TD
    * **`pr-level:advanced`**: Large features or refactoring, `≤ 800` lines, `≤ 25` files.
    * **`pr-level:major`**: Broad changes, `> 800` lines or `> 25` files (triggers a warning to split the PR).
 
-2. **Change Type Labels (`type:*`)**:
-   Inferred from conventional commit prefixes in the PR title first (e.g. `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `ci`, `style`, `perf`). If no prefix is present, it falls back to path-based scoring heuristics.
+2. **Change Type Labels**:
+   Inferred from conventional commit prefixes in the PR title first (e.g. `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `ci`, `style`, `perf`). If no prefix is present, it falls back to path-based scoring heuristics. These map directly to the unified project labels:
+   * **`bug`**: Something isn't working or needs a fix.
+   * **`enhancement`**: New feature or request.
+   * **`documentation`**: Improvements or additions to documentation.
+   * **`refactor`**: Refactoring code style, file structure, or performance.
+   * **`chore`**: Routine tasks, maintenance, build tasks.
+   * **`test`**: Adding or updating tests.
+   * **`ci-cd`**: GitHub Actions, Vercel, Netlify, Docker configuration.
+   * **`style`**: Changes that do not affect the meaning of the code.
+   * **`performance`**: Performance regression or improvement.
 
-3. **Affected Scope/Area Labels (`area:*`)**:
-   Tags the PR based on the files touched (e.g., `area:frontend`, `area:core`, `area:customization`, `area:docs`, `area:ci-cd`, `area:tests`).
+3. **Affected Scope/Area Labels**:
+   Tags the PR based on the files touched:
+   * **`area:frontend`**: Changes to frontend/UI/UX components and styles.
+   * **`area:core`**: Changes to core business logic, store, or services.
+   * **`customization`**: Changes to templates, assets, or global configuration.
+   * **`documentation`**: Changes to documentation files.
+   * **`ci-cd`**: Changes to workflow configs or deployment setups.
+   * **`test`**: Changes to test files.
 
 4. **Real-Time Status Tracking (`status:*`)**:
    Labels update dynamically based on the PR's lifecycle stage:

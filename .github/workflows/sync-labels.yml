@@ -21,8 +21,8 @@ jobs:
         with:
           script: |
             const labels = [
-              // Standard & Specific categories
-              { name: "bug", color: "ee0701", description: "Something isn't working" },
+              // Standard & Specific categories (unified for both Issues and PRs)
+              { name: "bug", color: "ee0701", description: "Something isn't working or needs a fix" },
               { name: "enhancement", color: "a2eeef", description: "New feature or request" },
               { name: "documentation", color: "0075ca", description: "Improvements or additions to documentation" },
               { name: "performance", color: "cccccc", description: "Performance regression or improvement" },
@@ -32,8 +32,11 @@ jobs:
               { name: "customization", color: "bfd4f2", description: "Environment variables, templates, and asset customization" },
               { name: "refactor", color: "fef2c0", description: "Refactoring code style, file structure, or performance" },
               { name: "ci-cd", color: "fbca04", description: "GitHub Actions, Vercel, Netlify, Docker configuration" },
+              { name: "test", color: "bfdadc", description: "Adding or updating tests" },
+              { name: "chore", color: "cfd3d7", description: "Routine tasks, maintenance, build tasks" },
+              { name: "style", color: "bfd4f2", description: "Changes that do not affect the meaning of the code" },
 
-              // Issue Levels
+              // Issue Difficulty Levels
               { name: "level:beginner", color: "9fedab", description: "Good first issue, simple tasks" },
               { name: "level:intermediate", color: "fcf692", description: "Requires basic knowledge of React/Tailwind" },
               { name: "level:advanced", color: "ff9999", description: "Complex animation, state management, or performance tuning" },
@@ -45,17 +48,6 @@ jobs:
               { name: "pr-level:advanced", color: "ff9999", description: "Advanced PR: <=800 lines, <=25 files" },
               { name: "pr-level:major", color: "e11d21", description: "Major PR: >800 lines or >25 files - needs extra maintainer attention" },
 
-              // PR Types
-              { name: "type:feature", color: "a2eeef", description: "New feature or request" },
-              { name: "type:bugfix", color: "ee0701", description: "Something isn't working" },
-              { name: "type:docs", color: "0075ca", description: "Improvements or additions to documentation" },
-              { name: "type:refactor", color: "fef2c0", description: "Refactoring code style, file structure, or performance" },
-              { name: "type:chore", color: "cfd3d7", description: "Routine tasks, maintenance, build tasks" },
-              { name: "type:test", color: "bfdadc", description: "Adding or updating tests" },
-              { name: "type:ci", color: "fbca04", description: "GitHub Actions, Vercel, Netlify, Docker configuration" },
-              { name: "type:style", color: "bfd4f2", description: "Changes that do not affect the meaning of the code" },
-              { name: "type:performance", color: "cccccc", description: "Performance regression or improvement" },
-
               // PR Statuses
               { name: "status:draft", color: "cfd3d7", description: "Work in progress; not ready for review" },
               { name: "status:needs-review", color: "6bc5e8", description: "Waiting for reviewer response" },
@@ -65,13 +57,9 @@ jobs:
               { name: "status:merge-conflict", color: "e11d21", description: "PR has merge conflicts that must be resolved" },
               { name: "status:ci-failing", color: "ee0701", description: "PR build, lint, or tests are failing" },
 
-              // PR Areas
+              // PR Areas (Only unique frontend and core areas remain; others map to standard tags)
               { name: "area:frontend", color: "d4c5f9", description: "Changes to frontend/UI/UX components and styles" },
               { name: "area:core", color: "bfdadc", description: "Changes to core business logic, store, or services" },
-              { name: "area:customization", color: "c5def5", description: "Changes to templates, assets, or global configuration" },
-              { name: "area:docs", color: "0075ca", description: "Changes to documentation files" },
-              { name: "area:ci-cd", color: "fbca04", description: "Changes to workflow configs or deployment setups" },
-              { name: "area:tests", color: "fcf692", description: "Changes to test files" },
 
               // Contributor Statuses
               { name: "first-time-contributor", color: "c2e0c6", description: "First time contributing to this repository" },
@@ -83,12 +71,6 @@ jobs:
               { name: "resolution: invalid", color: "e4e669", description: "Not reproducible or not a bug" },
               { name: "resolution: wontfix", color: "ffffff", description: "Decided not to fix or implement" },
               { name: "resolution: solved-by-config", color: "c5def5", description: "Resolved by configuration / env change" },
-
-              // Scopes
-              { name: "scope: animation", color: "bfdadc", description: "Framer Motion, transition animations" },
-              { name: "scope: core", color: "d4c5f9", description: "Zustand state store, logic engines" },
-              { name: "scope: ui-ux", color: "fef2c0", description: "Responsive layouts, visual styling" },
-              { name: "scope: assets", color: "e99695", description: "Confetti, emojis, sound, images" },
 
               // Work Statuses
               { name: "status: triage", color: "6bc5e8", description: "Needs triage review" },
@@ -130,10 +112,21 @@ jobs:
               }
             }
 
-            // Delete obsolete numbered level labels
+            // Delete obsolete level and duplicate type/area/scope labels
             const labelsToDelete = [
+              // Obsolete numbered levels
               "level 1", "level 2", "level 3", "level 4", "level 5", "level 6", "level 7",
-              "level 8", "level 9", "level 10", "level 11", "level 12"
+              "level 8", "level 9", "level 10", "level 11", "level 12",
+              
+              // Duplicate PR type labels
+              "type:feature", "type:bugfix", "type:docs", "type:refactor", "type:chore",
+              "type:test", "type:ci", "type:style", "type:performance",
+              
+              // Duplicate PR area labels
+              "area:customization", "area:docs", "area:ci-cd", "area:tests",
+              
+              // Obsolete scope labels
+              "scope: animation", "scope: core", "scope: ui-ux", "scope: assets"
             ];
 
             for (const labelName of labelsToDelete) {
@@ -152,4 +145,5 @@ jobs:
                 }
               }
             }
+
 
