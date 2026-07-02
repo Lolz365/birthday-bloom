@@ -46,3 +46,24 @@ body:
         - Developers contributing to the codebase
         - Deployers / DevOps
         - Everyone
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Severity / Triage Level
+      description: Select the impact or priority level of this issue.
+      options:
+        - "Level 1: Blocker (Crash, data loss, security vulnerability)"
+        - "Level 2: Critical (Core feature broken, major UI crash)"
+        - "Level 3: Major (Main element broken, significant animation lag)"
+        - "Level 4: Moderate (Secondary feature glitch, layout alignment issue)"
+        - "Level 5: Minor (Small UI glitch, console warning)"
+        - "Level 6: Cosmetic (Typo, theme styling polish, visual improvement)"
+        - "Level 7: Enhancement (New custom relationship template or feature idea)"
+        - "Level 8: Refactor (Code smell, tech debt, directory cleanup)"
+        - "Level 9: Documentation (FAQ, ENV_GUIDE, readme update)"
+        - "Level 10: Customization (Creating new templates, custom emoji set configs)"
+        - "Level 11: Accessibility (Aria-label, keyboard navigation, screen reader fix)"
+        - "Level 12: CI/CD & Security (Build warning, GitHub Action improvement)"
+    validations:
+      required: true
