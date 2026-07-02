@@ -46,6 +46,17 @@
 - [ ] I have added/updated tests if applicable
 - [ ] My commits are clean and descriptive
 
+## Reviewer & Admin Checklist (To be completed by Maintainer/Owner)
+
+> [!IMPORTANT]
+> **Strict Merge Policy**: Pull requests must **not** be merged automatically or without explicit approval from a repository maintainer or administrator.
+
+- [ ] Approved by repository owner or administrator
+- [ ] Code review completed and all discussions resolved
+- [ ] Status checks (Lint, TSC type check, Build, Tests) passed
+- [ ] Security audit completed (no exposed secrets, safe HTML/JS execution)
+- [ ] Merged manually by authorized administrator
+
 ## Additional Context
 
 <!-- Any other information reviewers should know. -->
