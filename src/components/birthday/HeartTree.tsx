@@ -194,7 +194,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 animate={{ scale: stage >= 3 ? leaf.scale : 0 }}
                                 whileHover={{ scale: leaf.scale * 1.2, zIndex: 50 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10, delay: 3 + leaf.delay }}
-                                // FIX: use transformOrigin instead of style.transform so Framer Motion's scale animation is not overridden
                                 style={{ transformOrigin: `${leaf.cx}px ${leaf.cy}px`, cursor: 'pointer' }}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -205,7 +204,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 }}
                             >
                                 {hasPhoto ? (
-                                    // FIX: translate moved into child <g> so position is preserved
                                     <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
                                         <rect x="-14" y="-14" width="28" height="32" fill="white" rx="2" className="drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]" />
                                         <image href={photos[i % photos.length]} x="-12" y="-12" width="24" height="24" preserveAspectRatio="xMidYMid slice" />
@@ -213,7 +211,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                         <circle cx="0" cy="15" r="1.5" fill={primaryColor} opacity="0.5" />
                                     </g>
                                 ) : (
-                                    // FIX: translate moved into child <g> so position is preserved
                                     <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
                                         <path
                                             d={heartPath}
