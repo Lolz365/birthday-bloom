@@ -104,8 +104,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         { cx: 260, cy: 90, scale: 0.7, delay: 0.4 },
     ];
 
-    // Fixed heart path — clean symmetric shape
-    const heartPath = "M0,-3 Q-4,-9 -9,-4 Q-14,1 -4,10 L0,14 L4,10 Q14,1 9,-4 Q4,-9 0,-3 Z";
+    const heartPath = "M0,-5 Q-5,-10 -10,-5 Q-15,0 -5,10 L0,15 L5,10 Q15,0 10,-5 Q5,-10 0,-5 Z";
 
     return (
         <div className="relative w-full max-w-[500px] aspect-square mx-auto overflow-hidden px-4 mb-20" style={{ perspective: "1000px" }}>
@@ -125,8 +124,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
 
                 <svg 
                     viewBox="0 0 300 300" 
-                    className="w-full h-full relative z-10 drop-shadow-2xl cursor-pointer"
-                    style={{ overflow: "visible" }}
+                    className="w-full h-full relative z-10 overflow-visible drop-shadow-2xl cursor-pointer"
                     onClick={() => {
                         if (stage >= 3) {
                             fireStars();
@@ -151,7 +149,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                         initial={{ scaleY: 0 }}
                         animate={{ scaleY: stage >= 1 ? 1 : 0 }}
                         transition={{ duration: 1.5, ease: "easeOut" }}
-                        style={{ transformOrigin: "150px 300px" }}
+                        style={{ originY: "bottom" }}
                     />
 
                     {/* Main Branches */}
@@ -184,7 +182,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                         />
                     ))}
 
-                    {/* Interactive Hearts & Photos */}
+                    {/* Interactive Photos & Messages */}
                     {heartLeaves.map((leaf, i) => {
                         const hasPhoto = photos.length > 0 && i < photos.length;
                         const quote = quotesPool[i % quotesPool.length];
@@ -194,12 +192,10 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 key={`leaf-${i}`}
                                 initial={{ scale: 0 }}
                                 animate={{ scale: stage >= 3 ? leaf.scale : 0 }}
-                                whileHover={{ scale: leaf.scale * 1.2 }}
+                                whileHover={{ scale: leaf.scale * 1.2, zIndex: 50 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10, delay: 3 + leaf.delay }}
-                                style={{
-                                    transformOrigin: `${leaf.cx}px ${leaf.cy}px`,
-                                    cursor: 'pointer',
-                                }}
+                                // FIX: use transformOrigin instead of style.transform so Framer Motion's scale animation is not overridden
+                                style={{ transformOrigin: `${leaf.cx}px ${leaf.cy}px`, cursor: 'pointer' }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setActiveMessage(quote);
@@ -209,6 +205,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 }}
                             >
                                 {hasPhoto ? (
+                                    // FIX: translate moved into child <g> so position is preserved
                                     <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
                                         <rect x="-14" y="-14" width="28" height="32" fill="white" rx="2" className="drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]" />
                                         <image href={photos[i % photos.length]} x="-12" y="-12" width="24" height="24" preserveAspectRatio="xMidYMid slice" />
@@ -216,6 +213,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                         <circle cx="0" cy="15" r="1.5" fill={primaryColor} opacity="0.5" />
                                     </g>
                                 ) : (
+                                    // FIX: translate moved into child <g> so position is preserved
                                     <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
                                         <path
                                             d={heartPath}
