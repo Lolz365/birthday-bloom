@@ -80,6 +80,7 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 | [FAQ.md](../FAQ.md) | Frequently asked questions |
 | [SUPPORT.md](../SUPPORT.md) | Support and contact |
 | [SECURITY.md](../SECURITY.md) | Security policy |
+| [PULL_REQUEST_POLICY.md](../.github/PULL_REQUEST_POLICY.md) | Strict PR review and merge policy |
 | [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) | Community standards |
 | [LICENSE](../LICENSE) | MIT License |
 

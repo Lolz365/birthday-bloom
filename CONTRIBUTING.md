@@ -145,6 +145,8 @@ Keep the first line under 72 characters. Reference issues in the body if applica
 
 ## Pull Request Process
 
+We follow a strict, manually reviewed pull request process to maintain high codebase standards. Pull requests are never merged automatically. For details on merge criteria, approvals, and administrator reviews, please see our [.github/PULL_REQUEST_POLICY.md](.github/PULL_REQUEST_POLICY.md).
+
 1. **Open early, even as a draft** — feedback is welcome
 2. **Link the issue** your PR addresses
 3. **Describe what changed and why**
