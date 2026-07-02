@@ -19,18 +19,18 @@ jobs:
             const issue = context.payload.issue;
             const body = issue.body || '';
 
-            // Search for "difficulty: beginner|intermediate|advanced" in the issue form markdown body
-            const match = body.match(/difficulty:\s*(beginner|intermediate|advanced)/i);
+            // Search for "level: beginner|intermediate|advanced" in the issue form markdown body
+            const match = body.match(/level:\s*(beginner|intermediate|advanced)/i);
             if (match) {
-              const difficultyVal = match[1].toLowerCase();
-              const labelToAdd = `difficulty: ${difficultyVal}`;
-              console.log(`Found difficulty selection: ${labelToAdd}`);
+              const levelVal = match[1].toLowerCase();
+              const labelToAdd = `level:${levelVal}`;
+              console.log(`Found level selection: ${labelToAdd}`);
               
               // Get current labels
               const currentLabels = issue.labels.map(l => l.name);
               
-              // Remove old difficulty labels if they exist (to handle updates during issue edits)
-              const labelsToRemove = currentLabels.filter(name => name.startsWith('difficulty: ') && name !== labelToAdd);
+              // Remove old difficulty/level labels if they exist (to handle updates during issue edits)
+              const labelsToRemove = currentLabels.filter(name => (name.startsWith('difficulty: ') || name.startsWith('level:')) && name !== labelToAdd);
               
               for (const oldLabel of labelsToRemove) {
                 console.log(`Removing outdated difficulty label: ${oldLabel}`);

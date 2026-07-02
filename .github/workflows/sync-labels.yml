@@ -33,10 +33,49 @@ jobs:
               { name: "refactor", color: "fef2c0", description: "Refactoring code style, file structure, or performance" },
               { name: "ci-cd", color: "fbca04", description: "GitHub Actions, Vercel, Netlify, Docker configuration" },
 
-              // Difficulty Levels
-              { name: "difficulty: beginner", color: "9fedab", description: "Good first issue, simple tasks" },
-              { name: "difficulty: intermediate", color: "fcf692", description: "Requires basic knowledge of React/Tailwind" },
-              { name: "difficulty: advanced", color: "ff9999", description: "Complex animation, state management, or performance tuning" },
+              // Issue Levels
+              { name: "level:beginner", color: "9fedab", description: "Good first issue, simple tasks" },
+              { name: "level:intermediate", color: "fcf692", description: "Requires basic knowledge of React/Tailwind" },
+              { name: "level:advanced", color: "ff9999", description: "Complex animation, state management, or performance tuning" },
+
+              // PR Complexity Levels
+              { name: "pr-level:trivial", color: "c5def5", description: "Trivial PR: typo fixes, <10 lines, 1 file" },
+              { name: "pr-level:beginner", color: "9fedab", description: "Beginner PR: <50 lines, <=3 files" },
+              { name: "pr-level:intermediate", color: "fcf692", description: "Intermediate PR: <=300 lines, <=10 files" },
+              { name: "pr-level:advanced", color: "ff9999", description: "Advanced PR: <=800 lines, <=25 files" },
+              { name: "pr-level:major", color: "e11d21", description: "Major PR: >800 lines or >25 files - needs extra maintainer attention" },
+
+              // PR Types
+              { name: "type:feature", color: "a2eeef", description: "New feature or request" },
+              { name: "type:bugfix", color: "ee0701", description: "Something isn't working" },
+              { name: "type:docs", color: "0075ca", description: "Improvements or additions to documentation" },
+              { name: "type:refactor", color: "fef2c0", description: "Refactoring code style, file structure, or performance" },
+              { name: "type:chore", color: "cfd3d7", description: "Routine tasks, maintenance, build tasks" },
+              { name: "type:test", color: "bfdadc", description: "Adding or updating tests" },
+              { name: "type:ci", color: "fbca04", description: "GitHub Actions, Vercel, Netlify, Docker configuration" },
+              { name: "type:style", color: "bfd4f2", description: "Changes that do not affect the meaning of the code" },
+              { name: "type:performance", color: "cccccc", description: "Performance regression or improvement" },
+
+              // PR Statuses
+              { name: "status:draft", color: "cfd3d7", description: "Work in progress; not ready for review" },
+              { name: "status:needs-review", color: "6bc5e8", description: "Waiting for reviewer response" },
+              { name: "status:changes-requested", color: "e11d21", description: "Reviewers requested changes to be made" },
+              { name: "status:approved", color: "006b75", description: "PR has been approved by reviewers" },
+              { name: "status:ready-to-merge", color: "9fedab", description: "Approved, all checks passing, and mergeable" },
+              { name: "status:merge-conflict", color: "e11d21", description: "PR has merge conflicts that must be resolved" },
+              { name: "status:ci-failing", color: "ee0701", description: "PR build, lint, or tests are failing" },
+
+              // PR Areas
+              { name: "area:frontend", color: "d4c5f9", description: "Changes to frontend/UI/UX components and styles" },
+              { name: "area:core", color: "bfdadc", description: "Changes to core business logic, store, or services" },
+              { name: "area:customization", color: "c5def5", description: "Changes to templates, assets, or global configuration" },
+              { name: "area:docs", color: "0075ca", description: "Changes to documentation files" },
+              { name: "area:ci-cd", color: "fbca04", description: "Changes to workflow configs or deployment setups" },
+              { name: "area:tests", color: "fcf692", description: "Changes to test files" },
+
+              // Contributor Statuses
+              { name: "first-time-contributor", color: "c2e0c6", description: "First time contributing to this repository" },
+              { name: "returning-contributor", color: "a2eeef", description: "Returned contributor with prior merged PRs" },
 
               // Solutions / Resolutions
               { name: "resolution: fixed", color: "006b75", description: "Resolved by code change" },

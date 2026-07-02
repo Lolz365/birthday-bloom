@@ -32,14 +32,14 @@ body:
       required: true
 
   - type: dropdown
-    id: difficulty
+    id: level
     attributes:
       label: Difficulty Level
       description: Select the estimated difficulty level.
       options:
-        - "difficulty: beginner (Good first issue, simple CSS/HTML tweaks)"
-        - "difficulty: intermediate (Standard React components and state)"
-        - "difficulty: advanced (Complex animations, core architecture changes)"
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
     validations:
       required: true
 
