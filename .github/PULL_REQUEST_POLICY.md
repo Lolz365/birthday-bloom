@@ -54,8 +54,56 @@ Since branch protection rules cannot be configured directly via local codebase f
 
 ---
 
-## 3. Pull Request Labels and Automation
+## 3. Pull Request Automation System
 
-Bots automatically apply labels to help triage incoming pull requests, but these do **not** bypass the merge rules:
-- **Path-Based Labels**: PRs modifying documentation get `documentation`; configuration files get `ci-cd` or `customization`; core refactoring gets `refactor`.
-- **Branch-Based Labels**: PRs created from branches prefixed with `feat/` automatically get `enhancement`; `fix/` branches get `bug`; `docs/` get `documentation`.
+An automated triage system processes every pull request to enforce quality controls, classify changes, and provide real-time status feedback.
+
+### Automation Workflow Architecture
+The system is configuration-driven and runs a native Node.js agent to communicate with the GitHub REST API:
+
+```mermaid
+graph TD
+    Event[GitHub Webhook Event] -->|Trigger| Workflow[PR Automation Workflow]
+    Config[PR Automation Config] -->|"Load rules"| Script[PR Automation Script]
+    Workflow -->|Execute| Script[PR Automation Script]
+    
+    Script -->|"Fetch PR and files"| GHAPI[GitHub REST API]
+    Script -->|"Check CI and reviews"| GHAPI
+    Script -->|"Query author history"| GHAPI
+    Script -->|"Sync and apply labels"| GHAPI
+    Script -->|"Post feedback"| GHAPI
+```
+*Figure: The execution flow and API interactions of the PR automation system.*
+
+### Automation Rules & Taxonomy
+
+1. **Complexity Levels (`pr-level:*`)**:
+   Automatically computed based on total lines modified (`additions + deletions`) and files changed:
+   * **`pr-level:trivial`**: Typo fixes, `< 10` lines, `1` file.
+   * **`pr-level:beginner`**: Simple patches, `< 50` lines, `≤ 3` files.
+   * **`pr-level:intermediate`**: Standard component edits, `≤ 300` lines, `≤ 10` files.
+   * **`pr-level:advanced`**: Large features or refactoring, `≤ 800` lines, `≤ 25` files.
+   * **`pr-level:major`**: Broad changes, `> 800` lines or `> 25` files (triggers a warning to split the PR).
+
+2. **Change Type Labels (`type:*`)**:
+   Inferred from conventional commit prefixes in the PR title first (e.g. `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `ci`, `style`, `perf`). If no prefix is present, it falls back to path-based scoring heuristics.
+
+3. **Affected Scope/Area Labels (`area:*`)**:
+   Tags the PR based on the files touched (e.g., `area:frontend`, `area:core`, `area:customization`, `area:docs`, `area:ci-cd`, `area:tests`).
+
+4. **Real-Time Status Tracking (`status:*`)**:
+   Labels update dynamically based on the PR's lifecycle stage:
+   * **`status:draft`**: PR is in draft state.
+   * **`status:needs-review`**: Ready for maintainers to review.
+   * **`status:changes-requested`**: Blocked on review feedback changes.
+   * **`status:approved`**: Approved by reviewers, waiting on checks/mergeability.
+   * **`status:ready-to-merge`**: Fully approved, passing CI, and conflict-free.
+   * **`status:merge-conflict`**: Has conflicts with `main` that must be resolved.
+   * **`status:ci-failing`**: The CI quality suite has failing checks.
+
+5. **Contributor Context**:
+   Applies **`first-time-contributor`** if the author has no prior merged PRs, or **`returning-contributor`** if they do.
+
+6. **Automated Feedback Dashboard**:
+   A bot comment is posted and updated in-place on every PR, listing the change metrics table, flagging critical warnings (large PR, unrelated areas, merge conflicts, failing CI), and detailing the next-step instructions.
+
