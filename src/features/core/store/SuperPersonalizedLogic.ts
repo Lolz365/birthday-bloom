@@ -27,6 +27,12 @@ export const getHighlySpecificLetter = (
   if (relationship === 'sibling') {
     return EMOTIONAL_LETTERS.sibling;
   }
+  if (relationship === 'brother') {
+    return EMOTIONAL_LETTERS.brother;
+  }
+  if (relationship === 'sister') {
+    return EMOTIONAL_LETTERS.sister;
+  }
 
   // 4. Colleague / Mentor
   if (relationship === 'colleague') return EMOTIONAL_LETTERS.colleague;
