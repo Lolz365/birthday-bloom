@@ -194,7 +194,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 animate={{ scale: stage >= 3 ? leaf.scale : 0 }}
                                 whileHover={{ scale: leaf.scale * 1.2, zIndex: 50 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10, delay: 3 + leaf.delay }}
-                                style={{ transform: `translate(${leaf.cx}px, ${leaf.cy}px)`, cursor: 'pointer' }}
+                                style={{ transformOrigin: `${leaf.cx}px ${leaf.cy}px`, cursor: 'pointer' }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setActiveMessage(quote);
@@ -204,21 +204,23 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 }}
                             >
                                 {hasPhoto ? (
-                                    <g>
+                                    <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
                                         <rect x="-14" y="-14" width="28" height="32" fill="white" rx="2" className="drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]" />
                                         <image href={photos[i % photos.length]} x="-12" y="-12" width="24" height="24" preserveAspectRatio="xMidYMid slice" />
                                         <rect x="-14" y="-14" width="28" height="32" fill="none" stroke={primaryColor} strokeWidth="0.5" opacity="0.2" rx="2" />
                                         <circle cx="0" cy="15" r="1.5" fill={primaryColor} opacity="0.5" />
                                     </g>
                                 ) : (
-                                    <path
-                                        d={heartPath}
-                                        fill={primaryColor}
-                                        filter={stage === 4 ? "url(#treeGlow)" : ""}
-                                        style={{
-                                            animation: stage === 4 ? `pulse-scale 3s ease-in-out infinite alternate` : "none"
-                                        }}
-                                    />
+                                    <g transform={`translate(${leaf.cx}, ${leaf.cy})`}>
+                                        <path
+                                            d={heartPath}
+                                            fill={primaryColor}
+                                            filter={stage === 4 ? "url(#treeGlow)" : ""}
+                                            style={{
+                                                animation: stage === 4 ? `pulse-scale 3s ease-in-out infinite alternate` : "none"
+                                            }}
+                                        />
+                                    </g>
                                 )}
                             </motion.g>
                         );
