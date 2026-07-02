@@ -1,0 +1,62 @@
+name: Deployment & CI-CD Issue
+description: Report build errors, package manager issues, or problems deploying to Vercel/Netlify.
+labels: [ci-cd]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please help us identify any errors during build, static compilation, or deployment.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Deployment Platform / Host
+      options:
+        - Vercel (Recommended)
+        - Netlify
+        - GitHub Pages
+        - Docker Container
+        - Self-hosted (PM2, static server)
+        - Local Node environment
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_log
+    attributes:
+      label: Build Error Log
+      description: Paste any relevant terminal logs, build traces, or console errors.
+      placeholder: npm ERR! build failed...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Severity / Triage Level
+      description: Select the impact or priority level of this issue.
+      options:
+        - "Level 1: Blocker (Crash, data loss, security vulnerability)"
+        - "Level 2: Critical (Core feature broken, major UI crash)"
+        - "Level 3: Major (Main element broken, significant animation lag)"
+        - "Level 4: Moderate (Secondary feature glitch, layout alignment issue)"
+        - "Level 5: Minor (Small UI glitch, console warning)"
+        - "Level 6: Cosmetic (Typo, theme styling polish, visual improvement)"
+        - "Level 7: Enhancement (New custom relationship template or feature idea)"
+        - "Level 8: Refactor (Code smell, tech debt, directory cleanup)"
+        - "Level 9: Documentation (FAQ, ENV_GUIDE, readme update)"
+        - "Level 10: Customization (Creating new templates, custom emoji set configs)"
+        - "Level 11: Accessibility (Aria-label, keyboard navigation, screen reader fix)"
+        - "Level 12: CI/CD & Security (Build warning, GitHub Action improvement)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I verified that the local build runs successfully with npm run build
+        - label: I checked if the Node.js version is 20 or higher
+          required: true
