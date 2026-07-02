@@ -58,4 +58,4 @@ Since branch protection rules cannot be configured directly via local codebase f
 
 Bots automatically apply labels to help triage incoming pull requests, but these do **not** bypass the merge rules:
 - **Path-Based Labels**: PRs modifying documentation get `documentation`; configuration files get `ci-cd` or `customization`; core refactoring gets `refactor`.
-- **Branch-Based Labels**: PRs created from branches prefixed with `feat/` automatically get `enhancement` and `level 7`; `fix/` branches get `bug` and `level 3`; `docs/` get `documentation` and `level 9`.
+- **Branch-Based Labels**: PRs created from branches prefixed with `feat/` automatically get `enhancement`; `fix/` branches get `bug`; `docs/` get `documentation`.

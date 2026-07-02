@@ -32,22 +32,16 @@ jobs:
             
             if (branchName.startsWith('feat/')) {
               labelsToAdd.add('enhancement');
-              labelsToAdd.add('level 7'); // Enhancement level
             } else if (branchName.startsWith('fix/')) {
               labelsToAdd.add('bug');
-              labelsToAdd.add('level 3'); // Major / standard bug level
             } else if (branchName.startsWith('docs/')) {
               labelsToAdd.add('documentation');
-              labelsToAdd.add('level 9'); // Documentation level
             } else if (branchName.startsWith('perf/')) {
               labelsToAdd.add('performance');
-              labelsToAdd.add('level 5'); // Minor / optimization level
             } else if (branchName.startsWith('refactor/')) {
               labelsToAdd.add('refactor');
-              labelsToAdd.add('level 8'); // Refactor level
             } else if (branchName.startsWith('chore/') || branchName.startsWith('ci/')) {
               labelsToAdd.add('ci-cd');
-              labelsToAdd.add('level 12'); // CI/CD level
             }
 
             if (labelsToAdd.size > 0) {
