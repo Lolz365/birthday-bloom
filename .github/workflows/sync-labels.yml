@@ -129,3 +129,27 @@ jobs:
                 }
               }
             }
+
+            // Delete obsolete numbered level labels
+            const labelsToDelete = [
+              "level 1", "level 2", "level 3", "level 4", "level 5", "level 6", "level 7",
+              "level 8", "level 9", "level 10", "level 11", "level 12"
+            ];
+
+            for (const labelName of labelsToDelete) {
+              try {
+                await github.rest.issues.deleteLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName
+                });
+                console.log(`Successfully deleted obsolete label: ${labelName}`);
+              } catch (error) {
+                if (error.status !== 404) {
+                  console.error(`Failed to delete label ${labelName}:`, error);
+                } else {
+                  console.log(`Label ${labelName} already deleted or not found.`);
+                }
+              }
+            }
+
