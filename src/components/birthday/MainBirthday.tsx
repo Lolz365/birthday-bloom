@@ -30,13 +30,12 @@ import { GlitchEffect } from "./GlitchEffect";
 import { VideoGallery } from "./VideoGallery";
 import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
 import { getHighlySpecificLetter, getBigWishes } from "@/features/core/store/SuperPersonalizedLogic";
-import { Car, Music, Code, Gamepad2, Palmtree, Camera, Pizza, Dumbbell, Rocket, Heart, Trophy, Star, LucideIcon } from "lucide-react";
+import { Car, Music, Code,Palmtree, Camera, Pizza, Dumbbell, Rocket, Heart, Trophy, Star, LucideIcon } from "lucide-react";
 
 const interestIcons: Record<string, LucideIcon> = {
   car: Car,
   music: Music,
   coding: Code,
-  gaming: Gamepad2,
   nature: Palmtree,
   travel: Camera,
   food: Pizza,
