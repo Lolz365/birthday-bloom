@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // 1. Validate Environment
 const token = process.env.GITHUB_TOKEN;
@@ -22,12 +22,7 @@ if (!eventPath) {
 }
 
 const event = JSON.parse(fs.readFileSync(eventPath, 'utf8'));
-const pullRequest = event.pull_request;
-if (!pullRequest) {
-  console.error("Error: No pull_request object found in the event payload.");
-  process.exit(0); // Exit gracefully if not a PR event
-}
-const pullNumber = pullRequest.number;
+const eventName = process.env.GITHUB_EVENT_NAME || 'pull_request';
 
 // 2. Load Configuration
 const configPath = path.join(process.cwd(), '.github/pr-automation.config.json');
@@ -65,13 +60,9 @@ async function apiRequest(apiPath, method = 'GET', body = null) {
 
 function globToRegex(pattern) {
   let p = pattern;
-  // Replace globstar '**' with temporary token
   p = p.replace(/\*\*/g, '___GLOBSTAR___');
-  // Escape regex characters except the token and single '*'
   p = p.replace(/[.+^${}()|[\]\\]/g, '\\$&');
-  // Replace single star '*' with '[^/]*'
   p = p.replace(/\*/g, '[^/]*');
-  // Replace globstar token with '.*' (allow matching slashes)
   p = p.replace(/___GLOBSTAR___/g, '.*');
   return new RegExp('^' + p + '$');
 }
@@ -80,11 +71,224 @@ function matchGlob(filePath, pattern) {
   return globToRegex(pattern).test(filePath);
 }
 
-// 4. Main execution
-async function run() {
+function getGreeting() {
+  const hour = new Date().getUTCHours();
+  if (hour >= 5 && hour < 12) {
+    return "morning 🌅";
+  } else if (hour >= 12 && hour < 17) {
+    return "afternoon ☀️";
+  } else if (hour >= 17 && hour < 22) {
+    return "evening 🌌";
+  } else {
+    return "night 🌙";
+  }
+}
+
+function getTurnaroundEstimate(complexity) {
+  switch (complexity) {
+    case 'pr-level:trivial':
+      return "⚡ **5 - 15 minutes** (Trivial change, quick review)";
+    case 'pr-level:beginner':
+      return "⏰ **30 minutes - 1 hour** (Minor change, single reviewer)";
+    case 'pr-level:intermediate':
+      return "📅 **1 - 2 hours** (Standard change, standard review)";
+    case 'pr-level:advanced':
+      return "🔍 **1 - 2 days** (Thorough review required)";
+    case 'pr-level:major':
+      return "🚨 **2 - 3 days** (Major architectural update, multiple maintainers)";
+    default:
+      return "📅 **Standard review time**";
+  }
+}
+
+// 4. Scheduled Reminder Mode
+async function runReminderMode() {
+  console.log("Running in Scheduled PR Inactivity / Reminder Mode...");
+  
+  let openPRs = [];
+  try {
+    openPRs = await apiRequest(`/repos/${owner}/${repo}/pulls?state=open&per_page=100`);
+  } catch (error) {
+    console.error("Failed to fetch open pull requests:", error);
+    return;
+  }
+  
+  console.log(`Found ${openPRs.length} open pull requests to analyze.`);
+  
+  const staleThresholdMs = 72 * 60 * 60 * 1000; // 72 hours (3 days)
+  const botCooldownMs = 72 * 60 * 60 * 1000;    // 72 hours to prevent duplicate pings
+  
+  for (const pr of openPRs) {
+    const pullNumber = pr.number;
+    const author = pr.user.login;
+    const isDraft = pr.draft || false;
+    
+    if (isDraft) {
+      console.log(`PR #${pullNumber} is a draft. Skipping.`);
+      continue;
+    }
+    
+    console.log(`Analyzing PR #${pullNumber} by @${author}...`);
+    
+    let commits = [];
+    let comments = [];
+    let reviewComments = [];
+    let reviews = [];
+    
+    try {
+      commits = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}/commits?per_page=100`);
+      comments = await apiRequest(`/repos/${owner}/${repo}/issues/${pullNumber}/comments?per_page=100`);
+      reviewComments = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}/comments?per_page=100`);
+      reviews = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}/reviews?per_page=100`);
+    } catch (error) {
+      console.error(`Failed to fetch history for PR #${pullNumber}:`, error.message);
+      continue;
+    }
+    
+    const humanActivities = [];
+    
+    // Add PR creation time
+    humanActivities.push({
+      type: 'creation',
+      user: author,
+      date: new Date(pr.created_at)
+    });
+    
+    // Commits
+    for (const commit of commits) {
+      const commitAuthor = commit.commit.author.name;
+      const commitDate = commit.commit.committer.date || commit.commit.author.date;
+      if (commitDate) {
+        humanActivities.push({
+          type: 'commit',
+          user: commit.author ? commit.author.login : commitAuthor,
+          date: new Date(commitDate)
+        });
+      }
+    }
+    
+    // Issue Comments
+    let lastBotReminderTime = 0;
+    for (const comment of comments) {
+      const isBot = comment.user && (comment.user.type === 'Bot' || comment.user.login.includes('[bot]') || comment.user.login === 'github-actions');
+      if (isBot) {
+        if (comment.body && comment.body.includes('<!-- pr-automation-stale-ping -->')) {
+          const reminderTime = new Date(comment.created_at).getTime();
+          if (reminderTime > lastBotReminderTime) {
+            lastBotReminderTime = reminderTime;
+          }
+        }
+        continue;
+      }
+      humanActivities.push({
+        type: 'comment',
+        user: comment.user.login,
+        date: new Date(comment.created_at)
+      });
+    }
+    
+    // Review Comments
+    for (const comment of reviewComments) {
+      const isBot = comment.user && (comment.user.type === 'Bot' || comment.user.login.includes('[bot]') || comment.user.login === 'github-actions');
+      if (isBot) continue;
+      humanActivities.push({
+        type: 'review_comment',
+        user: comment.user.login,
+        date: new Date(comment.created_at)
+      });
+    }
+    
+    // Reviews
+    for (const review of reviews) {
+      const isBot = review.user && (review.user.type === 'Bot' || review.user.login.includes('[bot]') || review.user.login === 'github-actions');
+      if (isBot) continue;
+      humanActivities.push({
+        type: 'review',
+        user: review.user.login,
+        date: new Date(review.submitted_at)
+      });
+    }
+    
+    // Sort to find the absolute latest human action
+    humanActivities.sort((a, b) => b.date.getTime() - a.date.getTime());
+    const latestActivity = humanActivities[0];
+    const idleTimeMs = Date.now() - latestActivity.date.getTime();
+    
+    console.log(`PR #${pullNumber} - Idle time: ${(idleTimeMs / (1000 * 60 * 60)).toFixed(1)} hours. Last human action: '${latestActivity.type}' by @${latestActivity.user} on ${latestActivity.date.toISOString()}.`);
+    
+    if (idleTimeMs > staleThresholdMs) {
+      const cooldownElapsedMs = Date.now() - lastBotReminderTime;
+      if (lastBotReminderTime > 0 && cooldownElapsedMs < botCooldownMs) {
+        console.log(`PR #${pullNumber} is stale but a reminder was posted recently (${(cooldownElapsedMs / (1000 * 60 * 60)).toFixed(1)} hours ago). Skipping.`);
+        continue;
+      }
+      
+      const prLabels = pr.labels.map(l => l.name);
+      let reminderMessage = '';
+      
+      if (prLabels.includes('status:changes-requested')) {
+        reminderMessage = `<!-- pr-automation-stale-ping -->
+### 😴 Inactivity Notice: Pending Updates
+
+Hi @${author}, it looks like this PR has had changes requested but has not received updates or responses in the last 3 days. 
+
+Could you please address the feedback from reviewers or let us know if you need assistance? We're eager to help get this merged! 🌸`;
+      } else if (prLabels.includes('status:needs-review')) {
+        reminderMessage = `<!-- pr-automation-stale-ping -->
+### 😴 Inactivity Notice: Pending Review
+
+Hi @${author}, and hi maintainers! This pull request has been waiting for review for over 3 days. 
+
+Could a maintainer or designated reviewer please take a look at the changes when you have a moment? Thank you! 🌟`;
+      } else {
+        reminderMessage = `<!-- pr-automation-stale-ping -->
+### 😴 Inactivity Notice
+
+Friendly reminder: this pull request has had no human activity in the last 3 days. Let's work together to complete the review and merge these changes! 💻`;
+      }
+      
+      console.log(`PR #${pullNumber} is stale! Posting reminder comment...`);
+      try {
+        await apiRequest(`/repos/${owner}/${repo}/issues/${pullNumber}/comments`, 'POST', {
+          body: reminderMessage
+        });
+      } catch (error) {
+        console.error(`Failed to post reminder comment for PR #${pullNumber}:`, error.message);
+      }
+    } else {
+      console.log(`PR #${pullNumber} is active. No action required.`);
+    }
+  }
+}
+
+// 5. Event-Driven PR Automation Mode
+async function runPRMode() {
+  let pullNumber = null;
+  if (event.pull_request) {
+    pullNumber = event.pull_request.number;
+  } else if (event.workflow_run) {
+    console.log("Triggered by workflow_run event. Locating associated Pull Request...");
+    if (event.workflow_run.pull_requests && event.workflow_run.pull_requests.length > 0) {
+      pullNumber = event.workflow_run.pull_requests[0].number;
+    } else {
+      const headBranch = event.workflow_run.head_branch;
+      const headOwner = event.workflow_run.head_repository ? event.workflow_run.head_repository.owner.login : owner;
+      console.log(`Querying open PRs for head ${headOwner}:${headBranch}...`);
+      const prs = await apiRequest(`/repos/${owner}/${repo}/pulls?state=open&head=${headOwner}:${headBranch}`);
+      if (prs && prs.length > 0) {
+        pullNumber = prs[0].number;
+      }
+    }
+  }
+
+  if (!pullNumber) {
+    console.log("Could not resolve pull request number for this event. Exiting gracefully.");
+    process.exit(0);
+  }
+
   console.log(`Processing PR #${pullNumber} in ${owner}/${repo}...`);
 
-  // A. Fetch current detailed PR info (webhook payload might be partial/stale)
+  // A. Fetch current detailed PR info
   const pr = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}`);
   const additions = pr.additions || 0;
   const deletions = pr.deletions || 0;
@@ -95,17 +299,15 @@ async function run() {
   const draft = pr.draft || false;
   const author = pr.user.login;
   
-  // Note: mergeable can be true, false, or null (if calculations are ongoing)
   let mergeable = pr.mergeable;
   if (mergeable === null) {
-    // Retry once after a small delay if mergeable is null
     console.log("Mergeability is null. Waiting 3 seconds to check again...");
     await new Promise(resolve => setTimeout(resolve, 3000));
     const prRetry = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}`);
     mergeable = prRetry.mergeable;
   }
 
-  // B. Fetch changed files to calculate areas and types
+  // B. Fetch changed files
   let files = [];
   try {
     files = await apiRequest(`/repos/${owner}/${repo}/pulls/${pullNumber}/files?per_page=100`);
@@ -132,7 +334,6 @@ async function run() {
   const existingLabelsMap = new Map(existingLabels.map(l => [l.name, l]));
   for (const labelDef of config.labels) {
     const existing = existingLabelsMap.get(labelDef.name);
-    // Normalize color code (strip # if present)
     const targetColor = labelDef.color.replace('#', '').toLowerCase();
     
     if (existing) {
@@ -154,7 +355,7 @@ async function run() {
     }
   }
 
-  // D. Determine Labels to Apply
+  // E. Determine Labels to Apply
   const labelsToApply = [];
 
   // 1. PR Complexity Level
@@ -173,7 +374,6 @@ async function run() {
 
   // 2. PR Type
   let detectedType = null;
-  // Parse conventional commit title prefix first
   const ccRegex = /^(\w+)(?:\(.+?\))?!\s*:\s*(.+)$|^(\w+)(?:\(.+?\))?\s*:\s*(.+)$/;
   const titleMatch = title.match(ccRegex);
   if (titleMatch) {
@@ -186,7 +386,6 @@ async function run() {
     }
   }
 
-  // Fallback to path heuristics
   if (!detectedType) {
     console.log("No conventional commit prefix matched. Falling back to path heuristics...");
     const typeScores = {};
@@ -245,22 +444,45 @@ async function run() {
   }
   labelsToApply.push(contributorStatus);
 
-  // 5. PR Status
+  // 5. PR Status (CI, Reviews, Conflicts)
   let ciFailing = false;
+  let ciRunning = true;
   try {
     const checkRunsObj = await apiRequest(`/repos/${owner}/${repo}/commits/${headSha}/check-runs`);
     const checkRuns = checkRunsObj.check_runs || [];
+    
+    let completedRuns = 0;
+    let relevantRuns = 0;
+    
     for (const run of checkRuns) {
-      if (run.status === 'completed' && ['failure', 'timed_out', 'action_required'].includes(run.conclusion)) {
-        if (run.name !== 'Auto Label PR' && run.name !== 'PR Automation') {
+      if (run.name === 'Auto Label PR' || run.name === 'PR Automation' || run.name === 'Run PR Automation') {
+        continue;
+      }
+      relevantRuns++;
+      if (run.status === 'completed') {
+        completedRuns++;
+        if (['failure', 'timed_out', 'action_required'].includes(run.conclusion)) {
           ciFailing = true;
-          break;
         }
       }
     }
+    
     const combinedStatus = await apiRequest(`/repos/${owner}/${repo}/commits/${headSha}/status`);
-    if (combinedStatus && (combinedStatus.state === 'failure' || combinedStatus.state === 'error')) {
-      ciFailing = true;
+    if (combinedStatus) {
+      if (combinedStatus.state === 'failure' || combinedStatus.state === 'error') {
+        ciFailing = true;
+        ciRunning = false;
+      } else if (combinedStatus.state === 'success') {
+        // success
+      } else {
+        // pending
+      }
+    }
+    
+    if (relevantRuns > 0 && completedRuns === relevantRuns && !ciFailing) {
+      ciRunning = false;
+    } else if (relevantRuns === 0) {
+      ciRunning = false;
     }
   } catch (error) {
     console.error("Failed to fetch CI checks or statuses:", error);
@@ -293,11 +515,10 @@ async function run() {
   if (draft) {
     labelsToApply.push('status:draft');
   } else {
-    // Determine base review/mergability status
     if (hasChangesRequested) {
       labelsToApply.push('status:changes-requested');
     } else if (approvalCount > 0) {
-      if (mergeable === false || ciFailing) {
+      if (mergeable === false || ciFailing || ciRunning) {
         labelsToApply.push('status:approved');
       } else {
         labelsToApply.push('status:ready-to-merge');
@@ -306,7 +527,6 @@ async function run() {
       labelsToApply.push('status:needs-review');
     }
 
-    // Add extra statuses
     if (mergeable === false) {
       labelsToApply.push('status:merge-conflict');
     }
@@ -315,11 +535,10 @@ async function run() {
     }
   }
 
-  // E. Update PR Labels in Github
+  // F. Update PR Labels in Github
   console.log("Current labels to apply:", labelsToApply);
   const currentPRLabels = pr.labels.map(l => l.name);
 
-  // We should only touch labels managed by our automation to prevent overwriting manual tags
   const managedLabelNames = config.labels.map(l => l.name);
   const labelsToRemove = currentPRLabels.filter(name => managedLabelNames.includes(name) && !labelsToApply.includes(name));
   const labelsToAdd = labelsToApply.filter(name => !currentPRLabels.includes(name));
@@ -340,70 +559,104 @@ async function run() {
     });
   }
 
-  // F. Generate and Post / Update Bot Comment
+  // G. Generate and Post / Update Bot Comment
   console.log("Generating feedback comment...");
   
+  const greeting = getGreeting();
   const typeDisplay = detectedType ? `\`${detectedType}\`` : '_None detected_';
   const levelDisplay = `\`${detectedLevel}\``;
   const areaDisplay = detectedAreas.length > 0 ? detectedAreas.map(a => `\`${a}\``).join(', ') : '_None detected_';
-  const contributorDisplay = `\`${contributorStatus}\``;
+  const contributorDisplay = contributorStatus === 'first-time-contributor' ? 'First-Time Contributor 🆕' : 'Returning Contributor 🚀';
+  const reviewTimeBinDisplay = getTurnaroundEstimate(detectedLevel);
 
-  // Build Warnings
+  // Status Checklist Formatting
+  let ciStatusIcon = '🟡 Running...';
+  if (ciFailing) {
+    ciStatusIcon = '🔴 Failing (Action Required)';
+  } else if (!ciRunning) {
+    ciStatusIcon = '🟢 Passing';
+  }
+
+  let approvalStatusIcon = '🟡 Pending Review';
+  if (hasChangesRequested) {
+    approvalStatusIcon = '🔴 Changes Requested (Action Required)';
+  } else if (approvalCount > 0) {
+    approvalStatusIcon = `🟢 Approved (${approvalCount} approval${approvalCount > 1 ? 's' : ''})`;
+  }
+
+  let conflictStatusIcon = '🟢 No conflicts';
+  if (mergeable === false) {
+    conflictStatusIcon = '🔴 Conflict detected (Needs Rebase)';
+  } else if (mergeable === null) {
+    conflictStatusIcon = '🟡 Calculating...';
+  }
+
+  // Warnings Section
   const warnings = [];
   if (detectedLevel === 'pr-level:advanced' || detectedLevel === 'pr-level:major') {
-    warnings.push(`⚠️ **Large PR Warning**: This pull request contains a large number of changes (${totalLines} lines across ${changedFilesCount} files). Please consider splitting it into smaller, logical pull requests if possible to make reviews more manageable.`);
+    warnings.push(`⚠️ **Large PR Warning**: This PR contains a large number of changes (${totalLines} lines across ${changedFilesCount} files). Please consider splitting it into smaller PRs to ease reviewing.`);
   }
-
-  // Detect unrelated areas (more than 2 distinct areas touched)
   if (detectedAreas.length > 2) {
-    const areaNames = detectedAreas.map(a => `\`${a}\``).join(', ');
-    warnings.push(`⚠️ **Unrelated Areas Warning**: This PR modifies multiple unrelated areas (${areaNames}). To maintain clean git history and ease code reviews, we recommend isolating unrelated changes into separate PRs.`);
+    warnings.push(`⚠️ **Unrelated Areas Warning**: This PR modifies multiple unrelated areas (${detectedAreas.map(a => `\`${a}\``).join(', ')}). We recommend separating unrelated tasks.`);
   }
-
   if (mergeable === false) {
-    warnings.push(`⚠️ **Merge Conflict**: This pull request has conflicts with the base branch. Please resolve the conflicts and push updates to proceed.`);
+    warnings.push(`⚠️ **Merge Conflict**: This PR has conflicts with the base branch. Please resolve them and push updates.`);
   }
-
   if (ciFailing) {
-    warnings.push(`⚠️ **CI Checks Failing**: One or more automated quality checks are failing. Please review the build logs and fix any errors.`);
+    warnings.push(`⚠️ **CI Checks Failing**: One or more automated quality checks are failing. Please review the build/test logs and fix any errors.`);
   }
 
-  // Build Next Steps
+  // Next Steps
   let nextSteps = '';
   if (mergeable === false || ciFailing) {
-    nextSteps = `👉 **Next Steps**: Please resolve the conflicts and/or fix the failing CI checks. Once updated, reviews can proceed.`;
+    nextSteps = `👉 **Action Required**: Please resolve the merge conflicts and/or fix the failing CI tests. Once fixed, reviewers will look at it.`;
   } else if (hasChangesRequested) {
-    nextSteps = `👉 **Next Steps**: Please address the feedback from reviewers and push updates.`;
+    nextSteps = `👉 **Action Required**: Please address reviewer feedback and push updates.`;
   } else if (draft) {
-    nextSteps = `👉 **Next Steps**: Mark this pull request as **Ready for Review** once you've finished making your changes.`;
-  } else if (contributorStatus === 'first-time-contributor') {
-    nextSteps = `👉 **Next Steps**: Thank you for your first contribution! A maintainer will review your changes shortly.`;
+    nextSteps = `👉 **Next Steps**: Mark this PR as **Ready for Review** once you've finished making your changes.`;
+  } else if (approvalCount > 0 && !ciRunning) {
+    nextSteps = `👉 **Next Steps**: The PR is fully approved and status checks are green. A maintainer will merge this shortly! 🎉`;
   } else {
-    nextSteps = `👉 **Next Steps**: The pull request is ready for review. A maintainer will review your changes shortly.`;
+    nextSteps = `👉 **Next Steps**: The PR is ready for review. A maintainer or reviewer will be assigned shortly.`;
   }
 
   const warningsSection = warnings.length > 0
-    ? `### Warnings\n\n${warnings.join('\n\n')}\n\n`
+    ? `### ⚠️ Warnings\n\n${warnings.map(w => `- ${w}`).join('\n')}\n\n`
     : '';
 
   const commentMarkdown = `<!-- pr-automation-bot-comment -->
-### 🤖 PR Automation Summary
+### 🤖 Birthday Bloom PR Assistant
 
-| Metric | Details |
+Good ${greeting}, @${author}! Thank you for contributing to Birthday Bloom! 🌸
+
+Here is the automated review and status dashboard for your pull request.
+
+| PR Metadata | Details |
 | :--- | :--- |
-| **Files Changed** | ${changedFilesCount} |
-| **Lines Added/Removed** | +${additions} / -${deletions} (${totalLines} total) |
-| **Detected Type** | ${typeDisplay} |
-| **Complexity Level** | ${levelDisplay} |
-| **Affected Areas** | ${areaDisplay} |
-| **Contributor Status** | ${contributorDisplay} |
+| 🧑‍💻 **Contributor** | @${author} (${contributorDisplay}) |
+| 📁 **Files Changed** | \`${changedFilesCount}\` |
+| ➕➖ **Diff Size** | \`+${additions} / -${deletions}\` (\`${totalLines}\` total lines) |
+| 🏷️ **Type of Change** | ${typeDisplay} |
+| ⚡ **Complexity Level**| ${levelDisplay} |
+| 🧩 **Affected Areas** | ${areaDisplay} |
+| ⏱️ **Review Turnaround**| ${reviewTimeBinDisplay} |
 
-${warningsSection}### Instructions
+---
 
+${warningsSection}### 📋 Pull Request Status Checklist
+- [x] Contributor checklist completed
+- [ ] **CI Quality Checks**: ${ciStatusIcon}
+- [ ] **Maintainer Review & Approval**: ${approvalStatusIcon}
+- [ ] **Merge Conflict Resolution**: ${conflictStatusIcon}
+
+### 🚀 Next Steps
 ${nextSteps}
+
+---
+*This dashboard updates automatically when you push commits, resolve reviews, or when status checks complete. If you have questions, please comment on this PR.*
 `;
 
-  // Find existing comment
+  // Find existing bot comment
   let existingCommentId = null;
   try {
     const comments = await apiRequest(`/repos/${owner}/${repo}/issues/${pullNumber}/comments?per_page=100`);
@@ -430,6 +683,15 @@ ${nextSteps}
   }
 
   console.log("PR automation process completed successfully.");
+}
+
+// 6. Main Runner
+async function run() {
+  if (eventName === 'schedule') {
+    await runReminderMode();
+  } else {
+    await runPRMode();
+  }
 }
 
 run().catch(error => {
