@@ -48,7 +48,7 @@ export const getInterestBasedTheme = (interests: string[]) => {
   if (lowerInterests.includes('car')) return 'automotive';
   if (lowerInterests.includes('music')) return 'melodic';
   if (lowerInterests.includes('coding')) return 'matrix';
-  if (lowerInterests.includes('gaming')) return 'pixel';
+  // if (lowerInterests.includes('gaming')) return 'pixel';
   
   return 'classic';
 };

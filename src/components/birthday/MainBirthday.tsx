@@ -40,7 +40,8 @@ const interestIcons: Record<string, LucideIcon> = {
   travel: Camera,
   food: Pizza,
   sport: Dumbbell,
-  space: Rocket
+  space: Rocket,
+  // gaming: removed
 };
 
 export const MainBirthday = () => {
@@ -74,7 +75,7 @@ export const MainBirthday = () => {
       { key: 'car', code: 'RIDE' },
       { key: 'music', code: 'BEATS' },
       { key: 'coding', code: 'CODE' },
-      { key: 'gaming', code: 'PLAY' },
+      // { key: 'gaming', code: 'PLAY' },
       { key: 'travel', code: 'TRIP' },
       { key: 'food', code: 'FEAST' },
       { key: 'art', code: 'ART' },
@@ -150,7 +151,7 @@ export const MainBirthday = () => {
       music: ["🎵", "🎶", "🎸", "🎹", "🎧", "🎤"],
       art: ["🎨", "🖌️", "🖼️", "✨", "🌈"],
       coding: ["💻", "⌨️", "🚀", "⚡", "👾"],
-      gaming: ["🎮", "🕹️", "👾", "🎯", "🎲"],
+      // gaming: ["🎮", "🕹️", "👾", "🎯", "🎲"],
       nature: ["🌿", "🌸", "🦋", "🍄", "🌙", "⭐"],
       travel: ["✈️", "🗺️", "🏔️", "🏝️", "🗼", "🗽"],
       food: ["🍕", "🍔", "🍣", "🍦", "🍩", "🧁"],
