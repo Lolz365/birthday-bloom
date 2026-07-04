@@ -298,6 +298,7 @@ export const MainBirthday = () => {
           <TypeWriter text={`${name}!`} speed={120} delay={1500} cursor={false} />
         </motion.h2>
 
+        {/*
         <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 px-4">
           {activeInterests.length > 0 ? (
             activeInterests.map((interest, idx) => {
@@ -326,6 +327,7 @@ export const MainBirthday = () => {
             </div>
           )}
         </motion.div>
+        */}
       </motion.section>
 
       {/* Components */}
