@@ -30,18 +30,18 @@ import { GlitchEffect } from "./GlitchEffect";
 import { VideoGallery } from "./VideoGallery";
 import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
 import { getHighlySpecificLetter, getBigWishes } from "@/features/core/store/SuperPersonalizedLogic";
-import { Car, Music, Code, Gamepad2, Palmtree, Camera, Pizza, Dumbbell, Rocket, Heart, Trophy, Star, LucideIcon } from "lucide-react";
+import { Car, Music, Code,Palmtree, Camera, Pizza, Dumbbell, Rocket, Heart, Trophy, Star, LucideIcon } from "lucide-react";
 
 const interestIcons: Record<string, LucideIcon> = {
   car: Car,
   music: Music,
   coding: Code,
-  gaming: Gamepad2,
   nature: Palmtree,
   travel: Camera,
   food: Pizza,
   sport: Dumbbell,
-  space: Rocket
+  space: Rocket,
+  // gaming: removed
 };
 
 export const MainBirthday = () => {
@@ -75,7 +75,7 @@ export const MainBirthday = () => {
       { key: 'car', code: 'RIDE' },
       { key: 'music', code: 'BEATS' },
       { key: 'coding', code: 'CODE' },
-      { key: 'gaming', code: 'PLAY' },
+      // { key: 'gaming', code: 'PLAY' },
       { key: 'travel', code: 'TRIP' },
       { key: 'food', code: 'FEAST' },
       { key: 'art', code: 'ART' },
@@ -151,7 +151,7 @@ export const MainBirthday = () => {
       music: ["🎵", "🎶", "🎸", "🎹", "🎧", "🎤"],
       art: ["🎨", "🖌️", "🖼️", "✨", "🌈"],
       coding: ["💻", "⌨️", "🚀", "⚡", "👾"],
-      gaming: ["🎮", "🕹️", "👾", "🎯", "🎲"],
+      // gaming: ["🎮", "🕹️", "👾", "🎯", "🎲"],
       nature: ["🌿", "🌸", "🦋", "🍄", "🌙", "⭐"],
       travel: ["✈️", "🗺️", "🏔️", "🏝️", "🗼", "🗽"],
       food: ["🍕", "🍔", "🍣", "🍦", "🍩", "🧁"],
@@ -298,6 +298,7 @@ export const MainBirthday = () => {
           <TypeWriter text={`${name}!`} speed={120} delay={1500} cursor={false} />
         </motion.h2>
 
+        {/*
         <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 px-4">
           {activeInterests.length > 0 ? (
             activeInterests.map((interest, idx) => {
@@ -326,6 +327,7 @@ export const MainBirthday = () => {
             </div>
           )}
         </motion.div>
+        */}
       </motion.section>
 
       {/* Components */}
