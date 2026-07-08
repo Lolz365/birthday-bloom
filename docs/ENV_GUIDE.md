@@ -60,7 +60,7 @@ The store normalizes aliases: e.g., `"love"` â†’ `partner`, `"mom"` â†�
 | `VITE_BIRTHDAY_LETTER_TITLE` | string | `"A Special Letter Just for You 💌"` | Letter section heading. |
 | `VITE_BIRTHDAY_LETTER_OVERRIDE` | escaped string | `""` | Full custom letter body. Use `\n` for newlines. The `\n` is converted to actual newlines in `useBirthdayStore`. |
 | `VITE_BIRTHDAY_COLOR` | hex | `#FF6B6B` | Primary accent color. Also accepted as `VITE_FAVORITE_COLOR`. Used for buttons, glows, cards, gradients. |
-| `VITE_THEME` | enum | `fun` | Theme hint: `romantic`, `fun`, `energetic`, `elegant`, `playful`, `nostalgic`. |
+| `VITE_THEME` | enum | `reserved` | Reserved for future theme hints; not currently parsed by the runtime. |
 | `VITE_BIRTHDAY_INTERESTS` | CSV/list | `""` | Drives interest icons (lucide-react icons in hero), quiz questions, gift code generation, emoji injection. Also accepted as `VITE_FAVORITE_ITEMS`. |
 | `VITE_FAVORITE_EMOJIS` | CSV/list | `""` | Custom burst emojis when tapping interactive elements. Also accepted as `VITE_BIRTHDAY_EMOJIS`. |
 | `VITE_CUSTOM_MESSAGE` | string | `""` | Backward-compatible alias for `VITE_BIRTHDAY_CUSTOM_MESSAGE`. |
@@ -151,9 +151,9 @@ The photo gallery supports lazy loading and falls back gracefully if a memory im
 | `VITE_FINAL_VIDEO_URL` | URL | Closing video in the FinalSurprise component. |
 | `VITE_SOUND_URL` | URL | Background music (falls back to built-in Pixabay audio if unset). |
 | `VITE_BGM_URL` | URL | Backward-compatible alias for sound URL. |
-| `VITE_SONG_URL` | URL | Optional song URL (reserved for future audio system). |
-| `VITE_VOICE_MESSAGE_URL` | URL | Optional voice message URL (reserved for future use). |
-| `VITE_SOUND_EFFECTS` | boolean | Enables/disables sound effects (default: `true`). |
+| `VITE_SONG_URL` | URL | Reserved for a future song integration; not currently consumed. |
+| `VITE_VOICE_MESSAGE_URL` | URL | Reserved for future voice message support; not currently consumed. |
+| `VITE_SOUND_EFFECTS` | `reserved` | Reserved for future sound-control support; not currently parsed. |
 
 **Audio resolution**: `AUDIO_ASSETS.bgmUrl` in `src/config/birthday.ts` checks `VITE_BGM_URL` first, then `VITE_SOUND_URL`. The `SoundManager` uses this for background music. Individual sound effects are hosted on Pixabay CDN.
 
@@ -178,7 +178,7 @@ Every rendered section has an env toggle:
 | `VITE_SHOW_VIDEO_SECTION` | `true` | Video gallery |
 | `VITE_SHOW_CAKE_SECTION` | `true` | Cake cutting experience |
 | `VITE_SHOW_FINAL_SURPRISE` | `true` | Final surprise (memories + video) |
-| `VITE_SHOW_SKIP_BUTTON` | `true` | Intro skip button |
+| `VITE_SHOW_SKIP_BUTTON` | `reserved` | The intro skip button is currently always shown; this env is reserved for future parsing. |
 
 Also accepted: `VITE_SHOW_PHOTOS_SECTION` (alias for photo section).
 
@@ -186,7 +186,7 @@ Also accepted: `VITE_SHOW_PHOTOS_SECTION` (alias for photo section).
 
 | Variable | Type | Default | Purpose |
 |---|---|---|---|
-| `VITE_DURATION` | enum | `normal` | `quick`, `normal`, or `extended`. Controls overall experience pacing. |
+| `VITE_DURATION` | `reserved` | `normal` | Reserved for future overall pacing control; not currently parsed. |
 
 ---
 
@@ -197,9 +197,9 @@ Also accepted: `VITE_SHOW_PHOTOS_SECTION` (alias for photo section).
 | `VITE_ANIMATION_SPEED` | `slow`, `moderate`, `fast` | based on relationship | Slow for romantic/family, fast for energetic friends |
 | `VITE_ANIMATION_INTENSITY` | `low`, `medium`, `high` | `high` | Lower for older phones or reduced motion needs |
 | `VITE_PARTICLE_COUNT` | number | `25` | Higher for desktop (`25-60`), lower for mobile (`8-15`) |
-| `VITE_REDUCED_MOTION` | boolean | `false` | Set `true` for motion-sensitive users |
-| `VITE_TEXT_SIZE` | `small`, `normal`, `large` | `normal` | Use `large` for parents/grandparents |
-| `VITE_HIGH_CONTRAST` | boolean | `false` | Improves readability at the cost of subtle styling |
+| `VITE_REDUCED_MOTION` | `reserved` | `false` | Reserved for future reduced-motion support; not currently parsed. |
+| `VITE_TEXT_SIZE` | `reserved` | `normal` | Reserved for future text-scaling support; not currently parsed. |
+| `VITE_HIGH_CONTRAST` | `reserved` | `false` | Reserved for future high-contrast support; not currently parsed. |
 
 ### Responsive Breakpoints
 
@@ -221,9 +221,9 @@ Also accepted: `VITE_SHOW_PHOTOS_SECTION` (alias for photo section).
 
 ### Accessibility Features
 
-- **Reduced Motion**: Honors system preferences via `VITE_REDUCED_MOTION`
-- **Text Scaling**: `small`, `normal`, `large` via `VITE_TEXT_SIZE`
-- **High Contrast**: `VITE_HIGH_CONTRAST` for enhanced visibility
+- **Reduced Motion**: Reserved for future support; currently not parsed.
+- **Text Scaling**: Reserved for future support; currently not parsed.
+- **High Contrast**: Reserved for future support; currently not parsed.
 - **Touch Targets**: 44x44px minimum for all interactive elements
 - **Keyboard Navigation**: Full support throughout the experience
 - **Screen Reader**: Compatible with semantic HTML and ARIA labels
@@ -328,8 +328,8 @@ Protect the surprise with a frosted-glass passcode screen:
 
 | Variable | Type | Purpose |
 |---|---|---|
-| `VITE_DEBUG` | boolean | Enables debug logging (default: `false`) |
-| `VITE_ANALYTICS_ID` | string | Optional analytics integration ID |
+| `VITE_DEBUG` | `reserved` | Reserved for future debug logging support; not currently parsed. |
+| `VITE_ANALYTICS_ID` | `reserved` | Optional | Reserved for future analytics integration; not currently parsed. |
 
 ---
 
@@ -432,7 +432,8 @@ VITE_BIRTHDAY_AGE=25
 VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=partner
 VITE_BIRTHDAY_COLOR=#FF4F8B
-VITE_THEME=romantic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=romantic
 VITE_ANIMATION_SPEED=slow
 VITE_BIRTHDAY_INTERESTS=music,coffee,travel
 VITE_BIRTHDAY_CUSTOM_MESSAGE=You make ordinary days feel like magic.
@@ -443,7 +444,8 @@ VITE_BIRTHDAY_CUSTOM_MESSAGE=You make ordinary days feel like magic.
 VITE_BIRTHDAY_NAME=Alex
 VITE_BIRTHDAY_RELATIONSHIP=friend
 VITE_BIRTHDAY_COLOR=#00C2FF
-VITE_THEME=fun
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=fun
 VITE_ANIMATION_SPEED=fast
 VITE_PARTICLE_COUNT=40
 VITE_BIRTHDAY_INTERESTS=gaming,music,food
@@ -459,7 +461,8 @@ VITE_FAMILY_PREFERRED_NAME=Pri
 VITE_FAMILY_RELATIONSHIP_LABEL=Younger Sister
 VITE_FAMILY_CLOSENESS=10
 VITE_BIRTHDAY_COLOR=#FF69B4
-VITE_THEME=playful
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=playful
 ```
 
 ### Father or Mother
@@ -469,8 +472,10 @@ VITE_BIRTHDAY_RELATIONSHIP=father
 VITE_FAMILY_MEMBER_TYPE=father
 VITE_FAMILY_RELATIONSHIP_LABEL=Father
 VITE_BIRTHDAY_COLOR=#4A90E2
-VITE_THEME=elegant
-VITE_TEXT_SIZE=large
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=elegant
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=large
 VITE_ANIMATION_INTENSITY=medium
 ```
 
@@ -480,9 +485,12 @@ VITE_BIRTHDAY_NAME=Grandma
 VITE_BIRTHDAY_RELATIONSHIP=grandmother
 VITE_FAMILY_MEMBER_TYPE=grandmother
 VITE_BIRTHDAY_COLOR=#D4AF37
-VITE_THEME=elegant
-VITE_TEXT_SIZE=large
-VITE_REDUCED_MOTION=true
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=elegant
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=large
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=true
 VITE_ANIMATION_INTENSITY=low
 VITE_PARTICLE_COUNT=8
 ```
@@ -514,7 +522,8 @@ VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=partner
 VITE_BIRTHDAY_COLOR=#FF1493
 VITE_BIRTHDAY_CUSTOM_MESSAGE=My beautiful Sarah, thank you for being the love of my life.
-VITE_THEME=romantic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=romantic
 VITE_ANIMATION_INTENSITY=high
 VITE_ANIMATION_SPEED=moderate
 VITE_PHOTO_1=https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=800
@@ -522,7 +531,8 @@ VITE_PHOTO_2=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800
 VITE_PHOTO_3=https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800
 VITE_SOUND_URL=https://assets.mixkit.co/active_storage/music/2869/2869-preview.mp3
 VITE_FAVORITE_EMOJIS=loved,bouquet,rose,heart,gift,ribbon
-VITE_TEXT_SIZE=normal
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=normal
 ```
 
 ### Best Friend Party (Firebase)
@@ -533,7 +543,8 @@ VITE_BIRTHDAY_GENDER=male
 VITE_BIRTHDAY_RELATIONSHIP=friend
 VITE_BIRTHDAY_COLOR=#00FFFF
 VITE_BIRTHDAY_CUSTOM_MESSAGE=Hey my bro! Another year older but still awesome.
-VITE_THEME=fun
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=fun
 VITE_ANIMATION_INTENSITY=high
 VITE_ANIMATION_SPEED=fast
 VITE_PARTICLE_COUNT=30
@@ -541,7 +552,8 @@ VITE_PHOTO_1=https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800
 VITE_PHOTO_2=https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800
 VITE_PHOTO_3=https://images.unsplash.com/photo-1507539803526-19b419cd3b5d?w=800
 VITE_FAVORITE_EMOJIS=party,clink,fire,star,confetti,balloon
-VITE_SHOW_SKIP_BUTTON=true
+# Intro skip button is currently always shown; this env is reserved for future parsing
+# VITE_SHOW_SKIP_BUTTON=true
 ```
 
 ### Mom's Birthday (Self-Hosted)
@@ -552,7 +564,8 @@ VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=family
 VITE_BIRTHDAY_COLOR=#FFD700
 VITE_BIRTHDAY_CUSTOM_MESSAGE=Dear Mom,\n\nThank you for all your love, care, and sacrifices.
-VITE_THEME=elegant
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=elegant
 VITE_ANIMATION_INTENSITY=medium
 VITE_ANIMATION_SPEED=slow
 VITE_PARTICLE_COUNT=15
@@ -560,8 +573,10 @@ VITE_PHOTO_1=https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800
 VITE_PHOTO_2=https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800
 VITE_PHOTO_3=https://images.unsplash.com/photo-1507539803526-19b419cd3b5d?w=800
 VITE_FAVORITE_EMOJIS=heart,family,rose,star,gift,ribbon
-VITE_TEXT_SIZE=large
-VITE_REDUCED_MOTION=false
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=large
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=false
 ```
 
 ### Colleague Birthday (Mobile-Optimized)
@@ -572,12 +587,14 @@ VITE_BIRTHDAY_GENDER=male
 VITE_BIRTHDAY_RELATIONSHIP=colleague
 VITE_BIRTHDAY_COLOR=#0047AB
 VITE_BIRTHDAY_CUSTOM_MESSAGE=Happy Birthday John! Wishing you success and happiness this year.
-VITE_THEME=energetic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=energetic
 VITE_ANIMATION_INTENSITY=medium
 VITE_ANIMATION_SPEED=moderate
 VITE_PARTICLE_COUNT=12
 VITE_FAVORITE_EMOJIS=party,confetti,star,rocket,briefcase,sparkle
-VITE_SHOW_SKIP_BUTTON=true
+# Intro skip button is currently always shown; this env is reserved for future parsing
+# VITE_SHOW_SKIP_BUTTON=true
 ```
 
 ### Kid's Birthday (Accessible)
@@ -588,12 +605,14 @@ VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=family
 VITE_BIRTHDAY_COLOR=#FF1493
 VITE_BIRTHDAY_CUSTOM_MESSAGE=Happy Birthday Emma! You are an amazing girl!
-VITE_THEME=playful
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=playful
 VITE_ANIMATION_INTENSITY=high
 VITE_ANIMATION_SPEED=fast
 VITE_PARTICLE_COUNT=20
 VITE_FAVORITE_EMOJIS=balloon,party,confetti,unicorn,sparkle,star,rainbow,ribbon
-VITE_TEXT_SIZE=large
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=large
 ```
 
 ### Brother's Birthday Bash
@@ -608,7 +627,8 @@ VITE_FAMILY_RELATIONSHIP_LABEL=Older Brother
 VITE_FAMILY_CLOSENESS=9
 VITE_FAMILY_YEARS_KNOWN=30
 VITE_BIRTHDAY_COLOR=#0047AB
-VITE_THEME=energetic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=energetic
 VITE_ANIMATION_SPEED=fast
 VITE_PARTICLE_COUNT=35
 VITE_BIRTHDAY_INTERESTS=coding,gaming,sport
@@ -639,9 +659,11 @@ VITE_BIRTHDAY_AGE=28
 VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=partner
 VITE_BIRTHDAY_COLOR=#B76E79
-VITE_THEME=romantic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=romantic
 VITE_ANIMATION_SPEED=slow
-VITE_REDUCED_MOTION=false
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=false
 VITE_BIRTHDAY_INTERESTS=music,art,travel
 VITE_BIRTHDAY_CUSTOM_MESSAGE=Every moment with you is a treasure.
 VITE_BIRTHDAY_LETTER_TITLE=To My Forever Valentine
@@ -695,10 +717,10 @@ VITE_ANIMATION_SPEED=fast
 ### Accessibility
 
 ```env
-# For seniors or accessibility needs
-VITE_TEXT_SIZE=large
-VITE_HIGH_CONTRAST=true
-VITE_REDUCED_MOTION=true
+# Reserved for future accessibility support; currently not parsed
+# VITE_TEXT_SIZE=large
+# VITE_HIGH_CONTRAST=true
+# VITE_REDUCED_MOTION=true
 ```
 
 ### Deployment Checklist
@@ -775,11 +797,11 @@ docker run -p 8080:8080 birthday-bloom
 | Name did not change | Check spelling of `VITE_BIRTHDAY_NAME`, restart dev server or redeploy |
 | Env works locally but not hosted | Add variables in hosting dashboard and rebuild |
 | Photos do not load | Use direct image URLs (`.jpg`, `.png`, `.webp`) or CDN URLs |
-| Too much motion | Set `VITE_REDUCED_MOTION=true`, `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=8` |
-| Relationship mood looks wrong | Use a supported relationship value or set `VITE_THEME` explicitly |
+| Too much motion | Set `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=8` (note: `VITE_REDUCED_MOTION` is reserved for future support) |
+| Relationship mood looks wrong | Use a supported relationship value; `VITE_THEME` is reserved for future manual override |
 | JSON family profile fails | Validate JSON â€” all keys and strings must be in double quotes |
 | Blank screen | Check console (F12), verify `VITE_BIRTHDAY_NAME` is set, ensure `.env` is in root, restart dev server |
-| Animations stutter on mobile | Set `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=5`, `VITE_REDUCED_MOTION=true` |
+| Animations stutter on mobile | Set `VITE_ANIMATION_INTENSITY=low`, `VITE_PARTICLE_COUNT=5` (note: `VITE_REDUCED_MOTION` is reserved for future support) |
 | Audio does not play | Verify `VITE_SOUND_URL` is valid HTTPS, CORS enabled on host, browser allows autoplay (click Start first) |
 | Build error: "Cannot find module" | Run `rm -rf node_modules && npm install && npm run build` |
 | Old version showing after deploy | Clear CDN cache â€” Vercel uses content hashes automatically |

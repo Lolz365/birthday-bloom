@@ -70,7 +70,8 @@ For SPA routing, add a `_redirects` file inside the `public/` folder:
   VITE_BIRTHDAY_AGE = "26"
   VITE_BIRTHDAY_RELATIONSHIP = "partner"
   VITE_BIRTHDAY_COLOR = "#FF1493"
-  VITE_THEME = "romantic"
+  # Reserved for future theme hints; not currently parsed
+  # VITE_THEME = "romantic"
 ```
 
 ---
@@ -319,7 +320,7 @@ Ensure `VITE_BIRTHDAY_NAME` is set to bypass the setup screen and launch the cin
 | `VITE_VIDEO_1` | URL | null | Video gallery item 1 |
 | `VITE_BGM_URL` | URL | null | Background music URL |
 | `VITE_ANIMATION_INTENSITY` | enum | "high" | low/medium/high |
-| `VITE_DURATION` | enum | "normal" | quick/normal/extended |
+| `VITE_DURATION` | `reserved` | "normal" | Reserved for future overall pacing control; not currently parsed. |
 | `VITE_FINAL_VIDEO_URL` | URL | null | Special video at the end |
 | `VITE_SPECIAL_MEMORIES` | csv | "" | Polaroid gallery items (format: "Title;url\|Title2;url2") |
 | `VITE_PASSWORD_REQUIRED` | boolean | false | Force enable password lock |
@@ -543,8 +544,10 @@ adb connect ANDROID_DEVICE_IP:5555
 VITE_BIRTHDAY_NAME=Sarah
 VITE_ANIMATION_INTENSITY=medium
 VITE_PARTICLE_COUNT=12
-VITE_TEXT_SIZE=normal
-VITE_REDUCED_MOTION=false
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=normal
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=false
 ```
 
 **Test Devices:**
@@ -559,8 +562,10 @@ VITE_REDUCED_MOTION=false
 VITE_BIRTHDAY_NAME=Alex
 VITE_ANIMATION_INTENSITY=medium
 VITE_PARTICLE_COUNT=15
-VITE_TEXT_SIZE=normal
-VITE_REDUCED_MOTION=false
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=normal
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=false
 ```
 
 **Test Devices:**
@@ -575,14 +580,16 @@ VITE_REDUCED_MOTION=false
 ```env
 VITE_ANIMATION_INTENSITY=medium
 VITE_PARTICLE_COUNT=12
-VITE_REDUCED_MOTION=true
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=true
 ```
 
 **Desktop:**
 ```env
 VITE_ANIMATION_INTENSITY=high
 VITE_PARTICLE_COUNT=40
-VITE_REDUCED_MOTION=false
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=false
 ```
 
 ### Environment Setup Examples
@@ -594,10 +601,12 @@ VITE_BIRTHDAY_AGE=28
 VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=partner
 VITE_BIRTHDAY_COLOR=#FF1493
-VITE_THEME=romantic
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=romantic
 VITE_ANIMATION_INTENSITY=high
 VITE_PARTICLE_COUNT=12
-VITE_TEXT_SIZE=normal
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=normal
 VITE_ANIMATION_SPEED=moderate
 ```
 
@@ -608,10 +617,12 @@ VITE_BIRTHDAY_AGE=24
 VITE_BIRTHDAY_GENDER=male
 VITE_BIRTHDAY_RELATIONSHIP=friend
 VITE_BIRTHDAY_COLOR=#00FFFF
-VITE_THEME=fun
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=fun
 VITE_ANIMATION_INTENSITY=high
 VITE_PARTICLE_COUNT=15
-VITE_TEXT_SIZE=normal
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=normal
 VITE_ANIMATION_SPEED=fast
 ```
 
@@ -622,11 +633,14 @@ VITE_BIRTHDAY_AGE=75
 VITE_BIRTHDAY_GENDER=female
 VITE_BIRTHDAY_RELATIONSHIP=family
 VITE_BIRTHDAY_COLOR=#FFD700
-VITE_THEME=elegant
+# Reserved for future theme hints; not currently parsed
+# VITE_THEME=elegant
 VITE_ANIMATION_INTENSITY=low
 VITE_PARTICLE_COUNT=8
-VITE_TEXT_SIZE=large
-VITE_REDUCED_MOTION=true
+# Reserved for future text scaling support; not currently parsed
+# VITE_TEXT_SIZE=large
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=true
 ```
 
 ### Common Mobile Issues & Fixes
@@ -655,7 +669,8 @@ Use React event handlers:
 
 **Battery drains fast:**
 ```env
-VITE_REDUCED_MOTION=true
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=true
 VITE_ANIMATION_INTENSITY=low
 ```
 

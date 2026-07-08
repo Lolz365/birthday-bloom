@@ -1,158 +1,171 @@
-# 🏛️ Naboraj Sarkar Architecture: The Cinematic Engine
+# 🏛️ Birthday Bloom Architecture: Runtime, Themes, and Cinematic Flow
 
-The Birthday Bloom application is more than a website—it is a **Cinematic Finite State Machine (CFSM)**. This architecture is designed for high-performance visual storytelling while maintaining 100% data-driven personalization.
+Birthday Bloom is built as an **env-first cinematic runtime**: data is hydrated from environment variables, transformed into a typed app state, and rendered through a phase-driven animation pipeline.
 
----
-
-## 🧩 The Core Orchestration
-
-The application logic is split into three distinct layers to ensure modularity and failure resilience.
-
-### 1. Data Layer (Zustand)
-Located in `src/features/core/store/useBirthdayStore.ts`.
-- **Secret Hydration**: Automatically parses environment variables at boot.
-- **Fail-Safe Defaults**: If a variable is missing or malformed (e.g., `VITE_BIRTHDAY_RELATIONSHIP="frined"`), the store uses intelligent fallback logic to ensure the app never crashes.
-- **Derived Mood Engine**: Dynamically calculates the "Atmospheric Score" (Romantic, Energetic, or Warm) which is consumed by the Theme system.
-
-### 2. Design Layer (CSS Variable Injection)
-Located in `src/features/core/theme/useDynamicTheme.ts`.
-- **Runtime Styling**: Instead of hardcoding colors, the engine injects HSL tokens into the `:root`.
-- **Template Morphing**: Swaps entire typography and radius systems based on the relationship mood.
-- **Vignette Control**: Adjusts the cinematic frame shadow intensity based on the active scene.
-
-### 3. Execution Layer (Scene State Machine)
-Located in `src/pages/Index.tsx` and `CinematicIntro.tsx`.
-
-**Expanded Phase State Machine:**
-The application operates as a strict linear state machine. Transitions must call `setPhase()` (an enum in `Index.tsx`). The full sequence is:
-
-1. **Splash** — Audio Awakening. Rendered by `SplashScreen.tsx`. Plays the initial ambient soundscape. Duration: ~3.5s before auto-transition.
-2. **Intro** — Timeline Orchestration via `CinematicIntro.tsx`. Three sub-phases:
-   - *Story*: Kinetic-typography narrative lines displayed one-by-one using staggered Framer Motion `variants`.
-   - *Chat*: Simulated chat interface (`FakeChat.tsx`) with typewriter text bubbles and spring-animated message cards.
-   - *Reveal*: The "Happy Birthday [Name]" reveal with particle burst and scale-in kinetic typography.
-3. **Password Lock** (conditional) — `PasswordUnlock.tsx` gate. If enabled by config, the user must enter the correct passcode. Failed attempts trigger the glassmorphic wobble shake effect (`x: [-10, 10, -10, 10, 0]`).
-4. **Main** — Interactive Ecosystem. `MainBirthday.tsx` renders the cake, gallery, confetti, and heartbeat progression. All sub-components run independently with no cross-dependencies.
-
-**Error Recovery**: If any Intro sub-phase fails, the engine executes auto-recovery and skips to the Main phase, ensuring the "Never Blank" policy.
+This document explains the actual implementation layers, the live source files, and the runtime behavior that matters for extension and debugging.
 
 ---
 
-## 📊 Logic Flow Diagram
+## 🧩 Three core runtime layers
 
-```mermaid
-graph TD
-    A[Boot: App.tsx] -->|Hydrate Store| B(useBirthdayStore)
-    B -->|Inject Tokens| C(useDynamicTheme)
-    C -->|Render Scene| D{State Machine}
-    
-    D -->|splash| E[Splash.tsx: Audio Awakening]
-    D -->|intro| F[CinematicIntro.tsx: Timeline Orchestration]
-    D -->|main| G[MainBirthday.tsx: Interactive Ecosystem]
-    
-    F -->|Failure?| H[Auto-Recovery: Skip to Main]
-```
+### 1. Data Layer — Env to Store
+**File:** `src/features/core/store/useBirthdayStore.ts`
+
+This is the single source of truth for personalization.
+
+- It parses environment variables at module load time
+- It normalizes aliases like `VITE_FAVORITE_COLOR` and `VITE_WISHER_NAME`
+- It enforces safe fallback rules for malformed values
+- It creates a typed `BirthdayConfig` object consumed by components
+
+**Implementation highlights**:
+- `parseEnvString()` drops empty values and normalizes `undefined` / `null`
+- `parseEnvBoolean()` supports `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`, `enabled`, `disabled`
+- `parseEnvList()` accepts comma, pipe, newline, or JSON array formats
+- `parseEnvJson<T>()` enables full JSON profile config via `VITE_FAMILY_PROFILE_JSON`
+
+**Live runtime values** parsed by the store include:
+- `VITE_BIRTHDAY_NAME`, `VITE_BIRTHDAY_AGE`, `VITE_BIRTHDAY_GENDER`, `VITE_BIRTHDAY_DATE`
+- `VITE_BIRTHDAY_RELATIONSHIP` with alias normalization
+- `VITE_BIRTHDAY_COLOR`, `VITE_BIRTHDAY_CUSTOM_MESSAGE`, `VITE_BIRTHDAY_LETTER_OVERRIDE`
+- `VITE_PHOTOS`, `VITE_PHOTO_1..6`, `VITE_PHOTO_CAPTIONS`
+- `VITE_VIDEO_1..3`, `VITE_FINAL_VIDEO_URL`
+- `VITE_SPECIAL_MEMORIES`
+- `VITE_PASSWORD`, `VITE_PASSWORD_HINT`, `VITE_PASSWORD_FORMAT`, `VITE_PASSWORD_REQUIRED`
+- `VITE_FAMILY_PROFILE_JSON`, `VITE_FAMILY_MEMBER_TYPE`, plus family metadata vars
+
+> Note: Some env keys appear in `.env.example` for future compatibility, but are not currently parsed in `useBirthdayStore.ts`. Those include `VITE_THEME`, `VITE_REDUCED_MOTION`, `VITE_TEXT_SIZE`, `VITE_HIGH_CONTRAST`, and `VITE_SHOW_SKIP_BUTTON`.
 
 ---
 
-## 🛡️ Failure Resilience & Error Handling
+### 2. Theme Layer — Runtime CSS tokens
+**File:** `src/features/core/theme/useDynamicTheme.ts`
 
-Our architecture follows the **Naboraj Sarkar "Never Blank" Policy**:
+This hook converts `favoriteColor`, `relationship`, and `gender` into `:root` variables.
 
-1. **State Corruption Guard**: If the store detects an invalid state, it automatically clears the local cache and restarts from the last valid checkpoint.
-2. **Asset Failure Handling**: If a photo fails to load from the URL provided in `.env`, the engine seamlessly injects a high-quality "Cinematic Placeholder" without interrupting the animation sequence.
-3. **Timer Safety**: Every `setTimeout` in the cinematic timeline is wrapped in a `try-catch` and registered in a `timersRef`. If the component unmounts, all pending timers are killed instantly to prevent background state updates (avoiding the common "React state update on unmounted component" warning).
+It dynamically sets:
+- `--color-primary`
+- `--color-primary-low`
+- `--color-primary-glow`
+- `--bg-gradient`
+- `--glow-effect`
+- `--glass-opacity`
+- `--font-display`
+- `--animation-pacing`
+- `--particle-speed`
+- `--card-radius`
+- gender-aware glow and blur adjustments
+
+This layer keeps visual theming centralized and decoupled from presentational components.
 
 ---
 
-## 📂 Engineering Folder Structure
+### 3. Execution Layer — Phase machine and scenes
+**Files:** `src/pages/Index.tsx`, `src/components/birthday/CinematicIntro.tsx`
 
-### `/src/features/core` (The Backbone)
-Contains the store, theme, and global physics constants.
+The app is a finite-state experience with four exclusive phases:
 
-### `/src/components/birthday` (The Magic Hub)
-The interactive "Actors". Each component is isolated and consumes the global config.
-- **`CakeCutting.tsx`** — Manages the multi-state SVG cake using the `useCakeController` hook. Handles countdown, candle blow, and slice states with spring-animated transitions.
-- **`CinematicIntro.tsx`** — Orchestration layer that maps the `storyLines` array to a sequence of `AnimatePresence` triggers using centralized `CINEMATIC_TIMINGS`.
-- **`HeartProgression.tsx`** — Physics-heavy component that calculates screen-center intersection for SVG heart paths.
-- **`SparkleEffect.tsx`** — High-performance particle engine using Framer Motion `layout` transitions with 3-layer parallax.
-- **`PasswordUnlock.tsx`** — Glassmorphic passcode gate with spring-based lateral shake feedback.
-- **`Confetti.tsx`** — Layered pyrotechnics system: staggered corner cannons, radial climax, and glitter rain.
+- `splash`
+- `unlock` (conditional on `isPasswordRequired(config)`)
+- `intro`
+- `main`
 
-### `/src/features/cinematic-story` (The Script)
-Contains the animation variants and narrative text logic. Custom animations use the `useStoryVariants` hook.
+`Index.tsx` renders one phase at a time with `AnimatePresence`.
+`CinematicIntro.tsx` manages a second-level storytelling timeline that runs the intro scenes in sequence.
 
-### `/src/config/` (The Logic Layer)
-- **`birthday.ts`** — The "Source of Truth" for the birthday person's data. Utilizes a three-tier fallback system (ENV > Config > Default).
+**Phase transitions**:
+- `SplashScreen` → checks password requirement
+- `PasswordUnlock` → on success moves to `intro`
+- `CinematicIntro` → when complete moves to `main`
+- `MainBirthday` → final interactive dashboard with ambient layers
 
-### `/src/assets/` (The Emotional Layer)
-- `photo-1.jpg`, `photo-2.jpg`, `photo-3.jpg` — The memories displayed in the gallery.
-- `heart.svg` — The master vector for the merge animation.
+**Implementation truth**:
+- A skip button exists in the UI, but it is not controlled by a runtime env toggle.
+- The password screen appears when `VITE_PASSWORD_REQUIRED=true` or `VITE_PASSWORD` is present.
+- The explicit phase values are typed as `type Phase = "splash" | "unlock" | "intro" | "main"`.
 
-### Coding Standards
-- **Component Localization**: Group related components by domain (`birthday/`) rather than by type (`ui/`).
-- **Tailwind Integration**: Maximize utility classes to keep the final CSS bundle under 50 KB.
-- **TypeScript Strictness**: Interfaces are required for all component props to ensure AI-scraping accuracy.
-- **Build Pipeline**: Vite compiles, Rollup handles tree-shaking of Lucide icons, PostCSS processes Tailwind directives and nested CSS.
+---
 
-### Data Flow
+## 🔧 Actual data flow
+
 ```mermaid
 graph LR
-    ENV[Environment Variables] --> B[Birthday Config]
-    UI[src/config.ts] --> B
-    B --> M[MainBirthday Component]
-    M --> C[Sub-Animations]
+  ENV[import.meta.env] --> S[useBirthdayStore.ts]
+  S --> T[useDynamicTheme.ts]
+  T --> ROOT[:root CSS vars]
+  S --> UI[Birthday components]
+  UI --> MAIN[MainBirthday.tsx]
 ```
 
 ---
 
-## ✨ Animation & Motion System
+## 🛡 Runtime resilience and behavior
 
-The motion in Birthday Bloom is built on **Framer Motion 11**, following professional cinematography principles.
+Birthday Bloom is designed to avoid blank or broken screens.
 
-### Cinematography Principles
-- **Camera Simulation**: Scenes transition with depth shift (`1.1x` scale + `blur(20px)` → focus), perspective rotations via `rotateX`/`rotateY` for 3D depth.
-- **Orchestration & Staggering**: Framer Motion `variants` with `staggerChildren` for rhythmic visual pace. Spring physics (`stiffness: 150`, `damping: 20`) instead of linear easing for organic movement.
-- **Kinetic Typography**: Character-by-character TypeWriter effects and pop-out/zoom-in for name reveals.
+- Invalid relationship strings fall back to `family`
+- Invalid or missing dates are ignored, not thrown
+- The app never reads `process.env`; it uses Vite's `import.meta.env` only
+- All intro timers are tracked and cleared on component unmount
+- The password generator uses either `VITE_PASSWORD` or the parsed birthday date
 
-### 15 Specialized Effects
-1. **Depth Shift** — Scene focus transitions with scale + blur.
-2. **Perspective Rotations** — 3D tilt via `rotateX`/`rotateY`.
-3. **StaggerChildren** — Rhythmic sequenced element appearance.
-4. **Spring Physics** — Natural easing with configurable stiffness/damping.
-5. **TypeWriter Effects** — Realistic character-by-character typing.
-6. **Pop-out & Zoom-in** — Emphasis animations for name reveals.
-7. **3-Layer Parallax** — Background, mid-ground, and foreground floating elements.
-8. **Mood-Aware Speed** — Particle velocity adjusts to the Atmospheric Score.
-9. **Glassmorphic Wobble** — Spring-based lateral shake on wrong passcode.
-10. **Blur Overlay Fade** — Smooth backdrop-filter transition from lock screen.
-11. **3-2-1 Countdown Ticks** — Scale bounce (`0.3x` → `1.2x`, `stiffness: 300`, `damping: 15`).
-12. **Centralized Timeline** — `CINEMATIC_TIMINGS` config prevents timeout race conditions.
-13. **Staggered Corner Cannons** — High-velocity, narrow-spread confetti bursts.
-14. **Radial Climax** — Centered burst expanding above the cake.
-15. **Glitter Rain** — Gold/silver stars with low gravity and random drift.
-
-### Atmospheric Particles
-The `FloatingElements` system uses 3-layer parallax (background atmosphere, mid-ground symbols, foreground details) with mood-aware speed adjustment.
-
-### Implementation Files
-- `src/components/birthday/CinematicIntro.tsx`
-- `src/components/birthday/MainBirthday.tsx`
-- `src/components/birthday/FloatingElements.tsx`
-- `src/components/birthday/PasswordUnlock.tsx`
-- `src/components/birthday/CakeCutting.tsx`
-- `src/components/birthday/Confetti.tsx`
+**Password rules**:
+- supported formats: `MMDD`, `DDMM`, `YYYYMMDD`, `YYYY-MM-DD`, `MM-DD`, `DD-MM`, `YYYY`
+- if `VITE_PASSWORD` is set, it overrides date generation
+- if no password is provided and no date exists, password unlock is inactive
 
 ---
 
-## 📎 Cross-References
+## 📂 Source file map
 
-- [Developer Guide](docs/developer-guide.md) — Setup, debugging, and contribution workflow.
-- [Environment Guide](docs/ENV_GUIDE.md) — Full `.env` variable reference and hydration rules.
-- [Quick Start](QUICK_START.md) — 5-minute deployment walkthrough.
-- [Template Architecture](docs/template-architecture.md) — Relationship mood templates and typography morphing.
-- [Family System](docs/family-system.md) — Multi-person birthday management and config inheritance.
+| File | Purpose |
+| --- | --- |
+| `src/features/core/store/useBirthdayStore.ts` | env parsing, typed config, helper accessors |
+| `src/features/core/theme/useDynamicTheme.ts` | runtime CSS variable injection |
+| `src/pages/Index.tsx` | top-level phase state machine and ambient layers |
+| `src/components/birthday/MainBirthday.tsx` | main celebration dashboard |
+| `src/components/birthday/CinematicIntro.tsx` | intro timeline and reveal sequence |
+| `src/components/birthday/PasswordUnlock.tsx` | optional passcode gate |
+| `src/utils/password.ts` | password generation / requirement logic |
+| `src/config/birthday.ts` | legacy audio/photo fallback lookup |
 
 ---
 
-*Generated by the Naboraj Sarkar Architecture Committee.* 📐
+## ✨ Animation and interaction system
+
+Birthday Bloom uses Framer Motion with a cinematic orchestration approach.
+
+### Animation patterns in use
+- `AnimatePresence` for mounting/unmounting phase transitions
+- `motion.div` with `opacity`, `scale`, `blur`, and `filter` transitions
+- spring-based motion for natural feel
+- staggered animation timing to preserve readability
+- layered ambient effects for visual depth
+
+### Key effects
+1. Depth shift and blur transitions
+2. 3D perspective rotations
+3. staggered child animations
+4. spring-based text reveals
+5. emoji and particle bursts
+6. conditional intro pacing based on relationship
+7. final reveal choreography
+
+---
+
+## 📝 Practical implementation notes
+
+- Do not read `import.meta.env` directly from presentation components.
+- Keep env parsing centralized in `useBirthdayStore.ts`.
+- Use `const config = useBirthdayStore(state => state.config)` in components.
+- When adding new env values, add them to `BirthdayConfig`, parse them in `useBirthdayStore.ts`, and document them in `docs/ENV_GUIDE.md`.
+- `useDynamicTheme.ts` depends only on `favoriteColor`, `relationship`, and `gender`, not on `VITE_THEME`.
+
+---
+
+## 📎 See also
+
+- [ENV_GUIDE.md](ENV_GUIDE.md) — exact env runtime reference
+- [developer-guide.md](developer-guide.md) — how to extend and add features
+- [template-architecture.md](template-architecture.md) — template and profile inheritance model
+- [family-system.md](family-system.md) — family profile schema and examples

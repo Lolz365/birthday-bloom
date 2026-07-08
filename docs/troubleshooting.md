@@ -61,7 +61,7 @@ Supported values: `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`, `enabled`
 ### Relationship mood looks wrong
 
 - Use a supported relationship value (see [ENV_GUIDE.md](./ENV_GUIDE.md))
-- Set `VITE_THEME` explicitly to override: `romantic`, `fun`, `energetic`, `elegant`, `playful`, `nostalgic`
+- `VITE_THEME` is reserved for future manual theme override and is not currently consumed by the runtime.
 
 ### JSON family profile fails
 
@@ -92,7 +92,8 @@ This is an iOS limitation. Audio resumes on the next touch interaction via the A
 ```env
 VITE_PARTICLE_COUNT=10
 VITE_ANIMATION_INTENSITY=low
-VITE_REDUCED_MOTION=true
+# Reserved for future reduced-motion support; not currently parsed
+# VITE_REDUCED_MOTION=true
 ```
 
 Also check: low power mode, browser GPU acceleration settings, and avoid high-resolution transparent PNGs (use WebP).
@@ -164,7 +165,7 @@ Set `VITE_BIRTHDAY_COLOR` in `.env.local` with any hex code (e.g., `#FF0000`). T
 
 ## Debug Mode
 
-Set `VITE_DEBUG=true` in `.env.local` to enable debug logging. Check the browser console for detailed diagnostic information.
+The current runtime does not parse `VITE_DEBUG`. Use browser developer tools and console logging for troubleshooting.
 
 ---
 
