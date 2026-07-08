@@ -1,55 +1,30 @@
-/**
- * 🌸 BIRTHDAY BLOOM - EMOTIONAL NARRATIVE TEMPLATES
- * -----------------------------------------
- * Authored by: NABORAJ SARKAR
- * High-fidelity emotional content for cinematic surprises.
- * 
- * Enhanced Configuration System for Birthday Bloom v2.1
- * Supports multiple templates based on gender, age, relationship, and theme
- */
-
 export type Gender = "male" | "female" | "other";
 export type Relationship = "partner" | "friend" | "family" | "colleague" | "mentor";
 export type TemplateTheme = "romantic" | "fun" | "energetic" | "elegant" | "playful" | "nostalgic";
 export type AgeGroup = "teen" | "young-adult" | "adult" | "senior";
-
 export interface BirthdayConfig {
-  // Basic Information
-  name: string;
-  age: number;
-  gender: Gender;
-  relationship: Relationship;
-  theme: TemplateTheme;
-
-  // Personalization
-  customMessage: string;
-  favoriteColor: string;
-  favoriteEmoji: string[];
-
-  // Media
-  photos: string[];
-  backgroundMusic?: string;
-  soundEffects: boolean;
-
-  // Experience Settings
-  animationIntensity: "low" | "medium" | "high";
-  particleEffects: boolean;
-  showSkipButton: boolean;
-  duration: "quick" | "normal" | "extended";
-
-  // Accessibility
-  reducedMotion: boolean;
-  textSize: "small" | "normal" | "large";
-  highContrast: boolean;
+    name: string;
+    age: number;
+    gender: Gender;
+    relationship: Relationship;
+    theme: TemplateTheme;
+    customMessage: string;
+    favoriteColor: string;
+    favoriteEmoji: string[];
+    photos: string[];
+    backgroundMusic?: string;
+    soundEffects: boolean;
+    animationIntensity: "low" | "medium" | "high";
+    particleEffects: boolean;
+    showSkipButton: boolean;
+    duration: "quick" | "normal" | "extended";
+    reducedMotion: boolean;
+    textSize: "small" | "normal" | "large";
+    highContrast: boolean;
 }
-
-/**
- * Emotional Letters for Different Themes
- * Crafted with deep emotion and poetic depth - "Super OP" Quality
- */
 export const EMOTIONAL_LETTERS = {
-  partner: {
-    male: `My King, My Strength, My Forever ${name},
+    partner: {
+        male: `My King, My Strength, My Forever ${name},
 
 In a world that often moves too fast, you are the stillness where my heart finds peace. Today isn't just about celebrating the day you were born; it's about celebrating every heartbeat you've shared with me. You aren't just my partner; you are the architect of my happiness, the guardian of my dreams, and the soul that mirrors my own.
 
@@ -59,8 +34,7 @@ Happy Birthday, my love. You are my greatest adventure and my home.
 
 Forever Yours,
 [Your Name]`,
-
-    female: `My Queen, My Muse, My Beautiful ${name},
+        female: `My Queen, My Muse, My Beautiful ${name},
 
 They say perfection doesn't exist, but every time I look at you, I see the flaw in that theory. You are the grace in my world, the light in my life, and the woman who makes my heart beat with purpose. Your strength inspires me, your intelligence humbles me, and your love... your love is the air I breathe.
 
@@ -70,10 +44,9 @@ Happy Birthday, my soulmate. May your light shine brighter than the stars tonigh
 
 With All My Soul,
 [Your Name]`
-  },
-
-  friend: {
-    romantic: `To the Most Radiant Soul I Know, ${name},
+    },
+    friend: {
+        romantic: `To the Most Radiant Soul I Know, ${name},
 
 From the very first moment our paths crossed, the world seemed to shift into focus. You have this magical way of making everything feel possible, of turning the mundane into the miraculous. Your eyes hold galaxies I want to explore, and your smile is the only map I'll ever need.
 
@@ -83,8 +56,7 @@ Happy Birthday, beautiful. May this year be as breathtaking as you are.
 
 Thinking of Only You,
 [Your Name]`,
-
-    friendly: `To My Unbiological Sister & Best Friend, ${name},
+        friendly: `To My Unbiological Sister & Best Friend, ${name},
 
 Happy Birthday to the one who knows all my secrets and still hasn't run away! 😂 You are the laughter in my life when things get tough and the logic I need when I'm being a mess. People like you don't just happen; you're a rare gem that I'm so lucky to have found.
 
@@ -94,8 +66,7 @@ Love you to the moon and back, Bestie! ✨
 
 Your Partner in Crime,
 [Your Name]`,
-
-    legend: `To The Absolute Legend, ${name},
+        legend: `To The Absolute Legend, ${name},
 
 Happy Birthday to the man who makes life feel like an epic adventure! You've always been the one with the best stories, the loudest laughs, and the most loyal heart. People like you are the reason 'best friend' was even a term invented.
 
@@ -105,9 +76,8 @@ Keep killing it, you absolute icon. The world isn't ready for what you're doing 
 
 Cheers to You,
 [Your Name]`
-  },
-
-  love: `My Heart's Only Desire, ${name},
+    },
+    love: `My Heart's Only Desire, ${name},
 
 If I could gather every star in the sky and place them at your feet, it still wouldn't be enough to show you how much I love you. You are the 'why' behind everything I do. In the chaos of this world, you are my sanctuary, my anchor, and my ultimate destination.
 
@@ -117,8 +87,7 @@ Happy Birthday, my forever. My heart is, and will always be, yours.
 
 Eternally Yours,
 [Your Name]`,
-
-  emotional: `To My Most Precious ${name},
+    emotional: `To My Most Precious ${name},
 
 There are moments when I just stop and realize how lucky I am to have you in my life. You are the kind of person who leaves a mark on everyone you meet, but the mark you've left on my heart is permanent and profound. 
 
@@ -128,8 +97,7 @@ Happy Birthday. Take a moment to see yourself through my eyes—you are absolute
 
 With Deepest Love,
 [Your Name]`,
-
-  family: `To Our Dear ${name},
+    family: `To Our Dear ${name},
 
 Family is more than just blood; it's the anchor in the storm and the laughter in the quiet. Having you as a part of our family is one of our greatest blessings. You bring a unique light, a steady strength, and a heart full of kindness that binds us all together.
 
@@ -139,8 +107,7 @@ Happy Birthday. May your day be filled with the same warmth and joy you bring to
 
 With All Our Love,
 Your Family`,
-
-  sibling: `To My Amazing Sibling, ${name},
+    sibling: `To My Amazing Sibling, ${name},
 
 From fighting over the TV remote to having each other's backs when it really matters, we've shared a lifetime of memories. You're the one person who knows all my embarrassing childhood stories and still chooses to be seen in public with me! 😂
 
@@ -150,8 +117,7 @@ Happy Birthday. Let's make this year the best one yet.
 
 Love Always,
 [Your Name]`,
-
-  brother: `To My Amazing Brother, ${name},
+    brother: `To My Amazing Brother, ${name},
 
 Growing up with you taught me what it means to have a true ally. You've been my protector, my rival, my challenge, and ultimately, my greatest supporter. The memories we've built together—from childhood adventures to navigating adulthood—are woven into the fabric of who I am today.
 
@@ -161,8 +127,7 @@ On your birthday, I celebrate not just the man you've become, but the incredible
 
 Your Sibling (The Better One 😎),
 [Your Name]`,
-
-  sister: `To My Incredible Sister, ${name},
+    sister: `To My Incredible Sister, ${name},
 
 You are the one person in this world who truly understands me—not just as a sibling, but as your own complete person with dreams, struggles, and a heart as beautiful as the world around you. Our bond is something I've never taken for granted, and with each passing year, I realize how rare it is to have someone who knows all your secrets and still thinks you're amazing.
 
@@ -174,8 +139,7 @@ Happy Birthday to my forever sister. The world is infinitely better because you'
 
 With All My Love,
 [Your Name]`,
-
-  colleague: `To an Incredible Colleague, ${name},
+    colleague: `To an Incredible Colleague, ${name},
 
 Working with you is a daily reminder that the people make the place. Your dedication, your brilliant ideas, and your positive energy transform even the most stressful days into something manageable—and often, genuinely fun.
 
@@ -185,8 +149,7 @@ Happy Birthday! Wishing you a year of huge success and even bigger moments of jo
 
 Warmly,
 [Your Name]`,
-
-  mentor: `To My Valued Mentor, ${name},
+    mentor: `To My Valued Mentor, ${name},
 
 Some people teach by telling, but you teach by being. Your guidance, patience, and unwavering belief in my potential have shaped my journey in ways I can't fully express. You've not only shown me the path but given me the confidence to walk it.
 
@@ -196,8 +159,7 @@ Happy Birthday, and thank you for everything.
 
 With Deep Gratitude,
 [Your Name]`,
-
-  milestone: `To the Incredible ${name}, on Your Milestone Birthday,
+    milestone: `To the Incredible ${name}, on Your Milestone Birthday,
 
 Today isn't just another birthday; it's a celebration of a major milestone! It's a moment to pause, look back at the incredible journey you've traveled, and look forward to the unwritten chapters still waiting for your brilliance.
 
@@ -208,200 +170,175 @@ Happy Milestone Birthday! Let's celebrate this epic moment in style!
 Cheers to the Journey,
 [Your Name]`
 };
-
-/**
- * Special Quotes & Shayari for Interactive Elements
- * Targeted by Relationship and Gender
- */
 export const SPECIAL_QUOTES = {
-  partner: {
-    male: [
-      "You are the king of my heart, the man of my dreams, and the soul I choose to walk with forever.",
-      "In your arms, I've found my sanctuary. You are my greatest strength and my softest comfort.",
-      "Tere sang bitaye har pal ek shayari hai, tu hi mera junoon, tu hi meri tishnagi hai. ❤️"
-    ],
-    female: [
-      "To the woman who turned my world into a garden of joy—you are my muse, my love, and my everything.",
-      "Your grace is my inspiration, your love is my anchor. Happy Birthday to my beautiful soulmate.",
-      "Tumhari muskurahat hi meri khushi ka raaz hai, tum hi mera kal aur tum hi mera aaj ho. 🌹"
-    ]
-  },
-  friend: {
-    legend: [
-      "To the legend who turns every regular day into an epic story. Stay wild, stay real.",
-      "Brother from another mother, loyal as a shadow, bright as a star. Keep shining.",
-      "Dosti ka naam ho toh tum jaisa, har mushkil mein saath dene wala yaar tum jaisa. 🔥"
-    ],
-    friendly: [
-      "To my soul-sister—thank you for being the person who knows my silence as well as my laughter.",
-      "You aren't just a friend; you're the family I got to choose. Here's to a lifetime of adventures.",
-      "Yaara teri yaari ko maine toh khuda maana, tujh jaisa yaar hai meri sabse badi khushnasibi. ✨"
-    ]
-  },
-  family: [
-    "The roots of our family tree are strengthened by your love. You are our pride and joy.",
-    "Every memory we share is a treasure. Thank you for being the heart of our home.",
-    "Parivaar ka garv ho tum, hamari khushiyon ki wajah ho tum. Sada khush raho. 🙏"
-  ]
-};
-
-/**
- * Template Presets
- * Automatically adjust messages, colors, emojis based on gender, age, and relationship
- */
-export const TEMPLATE_PRESETS = {
-  romantic: {
-    female: {
-      young_adult: {
-        colors: ["#FF1493", "#FF69B4", "#FFB6C1"],
-        emojis: ["💖", "✨", "💫", "🌹", "💝"],
-        messageTemplate: "Happy Birthday Beautiful! 🌹",
-        vibration: true,
-      },
-      adult: {
-        colors: ["#DC143C", "#FF69B4", "#FF4500"],
-        emojis: ["💕", "🌹", "✨", "💎", "👑"],
-        messageTemplate: "Happy Birthday to the Love of My Life! 💕",
-        vibration: true,
-      },
+    partner: {
+        male: [
+            "You are the king of my heart, the man of my dreams, and the soul I choose to walk with forever.",
+            "In your arms, I've found my sanctuary. You are my greatest strength and my softest comfort.",
+            "Tere sang bitaye har pal ek shayari hai, tu hi mera junoon, tu hi meri tishnagi hai. ❤️"
+        ],
+        female: [
+            "To the woman who turned my world into a garden of joy—you are my muse, my love, and my everything.",
+            "Your grace is my inspiration, your love is my anchor. Happy Birthday to my beautiful soulmate.",
+            "Tumhari muskurahat hi meri khushi ka raaz hai, tum hi mera kal aur tum hi mera aaj ho. 🌹"
+        ]
     },
-    male: {
-      young_adult: {
-        colors: ["#1E90FF", "#00CED1", "#FFD700"],
-        emojis: ["💙", "✨", "🎊", "⭐", "🚀"],
-        messageTemplate: "Happy Birthday Legend! 🎉",
-        vibration: true,
-      },
-      adult: {
-        colors: ["#0047AB", "#1E90FF", "#FF6347"],
-        emojis: ["💙", "⭐", "🎯", "👑", "💪"],
-        messageTemplate: "Happy Birthday King! 👑",
-        vibration: true,
-      },
-    },
-  },
-  fun: {
     friend: {
-      teen: {
-        colors: ["#00FF00", "#00FFFF", "#FF00FF"],
-        emojis: ["😎", "🍻", "🎮", "🎸", "🔥"],
-        messageTemplate: "Hey Birthday Buddy! Let's Party! 🎉",
-        vibration: true,
-      },
-      young_adult: {
-        colors: ["#FFD700", "#FF6347", "#00CED1"],
-        emojis: ["🥳", "🍕", "🎊", "🎈", "⭐"],
-        messageTemplate: "Another Year Older, Still Awesome! 🎉",
-        vibration: true,
-      },
+        legend: [
+            "To the legend who turns every regular day into an epic story. Stay wild, stay real.",
+            "Brother from another mother, loyal as a shadow, bright as a star. Keep shining.",
+            "Dosti ka naam ho toh tum jaisa, har mushkil mein saath dene wala yaar tum jaisa. 🔥"
+        ],
+        friendly: [
+            "To my soul-sister—thank you for being the person who knows my silence as well as my laughter.",
+            "You aren't just a friend; you're the family I got to choose. Here's to a lifetime of adventures.",
+            "Yaara teri yaari ko maine toh khuda maana, tujh jaisa yaar hai meri sabse badi khushnasibi. ✨"
+        ]
     },
-  },
-  family: {
-    young_adult: {
-      colors: ["#FFD700", "#FF69B4", "#87CEEB"],
-      emojis: ["👨‍👩‍👧‍👦", "❤️", "🎂", "🎁", "✨"],
-      messageTemplate: "Happy Birthday to Our Precious One! 🎉",
-      vibration: true,
-    },
-    adult: {
-      colors: ["#8B4513", "#DAA520", "#CD5C5C"],
-      emojis: ["❤️", "👪", "🎂", "✨", "🌟"],
-      messageTemplate: "Happy Birthday to Our Beloved! 💕",
-      vibration: true,
-    },
-  },
+    family: [
+        "The roots of our family tree are strengthened by your love. You are our pride and joy.",
+        "Every memory we share is a treasure. Thank you for being the heart of our home.",
+        "Parivaar ka garv ho tum, hamari khushiyon ki wajah ho tum. Sada khush raho. 🙏"
+    ]
 };
-
-/**
- * Default Configuration
- */
+export const TEMPLATE_PRESETS = {
+    romantic: {
+        female: {
+            young_adult: {
+                colors: ["#FF1493", "#FF69B4", "#FFB6C1"],
+                emojis: ["💖", "✨", "💫", "🌹", "💝"],
+                messageTemplate: "Happy Birthday Beautiful! 🌹",
+                vibration: true,
+            },
+            adult: {
+                colors: ["#DC143C", "#FF69B4", "#FF4500"],
+                emojis: ["💕", "🌹", "✨", "💎", "👑"],
+                messageTemplate: "Happy Birthday to the Love of My Life! 💕",
+                vibration: true,
+            },
+        },
+        male: {
+            young_adult: {
+                colors: ["#1E90FF", "#00CED1", "#FFD700"],
+                emojis: ["💙", "✨", "🎊", "⭐", "🚀"],
+                messageTemplate: "Happy Birthday Legend! 🎉",
+                vibration: true,
+            },
+            adult: {
+                colors: ["#0047AB", "#1E90FF", "#FF6347"],
+                emojis: ["💙", "⭐", "🎯", "👑", "💪"],
+                messageTemplate: "Happy Birthday King! 👑",
+                vibration: true,
+            },
+        },
+    },
+    fun: {
+        friend: {
+            teen: {
+                colors: ["#00FF00", "#00FFFF", "#FF00FF"],
+                emojis: ["😎", "🍻", "🎮", "🎸", "🔥"],
+                messageTemplate: "Hey Birthday Buddy! Let's Party! 🎉",
+                vibration: true,
+            },
+            young_adult: {
+                colors: ["#FFD700", "#FF6347", "#00CED1"],
+                emojis: ["🥳", "🍕", "🎊", "🎈", "⭐"],
+                messageTemplate: "Another Year Older, Still Awesome! 🎉",
+                vibration: true,
+            },
+        },
+    },
+    family: {
+        young_adult: {
+            colors: ["#FFD700", "#FF69B4", "#87CEEB"],
+            emojis: ["👨‍👩‍👧‍👦", "❤️", "🎂", "🎁", "✨"],
+            messageTemplate: "Happy Birthday to Our Precious One! 🎉",
+            vibration: true,
+        },
+        adult: {
+            colors: ["#8B4513", "#DAA520", "#CD5C5C"],
+            emojis: ["❤️", "👪", "🎂", "✨", "🌟"],
+            messageTemplate: "Happy Birthday to Our Beloved! 💕",
+            vibration: true,
+        },
+    },
+};
 export const DEFAULT_CONFIG: BirthdayConfig = {
-  name: "YOU",
-  age: 25,
-  gender: "other",
-  relationship: "friend",
-  theme: "fun",
-  customMessage: "Have an Amazing Birthday! 🎉",
-  favoriteColor: "#FF6B6B",
-  favoriteEmoji: ["🎉", "✨", "🎊", "🎈", "🥳"],
-  photos: [
-    "https://images.unsplash.com/photo-1530103043960-ef38714abb15",
-    "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3",
-    "https://images.unsplash.com/photo-1513151233558-d860c5398176",
-  ],
-  soundEffects: true,
-  animationIntensity: "high",
-  particleEffects: true,
-  showSkipButton: true,
-  duration: "normal",
-  reducedMotion: false,
-  textSize: "normal",
-  highContrast: false,
+    name: "YOU",
+    age: 25,
+    gender: "other",
+    relationship: "friend",
+    theme: "fun",
+    customMessage: "Have an Amazing Birthday! 🎉",
+    favoriteColor: "#FF6B6B",
+    favoriteEmoji: ["🎉", "✨", "🎊", "🎈", "🥳"],
+    photos: [
+        "https://images.unsplash.com/photo-1530103043960-ef38714abb15",
+        "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3",
+        "https://images.unsplash.com/photo-1513151233558-d860c5398176",
+    ],
+    soundEffects: true,
+    animationIntensity: "high",
+    particleEffects: true,
+    showSkipButton: true,
+    duration: "normal",
+    reducedMotion: false,
+    textSize: "normal",
+    highContrast: false,
 };
-
-/**
- * Color Palettes for Different Templates
- */
 export const COLOR_PALETTES = {
-  romantic: {
-    primary: "#FF1493",
-    secondary: "#FFB6C1",
-    accent: "#FF69B4",
-    light: "#FFE4E1",
-    dark: "#8B0A50",
-  },
-  fun: {
-    primary: "#FFD700",
-    secondary: "#FF6347",
-    accent: "#00CED1",
-    light: "#FFFACD",
-    dark: "#FF4500",
-  },
-  energetic: {
-    primary: "#FF4500",
-    secondary: "#00FF00",
-    accent: "#00FFFF",
-    light: "#FFE4B5",
-    dark: "#DC143C",
-  },
-  elegant: {
-    primary: "#C0C0C0",
-    secondary: "#DAA520",
-    accent: "#696969",
-    light: "#F5F5DC",
-    dark: "#2F4F4F",
-  },
-  playful: {
-    primary: "#FF69B4",
-    secondary: "#00FFFF",
-    accent: "#FFD700",
-    light: "#FFEFD5",
-    dark: "#FF1493",
-  },
-  nostalgic: {
-    primary: "#8B4513",
-    secondary: "#DAA520",
-    accent: "#CD5C5C",
-    light: "#F5DEB3",
-    dark: "#654321",
-  },
+    romantic: {
+        primary: "#FF1493",
+        secondary: "#FFB6C1",
+        accent: "#FF69B4",
+        light: "#FFE4E1",
+        dark: "#8B0A50",
+    },
+    fun: {
+        primary: "#FFD700",
+        secondary: "#FF6347",
+        accent: "#00CED1",
+        light: "#FFFACD",
+        dark: "#FF4500",
+    },
+    energetic: {
+        primary: "#FF4500",
+        secondary: "#00FF00",
+        accent: "#00FFFF",
+        light: "#FFE4B5",
+        dark: "#DC143C",
+    },
+    elegant: {
+        primary: "#C0C0C0",
+        secondary: "#DAA520",
+        accent: "#696969",
+        light: "#F5F5DC",
+        dark: "#2F4F4F",
+    },
+    playful: {
+        primary: "#FF69B4",
+        secondary: "#00FFFF",
+        accent: "#FFD700",
+        light: "#FFEFD5",
+        dark: "#FF1493",
+    },
+    nostalgic: {
+        primary: "#8B4513",
+        secondary: "#DAA520",
+        accent: "#CD5C5C",
+        light: "#F5DEB3",
+        dark: "#654321",
+    },
 };
-
-/**
- * Message Templates by Gender, Age, and Relationship
- */
 export const MESSAGE_TEMPLATES = {
-  romantic_female_young: "Happy Birthday Beautiful! You make every day special. 💖",
-  romantic_female_adult:
-    "Happy Birthday to the Love of My Life! Forever grateful for you. 💕",
-  romantic_male_young: "Happy Birthday Legend! Can't wait to celebrate with you. 💙",
-  romantic_male_adult: "Happy Birthday King! You mean everything to me. 👑",
-  fun_friend_teen: "Hey Birthday Buddy! Time to make some epic memories! 🎉",
-  fun_friend_young:
-    "Another year older, still awesome! Let's party like we're 21! 🥳",
-  fun_colleague: "Happy Birthday! Cheers to another year of collaboration! 🎊",
-  family_child: "Happy Birthday to our Precious One! We love you so much! 🎂",
-  family_adult: "Happy Birthday to our Beloved! You make us so proud! ❤️",
-  family_senior:
-    "Happy Birthday to our Wonderful Parent! Thank you for everything! 🌟",
+    romantic_female_young: "Happy Birthday Beautiful! You make every day special. 💖",
+    romantic_female_adult: "Happy Birthday to the Love of My Life! Forever grateful for you. 💕",
+    romantic_male_young: "Happy Birthday Legend! Can't wait to celebrate with you. 💙",
+    romantic_male_adult: "Happy Birthday King! You mean everything to me. 👑",
+    fun_friend_teen: "Hey Birthday Buddy! Time to make some epic memories! 🎉",
+    fun_friend_young: "Another year older, still awesome! Let's party like we're 21! 🥳",
+    fun_colleague: "Happy Birthday! Cheers to another year of collaboration! 🎊",
+    family_child: "Happy Birthday to our Precious One! We love you so much! 🎂",
+    family_adult: "Happy Birthday to our Beloved! You make us so proud! ❤️",
+    family_senior: "Happy Birthday to our Wonderful Parent! Thank you for everything! 🌟",
 };
