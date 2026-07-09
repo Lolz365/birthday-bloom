@@ -1,81 +1,118 @@
-# Roadmap
+# 🌸 Birthday Bloom — Detailed Project Roadmap
 
-This document outlines the planned direction for Birthday Bloom. It reflects the
-maintainer's priorities and community feedback. Timelines are approximate and
-may shift based on contributor availability.
+Welcome to the official roadmap for **Birthday Bloom**. This document details our planned future, ongoing work, and ultimate vision for this interactive birthday landing page platform.
 
-## Now — Repository Quality & Community Foundation
+> [!NOTE]
+> Timelines are estimates and driven by community needs and contributor availability. We welcome feedback and contributions to speed up any of these items!
 
-- [x] Community health files (CODE_OF_CONDUCT, SECURITY, SUPPORT)
-- [x] Issue and PR templates
-- [x] CI pipeline (lint, typecheck, build, test)
-- [x] Dependabot configuration
-- [x] README and docs restructuring
-- [x] CHANGELOG and ROADMAP
-- [ ] Enable GitHub Discussions for Q&A and feature brainstorming
-- [ ] Set up branch protection on `main`
+---
 
-## Next — Near-Term Improvements
+## 🎨 Project Vision & Philosophy
 
-### Templates & Personalization
-- [ ] More celebration modes (anniversary, graduation, generic celebration)
-- [ ] Pre-built theme packs users can drop in
-- [ ] Better support for group celebrations (multi-person)
+Birthday Bloom's goal is to turn a static landing page into a **cinematic, interactive stage** in the browser. 
 
-### Content & Media
-- [ ] YouTube / Vimeo native embed support for video section
-- [ ] Spotify / Apple Music playlist integration
-- [ ] GIF and animated sticker support
+* **Config-First:** We want non-coders to customize everything through environment variables.
+* **Performance-First:** Keep bundle sizes low, animations at 60fps, and avoid heavy external rendering engines.
+* **Emotion-Driven:** Structure the pacing of text, audio, and visual reveals to build anticipation and surprise.
 
-### Accessibility & Mobile
-- [ ] Screen reader pass on all interactive sections
-- [ ] Keyboard navigation audit and improvements
-- [ ] Offline support via service worker
-- [ ] PWA manifest for installable experience
+---
 
-### Developer Experience
-- [ ] Add Storybook for component development
-- [ ] Test coverage for core store and utilities
-- [ ] Contributing documentation for specific component areas
-- [ ] Better error messages for misconfigured env values
+## 📅 Roadmap Overview
 
-## Later — Bigger Features
+```mermaid
+gantt
+    title Birthday Bloom Project Timeline & Milestones
+    dateFormat  YYYY-MM
+    section Now (Core & Quality)
+    Docs & Community Health      :done, des1, 2026-06, 2026-07
+    CI/CD Automation & Lint      :done, des2, 2026-06, 2026-07
+    Security & Dependabot        :done, des3, 2026-06, 2026-07
+    Discussions & Branch Rules   :active, des4, 2026-07, 2026-08
+    section Next (Features & DX)
+    Presets & Themes             :active, des5, 2026-08, 2026-10
+    Spotify & Audio Embeds       :des6, 2026-09, 2026-11
+    Accessibility & PWA          :des7, 2026-10, 2026-12
+    Storybook & Testing          :des8, 2026-11, 2027-01
+    section Later (Scale & Ecosystem)
+    CLI Tool & Boilerplate       :des9, 2027-01, 2027-03
+    Online Preview Configurator  :des10, 2027-02, 2027-05
+    Guestbook Backend System     :des11, 2027-04, 2027-07
+```
 
-### Ecosystem
-- [ ] CLI tool for quick project scaffolding (`npx create-birthday-bloom`)
-- [ ] Online configurator / preview tool
-- [ ] Community template gallery
-- [ ] GitHub template repository for instant forks
+---
 
-### Platform
-- [ ] Admin dashboard for non-developer customization
-- [ ] Analytics integration option (opt-in)
-- [ ] Guest book /留言 system with optional backend
+## 🟢 Phase 1: Now — Quality & Community Foundation
+*Focus: Deepen repository stability, build infrastructure, and improve developer experience (DX).*
 
-### Performance
-- [ ] Lazy-load sections based on scroll position
-- [ ] Image optimization pipeline
-- [ ] Animation performance regression testing
+### 🛠️ Completed Milestones
+* **✅ Standard Community Health Files**
+  * Established standard documentation including [CODE_OF_CONDUCT.md](file:///d:/Projects/Website/birthday-bloom-main/CODE_OF_CONDUCT.md) for community guidelines, [SECURITY.md](file:///d:/Projects/Website/birthday-bloom-main/SECURITY.md) for vulnerability reporting, and [SUPPORT.md](file:///d:/Projects/Website/birthday-bloom-main/SUPPORT.md) for user assistance.
+* **✅ Pull Request & Issue Templates**
+  * Created custom YAML-driven templates for Bug Reports, Feature Requests, and Documentation requests, as well as a markdown Pull Request template.
+* **✅ Continuous Integration (CI) Automation**
+  * Set up GitHub Action pipelines that run ESLint, TypeScript compilation, Vitest checks, and production builds on every push and PR to ensure no broken code enters the branch.
+* **✅ Automated Dependency Management**
+  * Added Dependabot configuration to track node package updates and automatically submit security PRs.
+* **✅ Redesigned Documentation Suite**
+  * Created deep-dive guides: [ARCHITECTURE.md](file:///d:/Projects/Website/birthday-bloom-main/ARCHITECTURE.md), [ENV_CONFIGS.md](file:///d:/Projects/Website/birthday-bloom-main/ENV_CONFIGS.md), [FAQ.md](file:///d:/Projects/Website/birthday-bloom-main/FAQ.md), [CHANGELOG.md](file:///d:/Projects/Website/birthday-bloom-main/CHANGELOG.md), and a comprehensive [README.md](file:///d:/Projects/Website/birthday-bloom-main/README.md).
 
-## Ideas / Explorations
+### ⏳ Current Work-in-Progress
+* **🔄 Community Discussions Hub**
+  * Enable GitHub Discussions to allow users to share their own deployed sites, request features, and get troubleshooting support.
+* **🔒 Branch Protection Safeguards**
+  * Set up strict branch requirements for the `main` branch to guarantee all commits pass CI tests before being merged.
 
-These are not committed but are being explored:
+---
 
-- **i18n / localization framework** — Make it easy to translate the experience
-- **Secret message reveal** — Hidden content unlocked by date or interaction
-- **AR / camera filters** — Fun overlay effects using the device camera
-- **Multi-page narrative** — Branching stories based on user choices
-- **Shareable highlight reel** — Auto-generated GIF or video of the experience
+## 🟡 Phase 2: Next — Features & Polish
+*Focus: Add premium customization options, enrich media interactivity, and enhance core performance.*
 
-## How to Influence the Roadmap
+### 🎨 Templates & Personalization Presets
+* **Celebration Presets:** Drop-in themes and layouts for different milestones (e.g. *Anniversaries*, *Graduations*, *Mother's/Father's Day*).
+* **Pre-built Theme Packs:** Preset theme combinations of HSL colors and background gradients that can be switched via a single environment variable.
+* **Group Celebrations Mode:** Support for multiple people writing messages and signing the card together.
 
-- **Upvote issues** with 👍 reactions on GitHub
-- **Open feature requests** describing the problem and use case
-- **Submit PRs** — working code speaks loudest
-- **Share your use case** in Discussions
+### 🎵 Media & Content Integrations
+* **Native Audio & Spotify Embed:** Direct integrations to load background tracks seamlessly from Spotify or YouTube Music without breaking the page's audio lifecycle.
+* **Native Video Embed Support:** Clean wrapper components to display YouTube, Vimeo, or local HTML5 videos beautifully inside the birthday cinematic intro.
 
-We prioritize features that:
-1. Benefit the widest range of users
-2. Align with the env-first, customization-driven philosophy
-3. Maintain performance and accessibility
-4. Are maintainable by a small team
+### 📱 Accessibility & Mobile Improvements
+* **Screen Reader Audit (A11y):** Ensure all interactive triggers (like blowing candles and popping balloons) have correct ARIA labels and focus states.
+* **PWA (Progressive Web App):** Add a manifest file and service workers so the experience can be saved to a mobile home screen like a native app.
+* **Offline Compatibility:** Cache key assets (music, images, SVG icons) to allow offline loads.
+
+### 💻 Developer Experience (DX)
+* **Storybook Integration:** Set up Storybook for visual cataloging and testing of components like `<CakeCutting />` and `<HeartTree />`.
+* **Deeper Testing Coverage:** Introduce Vitest coverage metrics targeting core state stores and animations.
+
+---
+
+## 🔴 Phase 3: Later — Ecosystem & Scale
+*Focus: Scale out the platform to support automated setup, code-free configuration, and interactive server features.*
+
+### 🚀 Developer Scaffolding
+* **Scaffolding CLI Tool:** Create `npx create-birthday-bloom` to let developers generate a customized copy of the repository directly from their terminals.
+* **GitHub Template Repo:** Mark the repository as a GitHub Template to allow users to generate a duplicate with a single button click.
+
+### 🖥️ Online Configurator (No-Code Config)
+* **Visual Configurator UI:** A web-based form where users can fill out their details, select themes, upload assets, and preview the site in real-time.
+* **Export Config Package:** Download a prepared `.env` file containing the user's settings, ready to deploy.
+
+### 💬 Community & Shared Interactivity
+* **Interactive Guest Book:** A backend-supported message board allowing family and friends to write congratulations live on the page.
+* **Community Template Gallery:** Showcase user customizations and custom styles to inspire others.
+* **i18n Localization Engine:** Support for instant translations of standard messages.
+
+---
+
+## 🗳️ How the Roadmap is Managed
+
+We prioritize features that align with our core values:
+1. **Accessibility:** Lightweight, responsive, and working smoothly on all mobile devices.
+2. **Configuration-First:** Code adjustments are secondary to setting simple variables in [.env.example](file:///d:/Projects/Website/birthday-bloom-main/.env.example).
+3. **No Bloat:** Refrain from importing large library dependencies that impact rendering performance.
+
+### Want to influence the direction?
+* **Upvote:** Add a 👍 reaction to existing feature requests.
+* **Discuss:** Start a discussion thread to brainstorm new ideas.
+* **Submit:** Pull Requests are always welcome! Check [CONTRIBUTING.md](file:///d:/Projects/Website/birthday-bloom-main/CONTRIBUTING.md) to get started.
