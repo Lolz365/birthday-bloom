@@ -971,37 +971,6 @@ All contributors are expected to follow our [CODE_OF_CONDUCT.md](./CODE_OF_CONDU
 
 ---
 
-## 🛣️ Roadmap
-
-### Now — Quality & Community Foundation
-- ✅ Community health files (CODE_OF_CONDUCT, SECURITY, SUPPORT)
-- ✅ Issue and PR templates for structured contributions
-- ✅ CI pipeline with lint, typecheck, build, and test
-- ✅ Dependabot for dependency updates
-- ✅ Comprehensive documentation suite
-
-### Next — Features & Polish
-- [ ] Celebration mode presets (anniversary, graduation)
-- [ ] YouTube/Vimeo native embed support
-- [ ] Spotify playlist integration
-- [ ] Screen reader pass on all interactive sections
-- [ ] Offline support via service worker
-- [ ] PWA manifest for installable experience
-- [ ] Storybook for component development
-- [ ] Expanded test coverage
-
-### Later — Ecosystem & Scale
-- [ ] CLI tool (`npx create-birthday-bloom`)
-- [ ] Online preview configurator
-- [ ] Community template gallery
-- [ ] Guest book with optional backend
-- [ ] i18n / localization framework
-
-**Full roadmap:** [ROADMAP.md](./ROADMAP.md)  
-**Have ideas?** Open a [feature request](https://github.com/naborajs/birthday-bloom/issues/new?template=feature_request.yml)
-
----
-
 ## 🙌 Acknowledgments
 - **React.js Team**
 - **Framer Motion**
@@ -1035,20 +1004,6 @@ We believe that code is a gift. That's why we made Birthday Bloom open-source an
 ## 📖 Open Source Ecosystem
 
 Birthday Bloom comes with a complete open-source operating system to make contributing, maintaining, and collaborating easy.
-
-### Repository Health Files
-
-| File | Purpose |
-| --- | --- |
-| [CONTRIBUTING.md](./CONTRIBUTING.md) | Full contribution workflow |
-| [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Community standards and expectations |
-| [SECURITY.md](./SECURITY.md) | Vulnerability reporting process |
-| [SUPPORT.md](./SUPPORT.md) | Where to get help |
-| [STYLEGUIDE.md](./STYLEGUIDE.md) | Code, docs, and design conventions |
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | System architecture deep dive |
-| [CHANGELOG.md](./CHANGELOG.md) | Version history and release notes |
-| [ROADMAP.md](./ROADMAP.md) | Planned features and direction |
-| [FAQ.md](./FAQ.md) | Frequently asked questions |
 
 ### GitHub Automation
 

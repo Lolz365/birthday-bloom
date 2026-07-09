@@ -1,6 +1,19 @@
 # Deployment Guide
 
----
+## 🚀 Deployment Guide
+
+<p align="center">
+  <a href="https://youtu.be/gwq1IaHXUn4">
+    <img src="https://img.youtube.com/vi/gwq1IaHXUn4/maxresdefault.jpg"
+         alt="Birthday Bloom - Complete Deployment Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🚀 Watch the Complete Deployment Guide</strong><br>
+  Learn how to deploy <strong>Birthday Bloom</strong> step by step using <strong>Vercel</strong>. This guide covers everything from forking the GitHub repository, importing the project into Vercel, configuring environment variables, deploying your website, customizing it, and publishing updates. Perfect for beginners and experienced developers alike.
+</p>
 
 ## Quick Deployment (Vercel Recommended)
 
