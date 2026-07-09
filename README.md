@@ -4,23 +4,27 @@
 
 > An open-source birthday landing page built to offer smooth animations, interactive features, and straightforward environment-driven customization. Created by Naboraj Sarkar.
 
-![Birthday Bloom Banner](https://raw.githubusercontent.com/naborajs/birthday-bloom/main/public/favicon.png)
-
 <h3>✨ An Interactive Birthday Surprise Experience ✨</h3>
 
-<p align="center">
+ <p align="center">
   <a href="https://github.com/naborajs/birthday-bloom/stargazers"><img src="https://img.shields.io/github/stars/naborajs/birthday-bloom?style=for-the-badge&color=ff69b4&logo=github" alt="Stars"></a>
   <a href="https://github.com/naborajs/birthday-bloom/blob/main/LICENSE"><img src="https://img.shields.io/github/license/naborajs/birthday-bloom?style=for-the-badge&color=4169e1" alt="License"></a>
   <a href="https://vercel.com"><img src="https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel" alt="Deploy"></a>
+</p> 
+
+## 🎥 Project Overview
+
+<p align="center">
+  <a href="https://youtu.be/R3XNhP9hSjw" target="_blank">
+    <img src="https://img.youtube.com/vi/R3XNhP9hSjw/maxresdefault.jpg"
+         alt="Watch the Birthday Bloom Project Overview"
+         width="900">
+  </a>
 </p>
 
-<div align="center">
-  <figure>
-    <img src="src\assets\birthday-boom.png" alt="Birthday Bloom hero banner" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,0.35);" />
-    <figcaption><em>Personalized birthday experiences built with React, Framer Motion, and env-driven configuration.</em></figcaption>
-  </figure>
-</div>
-</div>
+<p align="center">
+  <b>📺 Click the thumbnail above to watch the official Birthday Bloom project overview.</b>
+</p>
 
 ---
 
