@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
 import { useConfetti } from "./Confetti";
@@ -39,15 +39,17 @@ const TreeSparks = ({ count, color }: { count: number; color: string }) => {
     );
 };
 
+const heartPath = "M0,-8 C-2,-14 -10,-14 -12,-7 C-15,0 -8,8 0,16 C8,8 15,0 12,-7 C10,-14 2,-14 0,-8 Z";
+
 export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
     const [stage, setStage] = useState<0 | 1 | 2 | 3 | 4>(0);
     const [activeMessage, setActiveMessage] = useState<string | null>(null);
+    const [scales, setScales] = useState<number[]>(Array(12).fill(0));
     const [hovered, setHovered] = useState<number | null>(null);
     const { config } = useBirthdayStore();
     const { relationship, gender, photos = [] } = config;
     const primaryColor = config.favoriteColor || 'hsl(330, 90%, 75%)';
-    const { fireStars } = useConfetti();
-    const { playReveal, playPop } = useSoundManager();
+    const { playPop } = useSoundManager();
 
     const quotesPool = useMemo(() => {
         if (relationship === 'partner') return SPECIAL_QUOTES.partner[gender as 'male' | 'female'] || SPECIAL_QUOTES.family;
@@ -55,15 +57,7 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         return SPECIAL_QUOTES.family;
     }, [relationship, gender]);
 
-    useEffect(() => {
-        const t1 = setTimeout(() => setStage(1), delay);
-        const t2 = setTimeout(() => setStage(2), delay + 1500);
-        const t3 = setTimeout(() => setStage(3), delay + 3000);
-        const t4 = setTimeout(() => setStage(4), delay + 4500);
-        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
-    }, [delay]);
-
-    const heartLeaves = [
+    const heartLeaves = useMemo(() => [
         { cx: 150, cy: 52,  s: 1.2, d: 0   },
         { cx: 128, cy: 32,  s: 0.9, d: 0.2 },
         { cx: 172, cy: 36,  s: 0.9, d: 0.1 },
@@ -76,10 +70,48 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         { cx: 202, cy: 58,  s: 0.8, d: 0.3 },
         { cx: 242, cy: 68,  s: 0.9, d: 0.2 },
         { cx: 262, cy: 92,  s: 0.7, d: 0.4 },
-    ];
+    ], []);
 
-    // Heart path centered at 0,0
-    const heartPath = "M0,-8 C-2,-14 -10,-14 -12,-7 C-15,0 -8,8 0,16 C8,8 15,0 12,-7 C10,-14 2,-14 0,-8 Z";
+    useEffect(() => {
+        const t1 = setTimeout(() => setStage(1), delay);
+        const t2 = setTimeout(() => setStage(2), delay + 1500);
+        const t3 = setTimeout(() => setStage(3), delay + 3000);
+        const t4 = setTimeout(() => setStage(4), delay + 4500);
+        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    }, [delay]);
+
+    // Animate hearts in one by one once stage >= 3
+    useEffect(() => {
+        if (stage < 3) return;
+        heartLeaves.forEach((leaf, i) => {
+            const start = performance.now();
+            const targetScale = leaf.s;
+            const duration = 600;
+            const delayMs = leaf.d * 1000;
+            const timer = setTimeout(() => {
+                const animate = (now: number) => {
+                    const t = Math.min((now - start - delayMs) / duration, 1);
+                    if (t < 0) { requestAnimationFrame(animate); return; }
+                    // spring-like easing
+                    const eased = 1 - Math.pow(1 - t, 3) + Math.sin(t * Math.PI) * 0.15;
+                    setScales(prev => { const n = [...prev]; n[i] = Math.min(eased * targetScale, targetScale * 1.1); return n; });
+                    if (t < 1) requestAnimationFrame(animate);
+                    else setScales(prev => { const n = [...prev]; n[i] = targetScale; return n; });
+                };
+                requestAnimationFrame(animate);
+            }, 0);
+            return () => clearTimeout(timer);
+        });
+    }, [stage, heartLeaves]);
+
+    const handleHeartClick = useCallback((e: React.MouseEvent, i: number) => {
+        e.stopPropagation();
+        if (stage < 3) return;
+        const message = HEART_MESSAGES[i] ?? quotesPool[i % quotesPool.length];
+        setActiveMessage(message);
+        playPop();
+        setTimeout(() => setActiveMessage(null), 5000);
+    }, [stage, quotesPool, playPop]);
 
     return (
         <div className="relative w-full max-w-[500px] mx-auto mb-20" style={{ perspective: "1000px" }}>
@@ -98,29 +130,27 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
 
                         {stage >= 3 && <TreeSparks count={25} color={primaryColor} />}
 
-                        <svg viewBox="0 0 300 300" className="w-full h-full relative z-10 overflow-visible cursor-pointer"
-                            style={{ filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.5))" }}
-                            onClick={() => { if (stage >= 3) { fireStars(); playReveal(); } }}>
+                        <svg viewBox="0 0 300 300" className="w-full h-full relative z-10 overflow-visible"
+                            style={{ filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.5))" }}>
                             <defs>
                                 <filter id="treeGlow" x="-50%" y="-50%" width="200%" height="200%">
                                     <feGaussianBlur stdDeviation="4" result="blur" />
                                     <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                                 </filter>
                                 <filter id="heartGlow" x="-80%" y="-80%" width="260%" height="260%">
-                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feGaussianBlur stdDeviation="5" result="blur" />
                                     <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                                 </filter>
-                                {/* Bark gradient — warm brown with highlight */}
                                 <linearGradient id="bark" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stopColor="hsl(22,35%,18%)" />
-                                    <stop offset="30%" stopColor="hsl(22,40%,32%)" />
+                                    <stop offset="30%" stopColor="hsl(22,42%,34%)" />
                                     <stop offset="60%" stopColor="hsl(22,38%,28%)" />
                                     <stop offset="100%" stopColor="hsl(22,30%,20%)" />
                                 </linearGradient>
                                 <linearGradient id="barkLight" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="hsl(30,50%,55%)" stopOpacity="0" />
-                                    <stop offset="40%" stopColor="hsl(30,50%,55%)" stopOpacity="0.35" />
-                                    <stop offset="100%" stopColor="hsl(30,50%,55%)" stopOpacity="0" />
+                                    <stop offset="0%" stopColor="hsl(30,55%,58%)" stopOpacity="0" />
+                                    <stop offset="40%" stopColor="hsl(30,55%,58%)" stopOpacity="0.4" />
+                                    <stop offset="100%" stopColor="hsl(30,55%,58%)" stopOpacity="0" />
                                 </linearGradient>
                                 <radialGradient id="heartFill" cx="35%" cy="28%" r="65%">
                                     <stop offset="0%" stopColor="hsl(350,95%,82%)" />
@@ -133,91 +163,64 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                 </radialGradient>
                             </defs>
 
-                            {/* === TRUNK === organic tapered shape, not a path stroke */}
-                            <motion.g initial={{ scaleY: 0 }} animate={{ scaleY: stage >= 1 ? 1 : 0 }}
+                            {/* Trunk — tapered bezier fill */}
+                            <motion.g
+                                initial={{ scaleY: 0 }} animate={{ scaleY: stage >= 1 ? 1 : 0 }}
                                 transition={{ duration: 1.5, ease: "easeOut" }}
-                                // transformTemplate keeps translate intact while framer animates scaleY
-                                transformTemplate={({ scaleY }) => `translate(0, 300px) scaleY(${scaleY}) translate(0, -300px)`}>
-                                {/* Wide base tapering to narrow top */}
-                                <path d="M 136 300 C 134 260 138 220 142 180 C 144 160 146 150 150 145
-                                         C 154 150 156 160 158 180 C 162 220 166 260 164 300 Z"
+                                transformTemplate={({ scaleY }) => `translate(0,300) scaleY(${scaleY}) translate(0,-300)`}>
+                                <path d="M 136 300 C 134 260 138 220 142 180 C 144 160 146 150 150 145 C 154 150 156 160 158 180 C 162 220 166 260 164 300 Z"
                                     fill="url(#bark)" />
-                                {/* Highlight stripe */}
-                                <path d="M 148 300 C 147 260 148 220 149 180 C 149.5 160 150 150 150 145
-                                         C 150 150 150.5 160 151 180 C 152 220 153 260 152 300 Z"
+                                <path d="M 148 300 C 147 260 148 220 149 180 C 149.5 160 150 150 150 145 C 150 150 150.5 160 151 180 C 152 220 153 260 152 300 Z"
                                     fill="url(#barkLight)" />
                             </motion.g>
 
-                            {/* === MAIN BRANCHES — tapered with two layered strokes === */}
+                            {/* Main branches */}
                             {[
-                                { d: "M 150 175 C 130 155 105 135 80 102",  w1: 14, w2: 6,  delay: 0.3 },
-                                { d: "M 150 162 C 170 145 195 118 222 80",  w1: 14, w2: 6,  delay: 0.5 },
-                                { d: "M 150 148 C 150 128 150 108 150 52",  w1: 12, w2: 5,  delay: 0.7 },
+                                { d: "M 150 175 C 130 155 105 135 80 102",  w: 14, dl: 0.3 },
+                                { d: "M 150 162 C 170 145 195 118 222 80",  w: 14, dl: 0.5 },
+                                { d: "M 150 148 C 150 128 150 108 150 52",  w: 12, dl: 0.7 },
                             ].map((b, i) => (
                                 <g key={`mb-${i}`}>
-                                    <motion.path d={b.d} fill="none" stroke="url(#bark)" strokeWidth={b.w1}
-                                        strokeLinecap="round"
+                                    <motion.path d={b.d} fill="none" stroke="url(#bark)" strokeWidth={b.w} strokeLinecap="round"
                                         initial={{ pathLength: 0 }} animate={{ pathLength: stage >= 1 ? 1 : 0 }}
-                                        transition={{ duration: 1.4, delay: b.delay }} />
-                                    <motion.path d={b.d} fill="none" stroke="url(#barkLight)" strokeWidth={b.w2 * 0.5}
-                                        strokeLinecap="round"
+                                        transition={{ duration: 1.4, delay: b.dl }} />
+                                    <motion.path d={b.d} fill="none" stroke="url(#barkLight)" strokeWidth={b.w * 0.35} strokeLinecap="round"
                                         initial={{ pathLength: 0 }} animate={{ pathLength: stage >= 1 ? 1 : 0 }}
-                                        transition={{ duration: 1.4, delay: b.delay + 0.05 }} />
+                                        transition={{ duration: 1.4, delay: b.dl + 0.05 }} />
                                 </g>
                             ))}
 
-                            {/* === SUB BRANCHES — thinner, organic curves === */}
+                            {/* Sub branches */}
                             {[
-                                { d: "M 112 142 C 92 122 70 116 56 120",   w: 7, delay: 1.4 },
-                                { d: "M 92  112 C 72  88  52  78  38 80",   w: 6, delay: 1.5 },
-                                { d: "M 188 128 C 210 112 230 112 248 118", w: 7, delay: 1.4 },
-                                { d: "M 208  94 C 228  72  246  58 262 52", w: 6, delay: 1.5 },
-                                { d: "M 150 100 C 136  78  118  58 108 40", w: 6, delay: 1.6 },
-                                { d: "M 150  80 C 162  60  174  44 190 32", w: 5, delay: 1.7 },
+                                { d: "M 112 142 C 92 122 70 116 56 120",   w: 7,  dl: 1.4 },
+                                { d: "M 92  112 C 72  88  52  78  38  80",  w: 6,  dl: 1.5 },
+                                { d: "M 188 128 C 210 112 230 112 248 118", w: 7,  dl: 1.4 },
+                                { d: "M 208  94 C 228  72  246  58 262  52", w: 6, dl: 1.5 },
+                                { d: "M 150 100 C 136  78  118  58 108  40", w: 6, dl: 1.6 },
+                                { d: "M 150  80 C 162  60  174  44 190  32", w: 5, dl: 1.7 },
                             ].map((b, i) => (
                                 <g key={`sb-${i}`}>
-                                    <motion.path d={b.d} fill="none" stroke="url(#bark)" strokeWidth={b.w}
-                                        strokeLinecap="round"
+                                    <motion.path d={b.d} fill="none" stroke="url(#bark)" strokeWidth={b.w} strokeLinecap="round"
                                         initial={{ pathLength: 0 }} animate={{ pathLength: stage >= 2 ? 1 : 0 }}
-                                        transition={{ duration: 1.1, delay: b.delay }} />
-                                    <motion.path d={b.d} fill="none" stroke="url(#barkLight)" strokeWidth={b.w * 0.3}
-                                        strokeLinecap="round"
+                                        transition={{ duration: 1.1, delay: b.dl }} />
+                                    <motion.path d={b.d} fill="none" stroke="url(#barkLight)" strokeWidth={b.w * 0.3} strokeLinecap="round"
                                         initial={{ pathLength: 0 }} animate={{ pathLength: stage >= 2 ? 1 : 0 }}
-                                        transition={{ duration: 1.1, delay: b.delay + 0.05 }} />
+                                        transition={{ duration: 1.1, delay: b.dl + 0.05 }} />
                                 </g>
                             ))}
 
-                            {/* === HEARTS ===
-                                 Key insight: transformTemplate merges framer's scale with
-                                 the SVG translate so the element stays positioned correctly
-                                 AND the click hit area moves with it. */}
+                            {/* Hearts — plain SVG <g> with SVG transform attribute, zero framer involvement */}
                             {heartLeaves.map((leaf, i) => {
                                 const hasPhoto = photos.length > 0 && i < photos.length;
-                                const message = HEART_MESSAGES[i] ?? quotesPool[i % quotesPool.length];
-                                const isHov = hovered === i;
-                                const targetScale = stage >= 3 ? (isHov ? leaf.s * 1.28 : leaf.s) : 0;
+                                const sc = hovered === i ? scales[i] * 1.28 : scales[i];
                                 return (
-                                    <motion.g
-                                        key={`leaf-${i}`}
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: targetScale }}
-                                        transition={{ type: "spring", stiffness: 220, damping: 12, delay: stage >= 3 ? 3 + leaf.d : 0 }}
-                                        // transformTemplate: framer injects scale, we prepend translate so origin is the heart center
-                                        transformTemplate={({ scale }) =>
-                                            `translate(${leaf.cx}px, ${leaf.cy}px) scale(${scale})`
-                                        }
-                                        style={{ cursor: "pointer" }}
-                                        onHoverStart={() => setHovered(i)}
-                                        onHoverEnd={() => setHovered(null)}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setActiveMessage(message);
-                                            playPop();
-                                            fireStars();
-                                            setTimeout(() => setActiveMessage(null), 5000);
-                                        }}
+                                    <g key={`leaf-${i}`}
+                                        transform={`translate(${leaf.cx},${leaf.cy}) scale(${sc})`}
+                                        style={{ cursor: stage >= 3 ? "pointer" : "default", transition: "transform 0.15s ease" }}
+                                        onMouseEnter={() => setHovered(i)}
+                                        onMouseLeave={() => setHovered(null)}
+                                        onClick={(e) => handleHeartClick(e, i)}
                                     >
-                                        {/* Fat transparent hit area */}
                                         <circle r="20" fill="transparent" />
                                         {hasPhoto ? (
                                             <g>
@@ -227,14 +230,12 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                             </g>
                                         ) : (
                                             <g>
-                                                {/* Glow halo behind heart */}
-                                                {isHov && <path d={heartPath} fill={primaryColor} filter="url(#heartGlow)" opacity="0.6" transform="scale(1.1)" />}
-                                                <path d={heartPath} fill="url(#heartFill)" filter={stage === 4 ? "url(#treeGlow)" : ""}
-                                                    style={{ animation: stage === 4 ? "pulse-scale 3s ease-in-out infinite alternate" : "none" }} />
+                                                {hovered === i && <path d={heartPath} fill={primaryColor} filter="url(#heartGlow)" opacity="0.7" transform="scale(1.15)" />}
+                                                <path d={heartPath} fill="url(#heartFill)" filter={stage === 4 ? "url(#treeGlow)" : ""} />
                                                 <path d={heartPath} fill="url(#heartShine)" style={{ pointerEvents: "none" }} />
                                             </g>
                                         )}
-                                    </motion.g>
+                                    </g>
                                 );
                             })}
                         </svg>
