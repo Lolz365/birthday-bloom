@@ -95,12 +95,20 @@ This project provides a personalized landing page built with **React 18**, **Fra
 - **Heartfelt Surprise Letter**: A concluding message card utilizing glassmorphism styling and custom background sparkles.
 - **Interactive Balloons**: Physics-correct drifting balloons that can be popped by clicking.
 
-<div align="center">
-  <figure>
-    <img src="src\assets\why.png" alt="Birthday Bloom feature showcase" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 68px rgba(0,0,0,0.28);" />
-    <figcaption><em>Visual outline of the birthday experience features.</em></figcaption>
-  </figure>
-</div>
+## 🎬 Detailed Project Explainer
+
+<p align="center">
+  <a href="https://youtu.be/VBgtLDP-vco">
+    <img src="https://img.youtube.com/vi/VBgtLDP-vco/maxresdefault.jpg"
+         alt="Birthday Bloom - Complete Project Explainer"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>📖 Watch the Complete Birthday Bloom Explainer (8 Minutes)</strong><br>
+  Learn everything about Birthday Bloom—from the problem it solves, its vision, core features, customization options, workflow, open-source philosophy, future roadmap, and how you can use and contribute to the project.
+</p>
 
 ---
 
