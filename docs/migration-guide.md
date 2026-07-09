@@ -149,7 +149,7 @@ Six birthday celebration templates with automatic selection based on relationshi
 - **Playful** - Quirky and fun themes
 - **Nostalgic** - Vintage and retro themes, warm colors (for family)
 
-Manual override via `VITE_THEME=romantic`.
+Theme selection is derived from the configured relationship and runtime heuristics. `VITE_THEME` is reserved for future manual theme override and is not currently consumed.
 
 ### 3. Personalization by Demographics
 
@@ -173,7 +173,7 @@ Touch targets minimum 44x44px, font-size 16px to prevent auto-zoom.
 
 ### 5. Audio System Architecture
 
-Background music management with sound effects library. Prepared for v2.1+ features including birthday song integration (`VITE_SONG_URL`), voice message support (`VITE_VOICE_MESSAGE_URL`), beat-sync animations, and custom playlist support.
+Background music is loaded from `VITE_SOUND_URL` with `VITE_BGM_URL` as a backward-compatible alias. `VITE_SONG_URL` and `VITE_VOICE_MESSAGE_URL` are reserved for planned future enhancements and are not currently consumed.
 
 ```typescript
 import { audioSystem } from '@/services/audioSystem';
@@ -201,12 +201,11 @@ v1.x was the initial release with a basic birthday experience, simple animations
    ```env
    VITE_BIRTHDAY_GENDER=female
    VITE_BIRTHDAY_RELATIONSHIP=partner
-   VITE_THEME=romantic
    VITE_ANIMATION_INTENSITY=high
-   VITE_REDUCED_MOTION=false
-   VITE_TEXT_SIZE=normal
-   VITE_HIGH_CONTRAST=false
+   VITE_PARTICLE_COUNT=25
    ```
+   Note: `VITE_THEME`, `VITE_REDUCED_MOTION`, `VITE_TEXT_SIZE`, and `VITE_HIGH_CONTRAST` are reserved for future use and are not currently parsed.
+
 3. **Update component imports**: v2.x introduced the Zustand store (`useBirthdayStore`) replacing direct config imports. Migrate from:
    ```typescript
    // v1.x - direct config import

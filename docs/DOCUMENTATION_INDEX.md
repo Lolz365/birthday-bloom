@@ -12,9 +12,9 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 
 | Document | Purpose | Read Time |
 |---|---|---|
-| [QUICK_START.md](../QUICK_START.md) | Get running in 5 minutes | 5 min |
+| [quick-start.md](./quick-start.md) | Get running in 5 minutes | 5 min |
 | [ENV_GUIDE.md](./ENV_GUIDE.md) | Full env customization reference with 15+ recipes | 15 min |
-| [ARCHITECTURE.md](../ARCHITECTURE.md) | System architecture overview | 10 min |
+| [architecture.md](./architecture.md) | System architecture overview | 10 min |
 | [developer-guide.md](./developer-guide.md) | Component API reference and extension patterns | 15 min |
 | [family-system.md](./family-system.md) | Family template system | 10 min |
 | [template-architecture.md](./template-architecture.md) | Template and config architecture | 8 min |
@@ -30,9 +30,9 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 
 ### New to Birthday Bloom?
 
-1. [QUICK_START.md](../QUICK_START.md) — Install and run locally
+1. [quick-start.md](./quick-start.md) — Install and run locally
 2. [ENV_GUIDE.md](./ENV_GUIDE.md) — Learn what you can customize
-3. [FAQ.md](../FAQ.md) — Common questions
+3. [faq.md](./faq.md) — Common questions
 4. Customize `.env.local` and restart
 
 ### Customizing for Someone
@@ -40,15 +40,15 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 1. [ENV_GUIDE.md](./ENV_GUIDE.md) — Full env reference with situation recipes
 2. [family-system.md](./family-system.md) — Family profile setup
 3. [template-architecture.md](./template-architecture.md) — How templates work
-4. [SUPPORT.md](../SUPPORT.md) — Getting help
+4. [SUPPORT.md](../.github/SUPPORT.md) — Getting help
 
 ### Contributing Code
 
-1. [CONTRIBUTING.md](../CONTRIBUTING.md) — Contribution workflow
-2. [STYLEGUIDE.md](../STYLEGUIDE.md) — Code conventions
-3. [ARCHITECTURE.md](../ARCHITECTURE.md) — System architecture
+1. [CONTRIBUTING.md](../.github/CONTRIBUTING.md) — Contribution workflow
+2. [styleguide.md](./styleguide.md) — Code conventions
+3. [architecture.md](./architecture.md) — System architecture
 4. [developer-guide.md](./developer-guide.md) — Developer reference
-5. [ROADMAP.md](../ROADMAP.md) — Planned features
+5. [roadmap.md](./roadmap.md) — Planned features
 
 ### Deploying to Production
 
@@ -60,7 +60,7 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 
 1. [troubleshooting.md](./troubleshooting.md) — Common issues
 2. [ENV_GUIDE.md](./ENV_GUIDE.md) — Env configuration help
-3. [FAQ.md](../FAQ.md) — Frequently asked questions
+3. [faq.md](./faq.md) — Frequently asked questions
 4. [GitHub Issues](https://github.com/naborajs/birthday-bloom/issues) — Report bugs
 
 ---
@@ -71,16 +71,8 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 
 | File | Purpose |
 |---|---|
-| [QUICK_START.md](../QUICK_START.md) | 5-minute setup guide |
-| [ARCHITECTURE.md](../ARCHITECTURE.md) | Architecture overview |
-| [CONTRIBUTING.md](../CONTRIBUTING.md) | Contribution workflow |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Code, docs, and design conventions |
 | [CHANGELOG.md](../CHANGELOG.md) | Version history |
-| [ROADMAP.md](../ROADMAP.md) | Planned features |
-| [FAQ.md](../FAQ.md) | Frequently asked questions |
-| [SUPPORT.md](../SUPPORT.md) | Support and contact |
-| [SECURITY.md](../SECURITY.md) | Security policy |
-| [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) | Community standards |
+| [PULL_REQUEST_POLICY.md](../.github/PULL_REQUEST_POLICY.md) | Strict PR review and merge policy |
 | [LICENSE](../LICENSE) | MIT License |
 
 ### Docs (Configuration & Customization)
@@ -88,15 +80,21 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 | File | Purpose |
 |---|---|
 | [ENV_GUIDE.md](./ENV_GUIDE.md) | Complete environment variable reference with 15+ recipes |
+| [env-configs.md](./env-configs.md) | Ready-to-use configuration recipes |
 | [family-system.md](./family-system.md) | Family template system |
 | [template-architecture.md](./template-architecture.md) | Template data flow and types |
 | [migration-guide.md](./migration-guide.md) | v1→v2→v3 migration |
 
-### Docs (Development)
+### Docs (Development & Operations)
 
 | File | Purpose |
 |---|---|
+| [quick-start.md](./quick-start.md) | 5-minute setup guide |
+| [architecture.md](./architecture.md) | Architecture overview |
 | [developer-guide.md](./developer-guide.md) | Component API reference and extension patterns |
+| [styleguide.md](./styleguide.md) | Code, docs, and design conventions |
+| [roadmap.md](./roadmap.md) | Planned features |
+| [faq.md](./faq.md) | Frequently asked questions |
 | [troubleshooting.md](./troubleshooting.md) | Common issues and solutions |
 
 ### Docs (Deployment)
@@ -119,38 +117,54 @@ Repository: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom
 | [setup-hindi.md](./setup-hindi.md) | हिंदी (Hindi) |
 | [setup-bengali.md](./setup-bengali.md) | বাংলা (Bengali) |
 
+### GitHub & Community Docs
+
+| File | Purpose |
+|---|---|
+| [CONTRIBUTING.md](../.github/CONTRIBUTING.md) | Contribution workflow |
+| [CODE_OF_CONDUCT.md](../.github/CODE_OF_CONDUCT.md) | Community standards |
+| [SECURITY.md](../.github/SECURITY.md) | Security policy |
+| [SUPPORT.md](../.github/SUPPORT.md) | Support and contact |
+
 ---
 
 ## File Map
 
 ```
 birthday-bloom/
-├── .env.example              # Environment template
+├── .env.example              # Environment variables template
 ├── README.md                 # Project introduction
-├── QUICK_START.md            # 5-minute setup
-├── ARCHITECTURE.md           # Architecture overview
-├── CONTRIBUTING.md           # Contribution workflow
-├── STYLEGUIDE.md             # Code conventions
 ├── CHANGELOG.md              # Version history
-├── ROADMAP.md                # Planned features
-├── FAQ.md                    # Frequently asked questions
-├── SUPPORT.md                # Support and contact
-├── SECURITY.md               # Security policy
-├── CODE_OF_CONDUCT.md        # Community standards
 ├── LICENSE                   # MIT License
+├── .github/
+│   ├── CONTRIBUTING.md       # Contribution workflow
+│   ├── CODE_OF_CONDUCT.md   # Community standards
+│   ├── SECURITY.md          # Security policy
+│   ├── SUPPORT.md           # Support and contact
+│   ├── PULL_REQUEST_POLICY.md# Pull request policy
+│   └── workflows/            # CI/CD automation
 ├── docs/
 │   ├── DOCUMENTATION_INDEX.md  # This file
 │   ├── ENV_GUIDE.md            # Env customization reference
+│   ├── env-configs.md          # Env configuration recipes
+│   ├── quick-start.md          # Local dev setup guide
+│   ├── architecture.md         # System architecture guide
+│   ├── styleguide.md           # Code styles and guidelines
+│   ├── roadmap.md              # Development roadmap
+│   ├── faq.md                  # Frequently asked questions
 │   ├── family-system.md        # Family templates
 │   ├── template-architecture.md# Template architecture
 │   ├── developer-guide.md      # Developer reference
 │   ├── troubleshooting.md      # Troubleshooting
 │   ├── migration-guide.md      # Migration guide
-│   ├── deployment.md           # Deployment
+│   ├── deployment.md           # Deployment guide
 │   ├── seo-guide.md            # SEO optimization
 │   ├── llm-access.md           # LLM access documentation
 │   ├── setup-hindi.md          # Hindi setup
 │   └── setup-bengali.md        # Bengali setup
+├── scripts/
+│   ├── strip-comments.js     # TS comment stripper utility
+│   └── strip-comments.cjs    # CommonJS version of the utility
 ```
 
 ---

@@ -74,7 +74,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
             return (gender === 'male' ? SPECIAL_QUOTES.friend.legend : SPECIAL_QUOTES.friend.friendly) || SPECIAL_QUOTES.family;
         return SPECIAL_QUOTES.family;
     }, [relationship, gender]);
-
     useEffect(() => {
         const timers = [
             setTimeout(() => setStage(1), delay),

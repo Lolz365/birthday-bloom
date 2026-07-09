@@ -2,7 +2,41 @@
 
 Thank you for considering a contribution to Birthday Bloom. Whether you're fixing a bug, improving documentation, polishing UI, enhancing accessibility, or building new features — your help is appreciated.
 
-> **Before writing code:** Please read the [ARCHITECTURE.md](./ARCHITECTURE.md) and [STYLEGUIDE.md](./STYLEGUIDE.md) to understand how the project is structured.
+### 🎬 Video Guides for Contributors
+We have created two animated walkthrough guides to help you contribute to Birthday Bloom:
+
+#### 1. Official Contributing Guide (Overview)
+<p align="center">
+  <a href="https://youtu.be/V4XZRRvcxgk" target="_blank">
+    <img src="https://img.youtube.com/vi/V4XZRRvcxgk/maxresdefault.jpg"
+         alt="Birthday Bloom - Official Contributing Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🤝 Watch the Official Contributing Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong>, whether you're a first-time open-source contributor or an experienced developer. This guide covers GitHub Issues, feature requests, bug reports, forking the repository, creating branches, making meaningful commits, submitting Pull Requests, the code review process, and open-source best practices to help you become a successful contributor.
+</p>
+
+#### 2. Detailed Step-by-Step Contributor Guide (Explainer)
+<p align="center">
+  <a href="https://youtu.be/a9-ndTkD8IE" target="_blank">
+    <img src="https://img.youtube.com/vi/a9-ndTkD8IE/maxresdefault.jpg"
+         alt="How to Contribute to Birthday Bloom"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>📚 Watch the Complete Contributor Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong> from start to finish. This step-by-step guide covers GitHub Issues, feature requests, bug reporting, forking the repository, cloning the project, creating branches, writing meaningful commit messages, opening Pull Requests, the review process, and open-source best practices. Whether you're making your first contribution or you're an experienced developer, this guide will help you confidently contribute to the project.
+</p>
+
+---
+
+> [!IMPORTANT]
+> **Before writing code:** Please read [architecture.md](file:///d:/Projects/Website/birthday-bloom-main/docs/architecture.md) and [styleguide.md](file:///d:/Projects/Website/birthday-bloom-main/docs/styleguide.md) to understand how the project is structured.
 
 ---
 
@@ -104,7 +138,7 @@ perf/optimize-particle-render
 
 ### Coding Standards
 
-See [STYLEGUIDE.md](./STYLEGUIDE.md) for detailed conventions. Key points:
+See [styleguide.md](../docs/styleguide.md) for detailed conventions. Key points:
 
 - Components: PascalCase, one per file
 - Hooks: `use` prefix, camelCase
@@ -144,6 +178,8 @@ Keep the first line under 72 characters. Reference issues in the body if applica
 ---
 
 ## Pull Request Process
+
+We follow a strict, manually reviewed pull request process to maintain high codebase standards. Pull requests are never merged automatically. For details on merge criteria, approvals, and administrator reviews, please see our [PULL_REQUEST_POLICY.md](./PULL_REQUEST_POLICY.md).
 
 1. **Open early, even as a draft** — feedback is welcome
 2. **Link the issue** your PR addresses
@@ -210,7 +246,7 @@ If your change affects:
 Welcome! Here's how to get started:
 
 1. **Find a `good first issue`** — these are labeled and scoped for newcomers
-2. **Read the [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+2. **Read the [architecture.md](../docs/architecture.md)** to understand the codebase
 3. **Set up the project** using the [Development Setup](#development-setup) section
 4. **Ask questions** — comment on the issue if something is unclear
 5. **Submit a draft PR** — we'll help you polish it

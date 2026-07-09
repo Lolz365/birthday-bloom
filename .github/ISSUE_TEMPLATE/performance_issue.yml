@@ -58,3 +58,15 @@ body:
     attributes:
       label: Recordings / Profiles
       description: Chrome DevTools Performance tab recordings, screenshots, or videos.
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true

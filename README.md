@@ -1,28 +1,30 @@
-# 🌸 Birthday Bloom — Cinematic Birthday Engine v3.0
+# 🌸 Birthday Bloom — Configurable Birthday Landing Page v3.0
 
 <div align="center">
 
-> **"A premium, production-ready digital experience crafted for the world by Naboraj Sarkar."**
-> 
-> **Now with Specialized Family Templates, Advanced Data Models, and Comprehensive Documentation**
+> An open-source birthday landing page built to offer smooth animations, interactive features, and straightforward environment-driven customization. Created by Naboraj Sarkar.
 
-![Birthday Bloom Banner](https://raw.githubusercontent.com/naborajs/birthday-bloom/main/public/favicon.png)
+<h3>✨ An Interactive Birthday Surprise Experience ✨</h3>
 
-<h3>✨ The Ultimate Open-Source Cinematic Birthday Surprise ✨</h3>
-
-<p align="center">
+ <p align="center">
   <a href="https://github.com/naborajs/birthday-bloom/stargazers"><img src="https://img.shields.io/github/stars/naborajs/birthday-bloom?style=for-the-badge&color=ff69b4&logo=github" alt="Stars"></a>
   <a href="https://github.com/naborajs/birthday-bloom/blob/main/LICENSE"><img src="https://img.shields.io/github/license/naborajs/birthday-bloom?style=for-the-badge&color=4169e1" alt="License"></a>
   <a href="https://vercel.com"><img src="https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel" alt="Deploy"></a>
+</p> 
+
+## 🎥 Project Overview
+
+<p align="center">
+  <a href="https://youtu.be/R3XNhP9hSjw" target="_blank">
+    <img src="https://img.youtube.com/vi/R3XNhP9hSjw/maxresdefault.jpg"
+         alt="Watch the Birthday Bloom Project Overview"
+         width="900">
+  </a>
 </p>
 
-<div align="center">
-  <figure>
-    <img src="src\assets\birthday-boom.png" alt="Birthday Bloom hero banner" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,0.35);" />
-    <figcaption><em>Premium cinematic birthday experiences built with React, Framer Motion, and env-driven personalization.</em></figcaption>
-  </figure>
-</div>
-</div>
+<p align="center">
+  <b>📺 Click the thumbnail above to watch the official Birthday Bloom project overview.</b>
+</p>
 
 ---
 
@@ -41,7 +43,7 @@ If you ask an AI coding agent to customize Birthday Bloom, tell it this first:
 Direct docs:
 
 - [Complete env customization guide](./docs/ENV_GUIDE.md)
-- [Quick start](./QUICK_START.md)
+- [Quick start](./docs/quick-start.md)
 - [Family system](./docs/family-system.md)
 - [Template architecture](./docs/template-architecture.md)
 - [Developer guide](./docs/developer-guide.md)
@@ -59,16 +61,16 @@ Everything you need to get the most out of Birthday Bloom:
 | If you want to... | Start here |
 | --- | --- |
 | Customize names, colors, photos, sections | [ENV_GUIDE.md](./docs/ENV_GUIDE.md) |
-| Run the project locally | [QUICK_START.md](./QUICK_START.md) |
-| Understand the codebase | [ARCHITECTURE.md](./ARCHITECTURE.md) |
+| Run the project locally | [quick-start.md](./docs/quick-start.md) |
+| Understand the codebase | [architecture.md](./docs/architecture.md) |
 | Deploy to Vercel / Netlify / Docker | [docs/deployment.md](./docs/deployment.md) |
 | Set up family profiles (brother, sister, etc.) | [docs/family-system.md](./docs/family-system.md) |
 | Troubleshoot issues | [docs/troubleshooting.md](./docs/troubleshooting.md) |
-| Contribute to the project | [CONTRIBUTING.md](./CONTRIBUTING.md) |
-| See what's coming next | [ROADMAP.md](./ROADMAP.md) |
-| Browse community standards | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
-| Report a security issue | [SECURITY.md](./SECURITY.md) |
-| Get help | [SUPPORT.md](./SUPPORT.md) / [FAQ.md](./FAQ.md) |
+| Contribute to the project | [CONTRIBUTING.md](./.github/CONTRIBUTING.md) |
+| See what's coming next | [roadmap.md](./docs/roadmap.md) |
+| Browse community standards | [CODE_OF_CONDUCT.md](./.github/CODE_OF_CONDUCT.md) |
+| Report a security issue | [SECURITY.md](./.github/SECURITY.md) |
+| Get help | [SUPPORT.md](./.github/SUPPORT.md) / [faq.md](./docs/faq.md) |
 | View version history | [CHANGELOG.md](./CHANGELOG.md) |
 | Explore all docs | [docs/DOCUMENTATION_INDEX.md](./docs/DOCUMENTATION_INDEX.md) |
 
@@ -83,40 +85,156 @@ Everything you need to get the most out of Birthday Bloom:
 
 ---
 
-## 🚀 Experience the Magic
-**Birthday Bloom** is a high-end, premium animated birthday surprise platform designed to capture and create unforgettable digital moments. Developed fundamentally with **React 18**, **Framer Motion**, and **Tailwind CSS**, it establishes a physics-based, emotional narrative layout.
+## ✨ Key Features & Interactive Elements
 
-- **Interactive Birthday Quiz**: A gamified trivia engine that personalizes questions based on interests.
-- **Polaroid Memory Gallery**: A beautiful "Memory Lane" featuring captions and images revealed through cinematic transitions.
-- **"Pure Reality" Cake 3D**: High-fidelity procedural textures, realistic drips, and volumetric lighting.
-- **Final Surprise Video**: A dedicated emotional closing scene with a configurable finale video.
-- **Advanced Physics Balloons**: Non-linear, physics-correct balloon drift with interactive "pop" mechanics.
+This project provides a personalized landing page built with **React 18**, **Framer Motion**, and **Tailwind CSS**. Rather than static text, it uses sequenced visual transitions and user interactions to guide the recipient through a customized birthday experience.
 
-<div align="center">
-  <figure>
-    <img src="src\assets\why.png" alt="Birthday Bloom feature showcase" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 68px rgba(0,0,0,0.28);" />
-    <figcaption><em>Read more to know more.</em></figcaption>
+- **Interactive Birthday Quiz**: A gamified trivia section that adapts questions based on the recipient's hobbies or relationship.
+- **Polaroid Memory Gallery**: A responsive gallery featuring user-tilting photos and revealable captions.
+- **Interactive SVG Cake**: A vector-based cake with animated candle flames that can be blown out (removing the flame paths) and cut (splitting the cake SVG layers apart with a bounce transition).
+- **Heartfelt Surprise Letter**: A concluding message card utilizing glassmorphism styling and custom background sparkles.
+- **Interactive Balloons**: Physics-correct drifting balloons that can be popped by clicking.
 
-</div>
+## 🎬 Detailed Project Explainer
+
+<p align="center">
+  <a href="https://youtu.be/VBgtLDP-vco">
+    <img src="https://img.youtube.com/vi/VBgtLDP-vco/maxresdefault.jpg"
+         alt="Birthday Bloom - Complete Project Explainer"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>📖 Watch the Complete Birthday Bloom Explainer (8 Minutes)</strong><br>
+  Learn everything about Birthday Bloom—from the problem it solves, its vision, core features, customization options, workflow, open-source philosophy, future roadmap, and how you can use and contribute to the project.
+</p>
 
 ---
 
-## 🔥 Why Birthday Bloom?
+## ⚙️ Why This Project Exists
 
-Most website templates are static or simply transition between pages. **Birthday Bloom is a cinematic finite state machine.** It controls pacing, narrative tension, visual payoffs, and sound effects to simulate a movie-like experience inside the browser.
+Most landing page templates are static. Birthday Bloom treats the browser as a stage, using a linear state machine to control the pacing of messages, interactive transitions, and audio feedback.
 
-By chaining together asynchronous events and orchestrated **Framer Motion** timelines, the application orchestrates a perfect symphony of text, light, SVG particle physics, and interactions. 
+By coordinating asynchronous delays and Framer Motion timelines, the application guides the user through typing scenes, simulated chats, and final interactive reveals.
 
-- **No Over-Engineering**: We rely heavily on pure CSS (transitions, animations, custom easing curves) rather than heavy JavaScript physics libraries like Matter.js or Three.js. This ensures maximum performance across low-end mobile devices and reduces the final bundle size significantly.
-- **Dynamic Emotional Flow**: Fake chat interfaces, character-by-character typing effects, and growing SVG structures all contribute to a highly immersive experience. The user isn't just "reading" a webpage; they are experiencing a narrative.
-- **Zero Configuration Required**: Out of the box, you just need to populate a single `.env` variable to get 90% of the value.
-- **Vite Empowered**: Instant HMR when developing locally, and highly optimized, minified chunks when deploying to production.
+- **Optimized Performance**: We rely on pure CSS and native SVG animations rather than heavy JavaScript physics libraries like Three.js or Matter.js. This ensures smooth 60fps animations on mobile devices while keeping the bundle size small.
+- **Engaging Text Flow**: Typewriter animations, cursor tracking, and simulated messaging windows help build a natural reading pace.
+- **Environment-Driven Configuration**: You can customize the name, relationship, messages, colors, and media simply by setting variables in a single `.env.local` file without editing code.
+- **Vite Build System**: Instant Hot-Module-Replacement (HMR) during local development and optimized assets for production deployments.
 
+---
+
+## 🚀 Deployment Guide
+
+If you want to deploy **Birthday Bloom** on the web to share with your loved one, you can do it completely free on Vercel. You don't need any coding experience to follow these steps!
+
+### 🎬 Video Walkthrough
+If you prefer a visual guide, click the thumbnail below to watch the complete step-by-step walkthrough:
+
+<p align="center">
+  <a href="https://youtu.be/gwq1IaHXUn4" target="_blank">
+    <img src="https://img.youtube.com/vi/gwq1IaHXUn4/maxresdefault.jpg"
+         alt="Birthday Bloom - Complete Deployment Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🚀 Watch the Complete Deployment Guide</strong><br>
+  Learn how to deploy <strong>Birthday Bloom</strong> step by step using <strong>Vercel</strong>. This guide covers everything from forking the GitHub repository, importing the project into Vercel, configuring environment variables, deploying your website, customizing it, and publishing updates. Perfect for beginners and experienced developers alike.
+</p>
+
+---
+
+### 📋 Step-by-Step Deployment Instructions
+
+---
+
+#### 1️⃣ Create a GitHub Account
+> **Goal:** Get a free space to hold your copy of the website code.
+>
+> * **Direct Link:** 👉 [GitHub Sign Up](https://github.com/join)
+> * **What to do:** Enter your email, create a password, choose a username, and complete the sign-up.
+> * **Why:** You need a GitHub account so that Vercel can pull the code and build it for you.
+
+---
+
+#### 2️⃣ Fork the Repository (Create Your Copy)
+> **Goal:** Copy all of Birthday Bloom's files to your new GitHub account.
+>
+> * **Direct Link:** 👉 [Fork Birthday Bloom](https://github.com/naborajs/birthday-bloom/fork)
+> * **What to do:** 
+>   1. Leave the **Repository name** as `birthday-bloom`.
+>   2. Make sure the checkbox **"Copy the main branch only"** is **checked**.
+>   3. Click the green **`Create fork`** button at the bottom of the page.
+> * **Why:** This creates a copy under your name (e.g., `github.com/your-username/birthday-bloom`), allowing you to link it to Vercel.
+
+---
+
+#### 3️⃣ Create a Vercel Account
+> **Goal:** Sign up for the hosting service that will put your website online for free.
+>
+> * **Direct Link:** 👉 [Vercel Sign Up](https://vercel.com/signup)
+> * **What to do:** Click the **`Continue with GitHub`** button. This automatically links your Vercel account to your GitHub account.
+> * **Why:** Linking with GitHub allows Vercel to read your code copy and automatically deploy updates.
+
+---
+
+#### 4️⃣ Import the Project to Vercel
+> **Goal:** Tell Vercel to start setting up your birthday website.
+>
+> * **Direct Link:** 👉 [Vercel - New Project Dashboard](https://vercel.com/new)
+> * **What to do:** 
+>   1. Under the **"Import Git Repository"** section, locate the repository named `birthday-bloom`.
+>   2. Click the black **`Import`** button next to it.
+> * **Why:** This imports the project files into Vercel so it can start setting up your deployment.
+
+---
+
+#### 5️⃣ Personalize Your Website (The most important step!)
+> **Goal:** Set the name, date, messages, and colors for the birthday person without touching any code.
+>
+> * **What to do:**
+>   1. On the project setup page in Vercel, find the section labeled **`Environment Variables`** (it is a dropdown panel). Click it to expand.
+>   2. For each variable below, type the **Key** in the first field, the **Value** in the second field, and click the blue **`Add`** button:
+>
+> | Key (Environment Variable) | Example Value | What it controls |
+> | :--- | :--- | :--- |
+> | `VITE_USER_NAME` | `Sarah` | The name of the birthday person. |
+> | `VITE_BIRTHDAY_DATE` | `2026-07-25` | The birthday date in `YYYY-MM-DD` format (sets up the countdown). |
+> | `VITE_TITLE` | `Happy Birthday, Sarah! 🌸` | The text shown on the browser tab. |
+> | `VITE_CARD_TITLE_SURPRISE` | `A Special Gift for You!` | The main title on the final letter envelope. |
+> | `VITE_THEME_COLOR` | `#ff69b4` | The theme color (e.g. pink: `#ff69b4`, red: `#e11d48`, blue: `#2563eb`). |
+>
+> > [!TIP]
+> > For a full list of all 20+ customizable items (like custom messages, photos, and music), check the [.env.example](file:///d:/Projects/Website/birthday-bloom-main/.env.example) configuration file or the [Environment Variables Guide](#-environment-variables-guide) section below.
+
+---
+
+#### 6️⃣ Deploy!
+> **Goal:** Build the site and make it live.
+>
+> * **What to do:** Click the blue **`Deploy`** button at the bottom.
+> * **What happens next:** Vercel will spend about 60–90 seconds building your site. Once done, it will show a preview screen of your website with a shower of **confetti**!
+> * **Why:** This turns your source code files into a live, interactive website accessible from any phone or computer.
+
+---
+
+#### 7️⃣ Copy Your Live Link and Share
+> **Goal:** Send the surprise to your loved one!
+>
+> * **What to do:**
+>   1. Click on the screenshot preview of your website in Vercel to open it.
+>   2. Copy the URL from your web browser's address bar. It will look like:
+>      `https://birthday-bloom-yourname.vercel.app`
+>   3. Send this link to the birthday person!
 
 ---
 
 ## 📖 Table of Contents
 
+* [🚀 Deployment Guide](#-deployment-guide)
 1. [Introduction](#-introduction)
 2. [Hyper-Personalization & Templates](#-hyper-personalization--templates)
 3. [System Architecture](#-system-architecture)
@@ -151,89 +269,128 @@ By chaining together asynchronous events and orchestrated **Framer Motion** time
 
 ---
 
-## 🎥 Cinematography Theory
+## 🎥 Animation & Pacing Principles
 
-Birthday Bloom is built on the principle of **Kinetic Storytelling**. Unlike traditional web apps that prioritize instant information retrieval, this engine prioritizes **Emotional Payoff**.
+The transitions and visual layers in Birthday Bloom are timed around natural reading speeds and sequence progression rather than immediate information layout.
 
-### 1. The 3D Camera Model
-We simulate a camera lens using CSS `perspective` and Framer Motion's `rotateX/Y` properties. This creates a "parallax of importance" where the most emotional elements (like the Heart Tree or Cake) feel physically closer to the user.
+### 1. Focal Depth Simulation
+We simulate a camera lens depth shift using CSS `perspective` and Framer Motion's `rotateX/Y` tilt properties. This creates a clear hierarchy where active interactive elements (like the Cake or Polaroid frames) stand out visually from the floating ambient particles.
 
-### 2. Narrative Pacing (The 300ms Rule)
-- **Micro-interactions**: 150ms (Button clicks, hover glows).
-- **Scene Shifts**: 800ms - 1.2s (Fading between chat and reveal). This long duration allows the user's brain to "reset" and prepare for a new emotional state.
-- **Storytelling**: 4s per line. This is optimized for the average adult reading speed, ensuring no one feels rushed.
+### 2. Chronological Pacing
+- **Interactive Elements**: 150ms transitions (such as button hover glows and button scales).
+- **Scene Transitions**: 800ms - 1.2s fades to separate typing screens, chat bubbles, and the final dashboard view cleanly.
+- **Text Staggering**: 4s delay per storyline line to ensure comfortable reading pacing.
 
-### 3. Filmic Post-Processing
-We apply a global **Film Grain** overlay (`body::after`) and a **Vignette** to eliminate digital "flatness". This technique is borrowed from high-end cinematography to make the UI feel like a living frame of film.
+### 3. Backdrop Filters and Vignettes
+A subtle background vignette gradient and a light noise overlay help blend the components together, providing a cohesive layout aesthetic.
 
 ---
 
 ## 🏗️ System Architecture
 
-Birthday Bloom operates as a highly orchestrated timeline. The following Mermaid graph details the entire user journey through the codebase, demonstrating how components trigger one another smoothly.
+Birthday Bloom operates as a structured timeline. The following diagram shows the chronological flow of scenes and interactive features from boot to the final reveal.
 
 ```mermaid
 graph TD
-    A[Splash Screen] -->|"Start Loading Assets"| B[Cinematic Intro]
-    B -->|"Phase 1: Storyline"| C[Fake Chat Simulator]
-    C -->|"Phase 2: Completion"| D[Post-Chat Narrative]
-    D -->|"Phase 3: Grand Reveal"| E[Main Ecosystem Dashboard]
+    Splash[Splash Screen] -->|Initialize| Intro[Cinematic Intro]
+    Intro -->|"Phase 1"| Story[Storyline Narrative]
+    Intro -->|"Phase 2"| Chat[Fake Chat Simulator]
+    Intro -->|"Phase 3"| Reveal[Birthday Reveal Screen]
+    Reveal -->|"Load Dashboard"| Main[Main Celebration View]
     
-    E -->|"Core Interaction"| F[Interactive SVG Cake Engine]
-    E -->|"Secondary Interaction"| G[Photo Memory Gallery]
-    E -->|"Grand Finale"| H[Growing Heart Tree Scene]
-    
-    subgraph Config Engine Layer
-    I[.env Personalization Map] --- J[src/config.ts Parsing]
-    J --- K[Component Props Injector]
-    end
-    
-    K --> E
+    Main -->|Interact| Cake[Interactive SVG Cake]
+    Main -->|Interact| Gallery[Polaroid Memory Gallery]
+    Main -->|Interact| HeartTree[Growing Heart Tree]
 ```
+*Figure: Scene progression flow and interactive features from boot to the grand finale.*
 
-### Advanced Data Flow
-
-To dive deeper into how state is managed without Redux or Context maps:
+### Config Engine Layer
+The project resolves environment variables and hydrates application state through a central config layer:
 
 ```mermaid
-sequenceDiagram
-    participant User
-    participant App
-    participant IntroComponent as Intro Component
-    participant CakeLogic as Cake Logic
-    participant CoreDashboard as Core Dashboard
-    
-    User->>App: Visit Global Website
-    App->>IntroComponent: Render Intro Payload
-    IntroComponent->>IntroComponent: Phase 1: Typing Story (Character by Character)
-    IntroComponent->>IntroComponent: Phase 2: Fake Chat (Hover, Delete, Type)
-    IntroComponent->>IntroComponent: Phase 3: Grand Reveal (Confetti & Stars)
-    IntroComponent->>App: Intro Completed (Callback Fired)
-    App->>CoreDashboard: Unmount Intro -> Fade Render Dashboard
-    User->>CoreDashboard: Scrolls to Cake Section
-    CoreDashboard->>CakeLogic: Render Cake Selection UI
-    User->>CakeLogic: Clicks "Blow Candles" Event Trigger
-    CakeLogic->>CakeLogic: SVG Flame Animations Stop
-    CakeLogic->>CakeLogic: Particles Burst (Confetti External Hook)
+flowchart LR
+    Env[Environment Config] -->|"Load at runtime"| Config[Config Parser]
+    Config -->|"Hydrate state"| Store[State Store]
+    Store -->|"Inject values as props"| Components[React Components]
 ```
+*Figure: The data flow from raw environment variables to component properties.*
+
+### Sequence of Operations
+
+The sequence is divided into two distinct interaction stages: the boot-to-intro phase, and the main dashboard user actions.
+
+**Part A: Boot & Intro Sequence**
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as "App.tsx"
+    participant Intro as "CinematicIntro.tsx"
+    participant Store as "useBirthdayStore.ts"
+
+    User->>App: Open Site
+    App->>Store: Initialize Configuration
+    App->>Intro: Mount Intro Component
+    loop Typing Sequences
+        Intro->>Intro: Play storytelling lines
+        Intro->>Intro: Play fake-chat typing
+        Intro->>Intro: Play birthday reveal
+    end
+    Intro->>App: Trigger onComplete Callback
+    App->>Intro: Unmount Intro Component
+```
+*Figure: Interaction sequence during the initialization and cinematic intro stages.*
+
+**Part B: Main Dashboard Interactions**
+```mermaid
+sequenceDiagram
+    actor User
+    participant Dashboard as "MainBirthday.tsx"
+    participant Cake as "CakeCutting.tsx"
+    participant Confetti as "useConfetti.ts"
+
+    User->>Dashboard: View Dashboard
+    Dashboard->>Cake: Render SVG Cake UI
+    User->>Cake: Click "Blow Candles"
+    Cake->>Cake: Extinguish SVG flames
+    Cake->>Confetti: Fire Corner Cannons
+    User->>Cake: Cut Cake
+    Cake->>Cake: Split SVG cake layers
+```
+*Figure: User interactions within the main dashboard and interactive cake cutting engine.*
 
 ---
 
 ## 🕒 Mastering the Lifecycle
 
-Understanding how the timeline works is essential to modifying the source code. The entire animation sequence relies on precisely tuned delays.
+The animation sequence relies on a state machine configured in the entry files. Understanding how these scenes transition is essential before modifying the code.
 
 <div align="center">
   <figure>
     <img src="src/assets/mastering-the-lifecycle.png" alt="Mastering the lifecycle illustration" style="max-width:100%;height:auto;border-radius:18px;box-shadow:0 24px 72px rgba(0,0,0,0.24);" />
-    <figcaption><em>Mastering the Lifecycle — a visual storyboard of Boot, Intro, Execution, Transition, and Celebration.</em></figcaption>
+    <figcaption><em>Mastering the Lifecycle — a storyboard of Boot, Intro, Execution, Transition, and Celebration.</em></figcaption>
   </figure>
 </div>
 
-1. **Boot**: `App.tsx` initializes and decides whether to show the Splash screen or Intro.
-2. **Mount**: `CinematicIntro.tsx` mounts. Using a `.map()` over predefined text arrays, it uses `setTimeout` to flip states. Ensure `overflow: hidden` remains so mobile layouts do not bounce.
-3. **Execution**: During the fake chat phase, a sequence of timers dictates when the cursor moves, hovers, deletes text, and retypes.
-4. **Transition**: Once the intro is completely finished, it calls the `onComplete` prop back to `App.tsx`, which unmounts the intro and fades in `MainBirthday.tsx`. If this prop never fires, the user is stuck in the intro forever. Be careful when deleting timers!
+```mermaid
+flowchart LR
+    Boot[Boot Initializer] -->|Mount| Intro[Cinematic Intro]
+    
+    subgraph State Machine Phases
+        Intro --> Story[storytelling scene]
+        Story -->|"Lines Complete"| Chat[fake-chat scene]
+        Chat -->|"Typing Complete"| PostChat[post-chat scene]
+        PostChat -->|"Reveal Trigger"| Reveal[reveal-sequence scene]
+        Reveal -->|Transition| Done[done scene]
+    end
+    
+    Done -->|"Complete Callback"| Main[Main Birthday View]
+```
+*Figure: The finite state machine phases and transitions of the application.*
+
+1. **Boot**: `App.tsx` initializes, loads configuration settings, and decides whether to play the intro sequence based on setup parameters.
+2. **Mount**: `CinematicIntro.tsx` mounts and maps over the custom narrative lines. Timers trigger transitions sequentially.
+3. **Execution**: During the chat phase, sequence timers control text entry, deletions, and sending animations to simulate active conversations.
+4. **Transition**: When the intro completes, the `onComplete` callback triggers the entry component to unmount the intro stage and render the `MainBirthday.tsx` dashboard. Modifying or removing these timers without care can lock the user inside the intro phase.
 
 
 ---
@@ -560,28 +717,44 @@ Despite the visual complexity, this repository maintains an incredibly lightweig
   </figure>
 </div>
 
-## 📁 Complete File-by-File Responsibility Map
+## 📁 File-by-File Responsibility Map
+
+The diagram below shows the high-level responsibilities of the primary directories:
+
+```mermaid
+graph TD
+    Root[src directory] --> Components[birthday components]
+    Root --> Features[features directory]
+    Root --> Pages[pages directory]
+    Root --> Config[config directory]
+
+    Components -->|Renders| Actors[Interactive Actors]
+    Features -->|Manages| Back[State and Theme Engine]
+    Pages -->|Controls| Entry[Index Entry and NotFound]
+    Config -->|Resolves| ENV[Personalization Fallbacks]
+```
+*Figure: High-level directory structure and core responsibilities.*
 
 ### `/src/components/birthday`
-- **`Balloons.tsx`**: Responsible for the floating SVG background elements. Uses physics-based randomness.
-- **`CakeCutting.tsx`**: The core interactive module. Handles selection, candle-blowing, and the 3D cutting ceremony.
-- **`CinematicIntro.tsx`**: The master orchestrator. Uses a finite state machine to manage scene timing.
-- **`FakeChatScene.tsx`**: Simulates a high-fidelity messaging interface.
-- **`FloatingElements.tsx`**: Manages ambient sparkles and dust particles.
-- **`HeartProgression.tsx`**: A mini-game or visual indicator of "love progression".
-- **`HeartTree.tsx`**: The finale component. A complex SVG growth animation.
-- **`MainBirthday.tsx`**: The "Home Base" after the intro ends.
-- **`PhotoGallery.tsx`**: The 3D-tilting image showcase.
-- **`Sparkles.tsx`**: Individual particle emitters.
-- **`TypeWriter.tsx`**: The core typographic engine.
+- **`Balloons.tsx`**: Floating SVG background balloons with random drift velocity.
+- **`CakeCutting.tsx`**: Interactive birthday cake (handles candle extinguishing, layered SVG splitting, and quotes).
+- **`CinematicIntro.tsx`**: Sequence orchestrator running the introduction scene state machine.
+- **`FakeChatScene.tsx`**: Simulates the typing and bubbles of the fake messaging interface.
+- **`FloatingElements.tsx`**: Manages the floating background particles and dust effects.
+- **`HeartProgression.tsx`**: Visual heart tracker showing interaction progress.
+- **`HeartTree.tsx`**: Sprouts and draws the growing branches and heart leaves using SVG stroke offsets.
+- **`MainBirthday.tsx`**: Main landing view hosting the birthday message and interactive components.
+- **`PhotoGallery.tsx`**: Polaroid photo gallery with dynamic 3D tilt effects.
+- **`Sparkles.tsx`**: Controls individual sparkle particle emission.
+- **`TypeWriter.tsx`**: Typographic component that types strings character-by-character recursively.
 
 ### `/src/features`
-- **`cinematic-story`**: Contains logic and variants specifically for the intro narrative.
-- **`core`**: The backbone of the app—Store, Theme, and global hooks.
+- **`cinematic-story`**: Animation variants and layout details for the intro text sequences.
+- **`core`**: Global store (`useBirthdayStore`), theme loaders (`useDynamicTheme`), and global utilities.
 
 ### `/src/pages`
-- **`Index.tsx`**: The entry point. Decides between showing the Intro or the Dashboard.
-- **`NotFound.tsx`**: A cinematic 404 page (often overlooked but essential for quality).
+- **`Index.tsx`**: Directs routing by rendering either the Splash screen, Cinematic Intro, or Main Dashboard.
+- **`NotFound.tsx`**: Custom 404 page for route handling.
 
 ---
 
@@ -742,38 +915,9 @@ spec:
 
 ---
 
-## 📊 Comprehensive Performance Analysis (Real-World Benchmarks)
+## 🌟 Contributing & Community
 
-We tested Birthday Bloom on various hardware configurations to ensure 60fps stability.
-
-| Device | CPU | RAM | FPS (Avg) | Load Time |
-| :--- | :--- | :--- | :--- | :--- |
-| MacBook Pro M2 | Apple M2 | 16GB | 120fps | 0.4s |
-| iPhone 14 Pro | A16 Bionic | 6GB | 60fps | 0.6s |
-| Pixel 7 | Google Tensor G2 | 8GB | 60fps | 0.8s |
-| Surface Pro 8 | Intel i7-1185G7 | 16GB | 60fps | 0.9s |
-| Samsung A54 | Exynos 1380 | 6GB | 55fps | 1.2s |
-| iPad Air (2022) | Apple M1 | 8GB | 60fps | 0.5s |
-| Raspberry Pi 4 | Broadcom BCM2711 | 4GB | 30fps | 4.5s |
-
-### Key Takeaways
-- **Apple Silicon** devices handle the SVG engine with zero effort.
-- **Android Mid-range** devices may see a slight frame drop during the massive confetti cannon, but remain perfectly usable.
-- **Network Latency** is the biggest bottleneck; always use a CDN (like Vercel Edge).
-
----
-
-## 🌟 Community Showcase & Hall of Fame
-
-The following developers and creators have contributed to the "Bloom Ecosystem". 
-
-1. **Naboraj Sarkar** - Original Concept & Lead Architecture.
-2. **Naboraj Sarkar** - Advanced 3D Engine & Cinematography.
-3. **Naboraj Sarkar Fans** - Beta Testing & Feature Requests.
-4. **The React Community** - For the foundational libraries.
-5. **YOU** - For downloading and using this project!
-
-*To add your name to the hall of fame, please open a PR with your GitHub profile link.*
+We welcome contributions of all types. If you find a bug, want to suggest features, improve documentation, or refine styles, please feel free to open an issue or submit a pull request. We thank everyone who uses, stars, or contributes to this repository.
 
 ---
 
@@ -781,11 +925,42 @@ The following developers and creators have contributed to the "Bloom Ecosystem".
 
 Birthday Bloom welcomes contributions of all kinds — bug fixes, documentation improvements, UI polish, accessibility enhancements, performance optimizations, and new features.
 
+### 🎬 Video Guides for Contributors
+We have created two animated walkthrough guides to help you contribute to Birthday Bloom:
+
+#### 1. Official Contributing Guide (Overview)
+<p align="center">
+  <a href="https://youtu.be/V4XZRRvcxgk" target="_blank">
+    <img src="https://img.youtube.com/vi/V4XZRRvcxgk/maxresdefault.jpg"
+         alt="Birthday Bloom - Official Contributing Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🤝 Watch the Official Contributing Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong>, whether you're a first-time open-source contributor or an experienced developer. This guide covers GitHub Issues, feature requests, bug reports, forking the repository, creating branches, making meaningful commits, submitting Pull Requests, the code review process, and open-source best practices to help you become a successful contributor.
+</p>
+
+#### 2. Detailed Step-by-Step Contributor Guide (Explainer)
+<p align="center">
+  <a href="https://youtu.be/a9-ndTkD8IE" target="_blank">
+    <img src="https://img.youtube.com/vi/a9-ndTkD8IE/maxresdefault.jpg"
+         alt="How to Contribute to Birthday Bloom"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>📚 Watch the Complete Contributor Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong> from start to finish. This step-by-step guide covers GitHub Issues, feature requests, bug reporting, forking the repository, cloning the project, creating branches, writing meaningful commit messages, opening Pull Requests, the review process, and open-source best practices. Whether you're making your first contribution or you're an experienced developer, this guide will help you confidently contribute to the project.
+</p>
+
 ### Quick Start for Contributors
 
-1. **Read [CONTRIBUTING.md](./CONTRIBUTING.md)** for the full workflow
-2. **Read [STYLEGUIDE.md](./STYLEGUIDE.md)** for code conventions
-3. **Read [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+1. **Read [CONTRIBUTING.md](./.github/CONTRIBUTING.md)** for the full workflow
+2. **Read [styleguide.md](./docs/styleguide.md)** for code conventions
+3. **Read [architecture.md](./docs/architecture.md)** to understand the codebase
 4. **Check [good first issues](https://github.com/naborajs/birthday-bloom/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** for beginner-friendly tasks
 5. **Fork, branch, commit, push, and PR** — see the [PR template](.github/pull_request_template.md)
 
@@ -800,38 +975,7 @@ Birthday Bloom welcomes contributions of all kinds — bug fixes, documentation 
 
 ### Community Standards
 
-All contributors are expected to follow our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md). Please be respectful, inclusive, and constructive.
-
----
-
-## 🛣️ Roadmap
-
-### Now — Quality & Community Foundation
-- ✅ Community health files (CODE_OF_CONDUCT, SECURITY, SUPPORT)
-- ✅ Issue and PR templates for structured contributions
-- ✅ CI pipeline with lint, typecheck, build, and test
-- ✅ Dependabot for dependency updates
-- ✅ Comprehensive documentation suite
-
-### Next — Features & Polish
-- [ ] Celebration mode presets (anniversary, graduation)
-- [ ] YouTube/Vimeo native embed support
-- [ ] Spotify playlist integration
-- [ ] Screen reader pass on all interactive sections
-- [ ] Offline support via service worker
-- [ ] PWA manifest for installable experience
-- [ ] Storybook for component development
-- [ ] Expanded test coverage
-
-### Later — Ecosystem & Scale
-- [ ] CLI tool (`npx create-birthday-bloom`)
-- [ ] Online preview configurator
-- [ ] Community template gallery
-- [ ] Guest book with optional backend
-- [ ] i18n / localization framework
-
-**Full roadmap:** [ROADMAP.md](./ROADMAP.md)  
-**Have ideas?** Open a [feature request](https://github.com/naborajs/birthday-bloom/issues/new?template=feature_request.yml)
+All contributors are expected to follow our [CODE_OF_CONDUCT.md](./.github/CODE_OF_CONDUCT.md). Please be respectful, inclusive, and constructive.
 
 ---
 
@@ -858,30 +1002,16 @@ This project is licensed under the **MIT License**. You are completely free to u
 
 We believe that code is a gift. That's why we made Birthday Bloom open-source and free for everyone. If you've used this to make someone happy, consider "paying it forward" by contributing a new feature or helping another developer in the community.
 
-### Ways to Give Back if you want to:
-- Write a blog post about how you used Birthday Bloom.
-- Record a video tutorial for the Naboraj Sarkar community.
-- Donate to an open-source library that we depend on (like Framer Motion).
+### Ways to Give Back
+- Write a blog post or share how you used Birthday Bloom.
+- Record a guide or tutorial to help other users.
+- Donate to open-source libraries that we depend on (like Framer Motion).
 
 ---
 
 ## 📖 Open Source Ecosystem
 
 Birthday Bloom comes with a complete open-source operating system to make contributing, maintaining, and collaborating easy.
-
-### Repository Health Files
-
-| File | Purpose |
-| --- | --- |
-| [CONTRIBUTING.md](./CONTRIBUTING.md) | Full contribution workflow |
-| [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | Community standards and expectations |
-| [SECURITY.md](./SECURITY.md) | Vulnerability reporting process |
-| [SUPPORT.md](./SUPPORT.md) | Where to get help |
-| [STYLEGUIDE.md](./STYLEGUIDE.md) | Code, docs, and design conventions |
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | System architecture deep dive |
-| [CHANGELOG.md](./CHANGELOG.md) | Version history and release notes |
-| [ROADMAP.md](./ROADMAP.md) | Planned features and direction |
-| [FAQ.md](./FAQ.md) | Frequently asked questions |
 
 ### GitHub Automation
 
@@ -912,15 +1042,9 @@ This project follows [Semantic Versioning](https://semver.org/). Major releases 
 
 ---
 
-## 👤 Naboraj Sarkar — The Studio Behind the Magic
+## 👤 Author
 
-> ✨ Building experiences, not just websites.
-
-**Naboraj Sarkar** is the creator behind **Naboraj Sarkar** — a creative development studio focused on crafting cinematic, interactive, and emotionally engaging web experiences.
-
-What started as a solo vision is now growing into a community-driven movement to:
-
-> 🌐 Make the internet more beautiful, expressive, and unforgettable.
+Birthday Bloom was created and is maintained by **Naboraj Sarkar**. If you find this project useful or want to support future work, feel free to connect via the contact channels below.
 
 ---
 <div align="center">
@@ -930,16 +1054,9 @@ What started as a solo vision is now growing into a community-driven movement to
   </figure>
 </div>
 
-## 🏁 Final Sign-off
-
-As we reach the conclusion of this master documentation, we want to remind you that the most important part of this project isn't the code, the 3D effects, or the 60fps performance—it's the smile on the person's face when they see their surprise.
-
-**Naboraj Sarkar & the Naboraj Sarkar Team**
-*April 24, 2026*
-
 ---
 
-> **"In the garden of the internet, may your digital memories always bloom."** 🌸
+Developed by Naboraj Sarkar. Contributions and improvements are welcome.
 
 ---
 

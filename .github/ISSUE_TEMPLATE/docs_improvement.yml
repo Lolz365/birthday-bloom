@@ -46,3 +46,15 @@ body:
         - Developers contributing to the codebase
         - Deployers / DevOps
         - Everyone
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true
