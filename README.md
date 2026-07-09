@@ -948,6 +948,19 @@ We welcome contributions of all types. If you find a bug, want to suggest featur
 
 Birthday Bloom welcomes contributions of all kinds — bug fixes, documentation improvements, UI polish, accessibility enhancements, performance optimizations, and new features.
 
+<p align="center">
+  <a href="https://youtu.be/V4XZRRvcxgk" target="_blank">
+    <img src="https://img.youtube.com/vi/V4XZRRvcxgk/maxresdefault.jpg"
+         alt="Birthday Bloom - Official Contributing Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🤝 Watch the Official Contributing Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong>, whether you're a first-time open-source contributor or an experienced developer. This guide covers GitHub Issues, feature requests, bug reports, forking the repository, creating branches, making meaningful commits, submitting Pull Requests, the code review process, and open-source best practices to help you become a successful contributor.
+</p>
+
 ### Quick Start for Contributors
 
 1. **Read [CONTRIBUTING.md](./CONTRIBUTING.md)** for the full workflow

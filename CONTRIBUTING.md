@@ -2,7 +2,23 @@
 
 Thank you for considering a contribution to Birthday Bloom. Whether you're fixing a bug, improving documentation, polishing UI, enhancing accessibility, or building new features — your help is appreciated.
 
-> **Before writing code:** Please read the [ARCHITECTURE.md](./ARCHITECTURE.md) and [STYLEGUIDE.md](./STYLEGUIDE.md) to understand how the project is structured.
+<p align="center">
+  <a href="https://youtu.be/V4XZRRvcxgk" target="_blank">
+    <img src="https://img.youtube.com/vi/V4XZRRvcxgk/maxresdefault.jpg"
+         alt="Birthday Bloom - Official Contributing Guide"
+         width="900">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🤝 Watch the Official Contributing Guide</strong><br>
+  Learn how to contribute to <strong>Birthday Bloom</strong>, whether you're a first-time open-source contributor or an experienced developer. This guide covers GitHub Issues, feature requests, bug reports, forking the repository, creating branches, making meaningful commits, submitting Pull Requests, the code review process, and open-source best practices to help you become a successful contributor.
+</p>
+
+---
+
+> [!IMPORTANT]
+> **Before writing code:** Please read [ARCHITECTURE.md](file:///d:/Projects/Website/birthday-bloom-main/ARCHITECTURE.md) and [STYLEGUIDE.md](file:///d:/Projects/Website/birthday-bloom-main/STYLEGUIDE.md) to understand how the project is structured.
 
 ---
 
