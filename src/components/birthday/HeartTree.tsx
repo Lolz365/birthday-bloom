@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
-import { useConfetti } from "./Confetti";
 import { useSoundManager } from "./SoundManager";
 import { SPECIAL_QUOTES } from "@/config/templates";
 
@@ -69,8 +68,10 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
     const { playPop } = useSoundManager();
 
     const quotesPool = useMemo(() => {
-        if (relationship === 'partner') return SPECIAL_QUOTES.partner[gender as 'male' | 'female'] || SPECIAL_QUOTES.family;
-        if (relationship === 'friend') return (gender === 'male' ? SPECIAL_QUOTES.friend.legend : SPECIAL_QUOTES.friend.friendly) || SPECIAL_QUOTES.family;
+        if (relationship === 'partner')
+            return SPECIAL_QUOTES.partner[gender as 'male' | 'female'] || SPECIAL_QUOTES.family;
+        if (relationship === 'friend')
+            return (gender === 'male' ? SPECIAL_QUOTES.friend.legend : SPECIAL_QUOTES.friend.friendly) || SPECIAL_QUOTES.family;
         return SPECIAL_QUOTES.family;
     }, [relationship, gender]);
 
@@ -84,7 +85,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
         return () => timers.forEach(clearTimeout);
     }, [delay]);
 
-    // Animate heart scales in via rAF once stage >= 3
     useEffect(() => {
         if (stage < 3) return;
         rafRefs.current.forEach(cancelAnimationFrame);
@@ -117,7 +117,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
 
     return (
         <div className="relative w-full max-w-[500px] mx-auto mb-20">
-            {/* Frosted card — no 3D transforms, no overflow:hidden on card so SVG overflow:visible works */}
             <div style={{
                 borderRadius: 20,
                 background: "rgba(255,255,255,0.05)",
@@ -130,13 +129,11 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
             }}>
                 <div style={{ position: "relative", width: "100%", aspectRatio: "1/1" }}>
 
-                    {/* Ambient bloom */}
                     <div className="absolute inset-0 pointer-events-none rounded-full blur-[100px] transition-opacity duration-[2000ms]"
                         style={{ background: `radial-gradient(circle at 50% 40%, ${primaryColor}40, transparent 70%)`, opacity: stage === 4 ? 1 : 0 }} />
 
                     {stage >= 3 && <TreeSparks count={20} color={primaryColor} />}
 
-                    {/* SVG — position:relative, z-index:10, NO pointer-events interference above it */}
                     <svg
                         viewBox="0 0 300 300"
                         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", zIndex: 10 }}
@@ -168,7 +165,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             </radialGradient>
                         </defs>
 
-                        {/* ── TRUNK: single tapered filled shape from base up to fork at y≈175 ── */}
                         <motion.path
                             d="M 138 300 C 136 260 139 220 142 185 C 144 175 147 168 150 165 C 153 168 156 175 158 185 C 161 220 164 260 162 300 Z"
                             fill="url(#bark)"
@@ -184,7 +180,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             style={{ transformOrigin: "150px 300px" }}
                         />
 
-                        {/* ── MAIN BRANCHES: start exactly at trunk top (150,165) ── */}
                         {[
                             { d: "M 150 165 C 130 150 105 130 80 102",  w: 13, dl: 0.3 },
                             { d: "M 150 165 C 170 148 195 118 222 80",  w: 13, dl: 0.5 },
@@ -200,7 +195,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             </g>
                         ))}
 
-                        {/* ── SUB BRANCHES ── */}
                         {[
                             { d: "M 112 140 C 90 122 68 116 56 120",    w: 7, dl: 1.4 },
                             { d: "M 90  110 C 70  88  50  78  38  80",  w: 6, dl: 1.5 },
@@ -219,7 +213,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             </g>
                         ))}
 
-                        {/* ── HEARTS: plain <g> with SVG transform, onClick on each ── */}
                         {LEAVES.map((leaf, i) => {
                             const sc = scales[i];
                             const hasPhoto = photos.length > 0 && i < photos.length;
@@ -230,7 +223,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                                     onClick={(e) => clickHeart(e, i)}
                                     style={{ cursor: "pointer" }}
                                 >
-                                    {/* big transparent hit area always present */}
                                     <circle r="22" fill="transparent" />
                                     {hasPhoto ? (
                                         <g>
@@ -248,7 +240,6 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                         })}
                     </svg>
 
-                    {/* Message bubble — pointer-events-none so it never blocks heart clicks */}
                     <AnimatePresence>
                         {activeMsg && (
                             <motion.div
