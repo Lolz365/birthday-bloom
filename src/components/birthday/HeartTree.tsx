@@ -48,29 +48,17 @@ const TreeSparks = ({ count, color }: { count: number; color: string }) => {
 /** 12 unique messages — one locked to each heart position.
  *  Falls back gracefully to relationship-based quotes if needed. */
 const HEART_MESSAGES = [
-    // 0 — top-centre (biggest, most prominent)
     "You are the centrepiece of every memory worth keeping. ✨",
-    // 1 — top-left cluster
     "In a world full of ordinary moments, you are the extraordinary one. 🌸",
-    // 2 — top-right cluster
     "Every year you bloom a little brighter — and somehow that still surprises me. 🌟",
-    // 3 — very top (small, delicate)
     "Even the stars dim a little when you walk in. 🌌",
-    // 4 — left-mid branch
     "Thank you for being the reason the room always feels warmer. 🧡",
-    // 5 — left outer
     "Dosti ka naam ho toh tum jaisa — yaar tum jaisa. 🔥",
-    // 6 — left inner
     "You carry kindness like a superpower, and you don’t even notice. 💕",
-    // 7 — far left (smallest on left)
     "The quiet ways you show up for people — those are the chapters I remember. 💫",
-    // 8 — right-mid branch
     "Tumhari muskurahat hi meri khushi ka raaz hai. 🌹",
-    // 9 — right upper
     "You are proof that the best things in life are never planned. ❤️",
-    // 10 — right outer
     "Loud in laughter, steady in loyalty — that’s you, always. 🎉",
-    // 11 — far right (small)
     "Here’s to another year of you being absolutely, unapologetically you. 💖",
 ];
 
@@ -151,35 +139,31 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                     padding: "24px 16px 16px",
                 }}
             >
-                {/* Inner vignette: tree edges dissolve into the card */}
-                <div
-                    className="absolute inset-0 pointer-events-none rounded-2xl"
-                    style={{
-                        background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%)",
-                        zIndex: 15,
-                    }}
-                />
-
                 <motion.div
                     animate={{ rotateX: stage === 4 ? 20 : 0 }}
                     className="relative w-full preserve-3d"
                     style={{ aspectRatio: "1 / 1" }}
                 >
-                    {/* Ambient bloom */}
+                    {/* Ambient bloom — z-0, purely visual */}
                     <div
                         className="absolute inset-0 transition-opacity duration-[2000ms] pointer-events-none rounded-full blur-[80px]"
                         style={{
                             background: `radial-gradient(circle at 50% 40%, ${primaryColor}50, transparent 70%)`,
                             opacity: stage >= 2 ? (stage === 4 ? 1 : 0.5) : 0,
+                            zIndex: 0,
                         }}
                     />
 
                     {stage >= 3 && <TreeSparks count={25} color={primaryColor} />}
 
+                    {/* SVG at z-20 — above vignette so hearts receive pointer events */}
                     <svg
                         viewBox="0 0 300 300"
-                        className="w-full h-full relative z-10 overflow-visible cursor-pointer"
-                        style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))" }}
+                        className="w-full h-full relative overflow-visible cursor-pointer"
+                        style={{
+                            zIndex: 20,
+                            filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
+                        }}
                         onClick={() => { if (stage >= 3) { fireStars(); playReveal(); } }}
                     >
                         <defs>
@@ -264,10 +248,9 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                             />
                         ))}
 
-                        {/* Heart Leaves — outer <g> positions via SVG translate so motion.g scales from leaf centre */}
+                        {/* Heart Leaves */}
                         {heartLeaves.map((leaf, i) => {
                             const hasPhoto = photos.length > 0 && i < photos.length;
-                            // Unique message per heart, fall back to quotesPool if somehow out of range
                             const message = HEART_MESSAGES[i] ?? quotesPool[i % quotesPool.length];
                             return (
                                 <g key={`leaf-${i}`} transform={`translate(${leaf.cx}, ${leaf.cy})`}>
@@ -311,7 +294,18 @@ export const HeartTree = ({ delay = 1000 }: HeartTreeProps) => {
                         })}
                     </svg>
 
-                    {/* Message Bubble */}
+                    {/* Vignette — AFTER the SVG in DOM so it paints on top visually,
+                         but pointer-events-none ensures it never blocks clicks */}
+                    <div
+                        className="absolute inset-0 pointer-events-none rounded-2xl"
+                        style={{
+                            background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%)",
+                            zIndex: 25,
+                            pointerEvents: "none",
+                        }}
+                    />
+
+                    {/* Message Bubble — z-[100] floats above everything */}
                     <AnimatePresence>
                         {activeMessage && (
                             <motion.div
