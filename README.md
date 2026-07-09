@@ -129,8 +129,8 @@ By coordinating asynchronous delays and Framer Motion timelines, the application
 
 If you want to deploy **Birthday Bloom** on the web to share with your loved one, you can do it completely free on Vercel. You don't need any coding experience to follow these steps!
 
-### Video Walkthrough
-If you prefer a visual guide, watch the video below for a complete step-by-step walkthrough:
+### 🎬 Video Walkthrough
+If you prefer a visual guide, click the thumbnail below to watch the complete step-by-step walkthrough:
 
 <p align="center">
   <a href="https://youtu.be/gwq1IaHXUn4" target="_blank">
@@ -147,49 +147,88 @@ If you prefer a visual guide, watch the video below for a complete step-by-step 
 
 ---
 
-### Step-by-Step Deployment Instructions
+### 📋 Step-by-Step Deployment Instructions
 
-#### Step 1: Create a GitHub Account
-To copy and host the project code, you need a free GitHub account.
-* Go to the [GitHub Sign Up page](https://github.com/join) and create a free account.
+---
 
-#### Step 2: Fork the Project
-"Forking" creates a personal copy of this repository on your own GitHub account so you can customize it.
-* Go to the [GitHub Repository Fork Page](https://github.com/naborajs/birthday-bloom/fork) (or click the **Fork** button in the top-right corner of the [main project page](https://github.com/naborajs/birthday-bloom)).
-* Leave all settings as default and click the green **Create fork** button.
+#### 1️⃣ Create a GitHub Account
+> **Goal:** Get a free space to hold your copy of the website code.
+>
+> * **Direct Link:** 👉 [GitHub Sign Up](https://github.com/join)
+> * **What to do:** Enter your email, create a password, choose a username, and complete the sign-up.
+> * **Why:** You need a GitHub account so that Vercel can pull the code and build it for you.
 
-#### Step 3: Create a Vercel Account
-We will use Vercel to host and run your website online for free.
-* Go to the [Vercel Sign Up page](https://vercel.com/signup).
-* Select **Continue with GitHub** to connect your Vercel account with the GitHub account you just created.
+---
 
-#### Step 4: Import Your Project to Vercel
-* Once inside your Vercel Dashboard, click the **Add New...** button and select **Project**, or go directly to the [Vercel Import page](https://vercel.com/new).
-* Under the **Import Git Repository** list, find `birthday-bloom` (under your username) and click the **Import** button.
+#### 2️⃣ Fork the Repository (Create Your Copy)
+> **Goal:** Copy all of Birthday Bloom's files to your new GitHub account.
+>
+> * **Direct Link:** 👉 [Fork Birthday Bloom](https://github.com/naborajs/birthday-bloom/fork)
+> * **What to do:** 
+>   1. Leave the **Repository name** as `birthday-bloom`.
+>   2. Make sure the checkbox **"Copy the main branch only"** is **checked**.
+>   3. Click the green **`Create fork`** button at the bottom of the page.
+> * **Why:** This creates a copy under your name (e.g., `github.com/your-username/birthday-bloom`), allowing you to link it to Vercel.
 
-#### Step 5: Personalize Your Site (Add Environment Variables)
-This is the most important step! Here, you customize the birthday details (the recipient's name, their birthday date, theme color, etc.) before launching.
-* On the project configuration screen, look for the dropdown section labeled **Environment Variables**.
-* Add the following variables by typing the **Name** in the first input box, the **Value** in the second input box, and clicking the **Add** button for each one:
+---
 
-| Environment Variable Name (Key) | Example Value | Description |
-| :--- | :--- | :--- |
-| `VITE_USER_NAME` | `Sarah` | The name of the birthday person. |
-| `VITE_BIRTHDAY_DATE` | `2026-07-25` | The date of their birthday in `YYYY-MM-DD` format (used for the countdown timer). |
-| `VITE_TITLE` | `Happy Birthday, Sarah! 🌸` | The text that appears on the browser tab title. |
-| `VITE_CARD_TITLE_SURPRISE` | `A Special Gift for You!` | The main title displayed on the final letter card. |
-| `VITE_THEME_COLOR` | `#ff69b4` | The theme color hex code (e.g. pink: `#ff69b4`, rose: `#e11d48`, blue: `#2563eb`). |
+#### 3️⃣ Create a Vercel Account
+> **Goal:** Sign up for the hosting service that will put your website online for free.
+>
+> * **Direct Link:** 👉 [Vercel Sign Up](https://vercel.com/signup)
+> * **What to do:** Click the **`Continue with GitHub`** button. This automatically links your Vercel account to your GitHub account.
+> * **Why:** Linking with GitHub allows Vercel to read your code copy and automatically deploy updates.
 
-> [!NOTE]
-> For a full list of all 20+ customizable options, see the [.env.example](file:///d:/Projects/Website/birthday-bloom-main/.env.example) configuration file or check the [Environment Variables Guide](#-environment-variables-guide) further down.
+---
 
-#### Step 6: Deploy!
-* Once you have added your custom environment variables, click the blue **Deploy** button at the bottom of the page.
-* Wait about 60–90 seconds while Vercel builds your site. When it's complete, you will see a preview screen with a shower of confetti!
+#### 4️⃣ Import the Project to Vercel
+> **Goal:** Tell Vercel to start setting up your birthday website.
+>
+> * **Direct Link:** 👉 [Vercel - New Project Dashboard](https://vercel.com/new)
+> * **What to do:** 
+>   1. Under the **"Import Git Repository"** section, locate the repository named `birthday-bloom`.
+>   2. Click the black **`Import`** button next to it.
+> * **Why:** This imports the project files into Vercel so it can start setting up your deployment.
 
-#### Step 7: Get Your Live Link and Share
-* Click on the web preview on your Vercel dashboard to open your new live website.
-* Copy the URL from your browser's address bar (it will look like `https://birthday-bloom-yourname.vercel.app`) and send it to the birthday person!
+---
+
+#### 5️⃣ Personalize Your Website (The most important step!)
+> **Goal:** Set the name, date, messages, and colors for the birthday person without touching any code.
+>
+> * **What to do:**
+>   1. On the project setup page in Vercel, find the section labeled **`Environment Variables`** (it is a dropdown panel). Click it to expand.
+>   2. For each variable below, type the **Key** in the first field, the **Value** in the second field, and click the blue **`Add`** button:
+>
+> | Key (Environment Variable) | Example Value | What it controls |
+> | :--- | :--- | :--- |
+> | `VITE_USER_NAME` | `Sarah` | The name of the birthday person. |
+> | `VITE_BIRTHDAY_DATE` | `2026-07-25` | The birthday date in `YYYY-MM-DD` format (sets up the countdown). |
+> | `VITE_TITLE` | `Happy Birthday, Sarah! 🌸` | The text shown on the browser tab. |
+> | `VITE_CARD_TITLE_SURPRISE` | `A Special Gift for You!` | The main title on the final letter envelope. |
+> | `VITE_THEME_COLOR` | `#ff69b4` | The theme color (e.g. pink: `#ff69b4`, red: `#e11d48`, blue: `#2563eb`). |
+>
+> > [!TIP]
+> > For a full list of all 20+ customizable items (like custom messages, photos, and music), check the [.env.example](file:///d:/Projects/Website/birthday-bloom-main/.env.example) configuration file or the [Environment Variables Guide](#-environment-variables-guide) section below.
+
+---
+
+#### 6️⃣ Deploy!
+> **Goal:** Build the site and make it live.
+>
+> * **What to do:** Click the blue **`Deploy`** button at the bottom.
+> * **What happens next:** Vercel will spend about 60–90 seconds building your site. Once done, it will show a preview screen of your website with a shower of **confetti**!
+> * **Why:** This turns your source code files into a live, interactive website accessible from any phone or computer.
+
+---
+
+#### 7️⃣ Copy Your Live Link and Share
+> **Goal:** Send the surprise to your loved one!
+>
+> * **What to do:**
+>   1. Click on the screenshot preview of your website in Vercel to open it.
+>   2. Copy the URL from your web browser's address bar. It will look like:
+>      `https://birthday-bloom-yourname.vercel.app`
+>   3. Send this link to the birthday person!
 
 ---
 
