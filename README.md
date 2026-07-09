@@ -915,29 +915,6 @@ spec:
 
 ---
 
-## 📊 Performance Analysis & Benchmarks
-
-The benchmark details below show average performance stats recorded during test cycles. Actual performance will vary depending on network speeds, active background tasks, and browser implementations.
-
-| Device | CPU | RAM | FPS (Avg) | Load Time |
-| :--- | :--- | :--- | :--- | :--- |
-| MacBook Pro M2 | Apple M2 | 16GB | 120fps | 0.4s |
-| iPhone 14 Pro | A16 Bionic | 6GB | 60fps | 0.6s |
-| Pixel 7 | Google Tensor G2 | 8GB | 60fps | 0.8s |
-| Surface Pro 8 | Intel i7-1185G7 | 16GB | 60fps | 0.9s |
-| Samsung A54 | Exynos 1380 | 6GB | 55fps | 1.2s |
-| iPad Air (2022) | Apple M1 | 8GB | 60fps | 0.5s |
-| Raspberry Pi 4 | Broadcom BCM2711 | 4GB | 30fps | 4.5s |
-
-*Table: Reference benchmark data compiled from local testing devices.*
-
-### Architectural Optimizations
-- **GPU Acceleration**: Animations leverage hardware acceleration via CSS `transform3d` properties to avoid browser layout recalculations.
-- **Lightweight Dependencies**: Avoids heavy 3D rendering engines or physics libraries to minimize bundle sizes.
-- **Asset Size Minimization**: Relies on vector-based SVG graphics instead of raw image formats for animations.
-
----
-
 ## 🌟 Contributing & Community
 
 We welcome contributions of all types. If you find a bug, want to suggest features, improve documentation, or refine styles, please feel free to open an issue or submit a pull request. We thank everyone who uses, stars, or contributes to this repository.
