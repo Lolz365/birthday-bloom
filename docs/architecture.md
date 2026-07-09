@@ -1,171 +1,194 @@
-# 🏛️ Birthday Bloom Architecture: Runtime, Themes, and Cinematic Flow
+# 🏛️ Birthday Bloom Architecture
 
-Birthday Bloom is built as an **env-first cinematic runtime**: data is hydrated from environment variables, transformed into a typed app state, and rendered through a phase-driven animation pipeline.
-
-This document explains the actual implementation layers, the live source files, and the runtime behavior that matters for extension and debugging.
+Birthday Bloom is a **Cinematic Finite State Machine (CFSM)** — a React application designed for high-performance visual storytelling with env-driven personalization.
 
 ---
 
-## 🧩 Three core runtime layers
+## Core Data Flow
 
-### 1. Data Layer — Env to Store
-**File:** `src/features/core/store/useBirthdayStore.ts`
-
-This is the single source of truth for personalization.
-
-- It parses environment variables at module load time
-- It normalizes aliases like `VITE_FAVORITE_COLOR` and `VITE_WISHER_NAME`
-- It enforces safe fallback rules for malformed values
-- It creates a typed `BirthdayConfig` object consumed by components
-
-**Implementation highlights**:
-- `parseEnvString()` drops empty values and normalizes `undefined` / `null`
-- `parseEnvBoolean()` supports `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`, `enabled`, `disabled`
-- `parseEnvList()` accepts comma, pipe, newline, or JSON array formats
-- `parseEnvJson<T>()` enables full JSON profile config via `VITE_FAMILY_PROFILE_JSON`
-
-**Live runtime values** parsed by the store include:
-- `VITE_BIRTHDAY_NAME`, `VITE_BIRTHDAY_AGE`, `VITE_BIRTHDAY_GENDER`, `VITE_BIRTHDAY_DATE`
-- `VITE_BIRTHDAY_RELATIONSHIP` with alias normalization
-- `VITE_BIRTHDAY_COLOR`, `VITE_BIRTHDAY_CUSTOM_MESSAGE`, `VITE_BIRTHDAY_LETTER_OVERRIDE`
-- `VITE_PHOTOS`, `VITE_PHOTO_1..6`, `VITE_PHOTO_CAPTIONS`
-- `VITE_VIDEO_1..3`, `VITE_FINAL_VIDEO_URL`
-- `VITE_SPECIAL_MEMORIES`
-- `VITE_PASSWORD`, `VITE_PASSWORD_HINT`, `VITE_PASSWORD_FORMAT`, `VITE_PASSWORD_REQUIRED`
-- `VITE_FAMILY_PROFILE_JSON`, `VITE_FAMILY_MEMBER_TYPE`, plus family metadata vars
-
-> Note: Some env keys appear in `.env.example` for future compatibility, but are not currently parsed in `useBirthdayStore.ts`. Those include `VITE_THEME`, `VITE_REDUCED_MOTION`, `VITE_TEXT_SIZE`, `VITE_HIGH_CONTRAST`, and `VITE_SHOW_SKIP_BUTTON`.
-
----
-
-### 2. Theme Layer — Runtime CSS tokens
-**File:** `src/features/core/theme/useDynamicTheme.ts`
-
-This hook converts `favoriteColor`, `relationship`, and `gender` into `:root` variables.
-
-It dynamically sets:
-- `--color-primary`
-- `--color-primary-low`
-- `--color-primary-glow`
-- `--bg-gradient`
-- `--glow-effect`
-- `--glass-opacity`
-- `--font-display`
-- `--animation-pacing`
-- `--particle-speed`
-- `--card-radius`
-- gender-aware glow and blur adjustments
-
-This layer keeps visual theming centralized and decoupled from presentational components.
-
----
-
-### 3. Execution Layer — Phase machine and scenes
-**Files:** `src/pages/Index.tsx`, `src/components/birthday/CinematicIntro.tsx`
-
-The app is a finite-state experience with four exclusive phases:
-
-- `splash`
-- `unlock` (conditional on `isPasswordRequired(config)`)
-- `intro`
-- `main`
-
-`Index.tsx` renders one phase at a time with `AnimatePresence`.
-`CinematicIntro.tsx` manages a second-level storytelling timeline that runs the intro scenes in sequence.
-
-**Phase transitions**:
-- `SplashScreen` → checks password requirement
-- `PasswordUnlock` → on success moves to `intro`
-- `CinematicIntro` → when complete moves to `main`
-- `MainBirthday` → final interactive dashboard with ambient layers
-
-**Implementation truth**:
-- A skip button exists in the UI, but it is not controlled by a runtime env toggle.
-- The password screen appears when `VITE_PASSWORD_REQUIRED=true` or `VITE_PASSWORD` is present.
-- The explicit phase values are typed as `type Phase = "splash" | "unlock" | "intro" | "main"`.
-
----
-
-## 🔧 Actual data flow
-
-```mermaid
-graph LR
-  ENV[import.meta.env] --> S[useBirthdayStore.ts]
-  S --> T[useDynamicTheme.ts]
-  T --> ROOT[:root CSS vars]
-  S --> UI[Birthday components]
-  UI --> MAIN[MainBirthday.tsx]
+```
+.env.local
+  → import.meta.env (Vite)
+  → useBirthdayStore (Zustand) — parses, normalizes, validates
+    → useDynamicTheme — injects HSL CSS custom properties into :root
+    → Birthday components — read config from store
 ```
 
 ---
 
-## 🛡 Runtime resilience and behavior
+## Layer Architecture
 
-Birthday Bloom is designed to avoid blank or broken screens.
+### 1. Data Layer — `src/features/core/store/useBirthdayStore.ts`
 
-- Invalid relationship strings fall back to `family`
-- Invalid or missing dates are ignored, not thrown
-- The app never reads `process.env`; it uses Vite's `import.meta.env` only
-- All intro timers are tracked and cleared on component unmount
-- The password generator uses either `VITE_PASSWORD` or the parsed birthday date
+The Zustand store is the single source of truth. At module load time, it parses every `VITE_*` environment variable using robust helpers:
 
-**Password rules**:
-- supported formats: `MMDD`, `DDMM`, `YYYYMMDD`, `YYYY-MM-DD`, `MM-DD`, `DD-MM`, `YYYY`
-- if `VITE_PASSWORD` is set, it overrides date generation
-- if no password is provided and no date exists, password unlock is inactive
+- `parseEnvString()` — rejects `"undefined"`, `"null"`, empty strings
+- `parseEnvBoolean()` — accepts `true/false/1/0/yes/no/on/off`
+- `parseEnvNumber()` — safe integer parsing with null fallback
+- `parseEnvList()` — splits on `,`, `|`, or newline; also handles JSON arrays
+- `parseEnvJson()` — for `VITE_FAMILY_PROFILE_JSON`
+
+The store exposes:
+- `config` — full `BirthdayConfig` object
+- `isConfigured` — whether `VITE_BIRTHDAY_NAME` is set
+- `setConfig()` — partial runtime update
+- `getAnimationPacing()` — derives `'slow' | 'moderate' | 'fast'` from relationship or `VITE_ANIMATION_SPEED`
+- `getMood()` — derives `'romantic' | 'energetic' | 'warm'` from relationship
+
+**Relationship normalization**: The raw env string is checked against a series of `.includes()` patterns. For example, `"partner"` or `"love"` → `partner`; `"brother"` → `brother`. Unknown values fall back to `family`.
+
+### 2. Theme Layer — `src/features/core/theme/useDynamicTheme.ts`
+
+Reads `favoriteColor`, `relationship`, and `gender` from the store and injects CSS custom properties on `:root`:
+
+- `--color-primary`, `--color-primary-low`, `--color-primary-glow` — derived from the hex color
+- `--bg-gradient` — relationship-specific background (radial for partner, linear for friend/family)
+- `--glow-effect` — box-shadow intensity
+- `--font-display` — typography: serif for partner, sans-serif for friend, rounded for family
+- `--animation-pacing` and `--particle-speed` — timing multipliers
+- `--card-radius` — border-radius mood
+
+Gender-based subtle shifts adjust `--glow-intensity`, `--glass-blur`, and `--color-accent-soft`.
+
+### 3. State Machine — `src/pages/Index.tsx`
+
+The page orchestrates a strict `Phase` type:
+
+```
+Phase = "splash" | "unlock" | "intro" | "main"
+```
+
+- **splash**: `SplashScreen` — tap-to-start, triggers audio awakening via `useSoundManager.startMusic()`
+- **unlock** (optional): `PasswordUnlock` — only if `isPasswordRequired(config)` returns true
+- **intro**: `CinematicIntro` — multi-scene cinematic sequence
+- **main**: `MainBirthday` — interactive celebration dashboard
+
+Transitions use `AnimatePresence` with cinematic blur/scale/opacity animations.
+
+**Skip button**: A floating "Skip Intro ⏭" button is shown during splash and intro phases (hidden during unlock to prevent bypass).
+
+### 4. Cinematic Intro Timeline — `src/components/birthday/CinematicIntro.tsx`
+
+Internal scene type:
+
+```
+Scene = "storytelling" | "fake-chat" | "post-chat" | "special-message" | "reveal-sequence" | "done"
+```
+
+Timing is controlled by `speedMultiplier` (derived from `getAnimationPacing()`):
+- `fast` → 0.7x
+- `slow` → 1.3x
+- default → 1.0x
+
+All timers use `timersRef` for cleanup on unmount. Each scene transition chains `setTimeout` calls with clear ordering.
+
+Reveal step type:
+
+```
+RevealStep = "dear-name" | "grand-reveal" | "final-message"
+```
+
+The reveal sequence fires multi-layer confetti (`fireCinematicCelebration`), screen shake, flash, emoji bursts, ring pulse, and heart progression stage changes.
+
+### 5. Execution Layer — `src/components/birthday/`
+
+Every birthday component reads from `useBirthdayStore` rather than accessing `import.meta.env` directly. This keeps env parsing centralized.
+
+### 6. Models Layer — `src/features/core/models/`
+
+- **`familyTemplates.ts`**: Base `FamilyMemberProfile` schema + 14 specialized member types (brother, sister, father, mother, etc.) with factory functions. Uses `FAMILY_TEMPLATE_REGISTRY` for scalable type mapping.
+- **`dataModels.ts`**: `EnhancedBirthdayConfig` (full app config), `ConfigValidator` (validate/sanitize/merge), `FamilyCollection`, `FamilyMember`, and `DataValidator` utility class.
+
+### 7. Config Layer — `src/config/`
+
+- **`birthday.ts`**: Simple static fallback for photo URLs and birthday name (used only when env is missing)
+- **`templates.ts`**: `EMOTIONAL_LETTERS` (relationship-specific letters), `SPECIAL_QUOTES` (partner/friend/family quotes), `TEMPLATE_PRESETS` (color/emoji presets by relationship/gender/age), `COLOR_PALETTES`
+- **`emojiKits.ts`**: `TemplateEmojiKit` per relationship type with signature/cursor/floating/celebration emoji sets, chat messages, and label overrides. `getTemplateEmojiKit()` merges base emojis with interest-based and custom emojis.
 
 ---
 
-## 📂 Source file map
+## Sound Architecture — `src/components/birthday/SoundManager.tsx`
 
-| File | Purpose |
-| --- | --- |
-| `src/features/core/store/useBirthdayStore.ts` | env parsing, typed config, helper accessors |
-| `src/features/core/theme/useDynamicTheme.ts` | runtime CSS variable injection |
-| `src/pages/Index.tsx` | top-level phase state machine and ambient layers |
-| `src/components/birthday/MainBirthday.tsx` | main celebration dashboard |
-| `src/components/birthday/CinematicIntro.tsx` | intro timeline and reveal sequence |
-| `src/components/birthday/PasswordUnlock.tsx` | optional passcode gate |
-| `src/utils/password.ts` | password generation / requirement logic |
-| `src/config/birthday.ts` | legacy audio/photo fallback lookup |
+A singleton `AudioManager` class handles:
+- Background music (loop, fade-out, volume control)
+- Sound effects: type, whoosh, reveal, pop, boom
+- Browser autoplay fallback (listens for first click)
+
+The `useSoundManager` hook exposes `playType()`, `playWhoosh()`, `playReveal()`, `playPop()`, `playBoom()`, `startMusic()`, `setBgVolume()`, `fadeOutBgMusic()`.
+
+URLs are configured via `AUDIO_URLS` object, with `bgMusic` sourced from `AUDIO_ASSETS.bgmUrl` (which resolves `VITE_BGM_URL` or `VITE_SOUND_URL`).
 
 ---
 
-## ✨ Animation and interaction system
+## Confetti Architecture — `src/components/birthday/Confetti.tsx`
 
-Birthday Bloom uses Framer Motion with a cinematic orchestration approach.
+Wraps `canvas-confetti` with mobile-aware scaling:
 
-### Animation patterns in use
-- `AnimatePresence` for mounting/unmounting phase transitions
-- `motion.div` with `opacity`, `scale`, `blur`, and `filter` transitions
-- spring-based motion for natural feel
-- staggered animation timing to preserve readability
-- layered ambient effects for visual depth
+- `fireConfetti(options)` — single burst
+- `fireCannon()` — dual-side cannons for 2s (mobile: 1.2s)
+- `fireStars()` — 360° star-shaped particles
+- `fireCinematicCelebration()` — layered burst: dual corner cannons → central fireworks
 
-### Key effects
-1. Depth shift and blur transitions
-2. 3D perspective rotations
-3. staggered child animations
-4. spring-based text reveals
-5. emoji and particle bursts
-6. conditional intro pacing based on relationship
-7. final reveal choreography
+All functions reduce particle count on mobile (`<768px` or userAgent match).
 
 ---
 
-## 📝 Practical implementation notes
+## Password System — `src/utils/password.ts`
 
-- Do not read `import.meta.env` directly from presentation components.
-- Keep env parsing centralized in `useBirthdayStore.ts`.
-- Use `const config = useBirthdayStore(state => state.config)` in components.
-- When adding new env values, add them to `BirthdayConfig`, parse them in `useBirthdayStore.ts`, and document them in `docs/ENV_GUIDE.md`.
-- `useDynamicTheme.ts` depends only on `favoriteColor`, `relationship`, and `gender`, not on `VITE_THEME`.
+Three functions:
+
+- `parseRawBirthdayDate()` — tries `new Date()`, regex match for `YYYY-MM-DD`, then `MM-DD`/`DD-MM` guessing
+- `generatePasswordFromDate()` — formats parsed date as MMDD, DDMM, YYYYMMDD, etc.
+- `getEffectivePassword()` — resolves `VITE_PASSWORD` first, then generates from `VITE_BIRTHDAY_DATE`, then falls back to raw `import.meta.env.VITE_BIRTHDAY_DATE`
+- `isPasswordRequired()` — checks `VITE_PASSWORD_REQUIRED` first, then whether a custom password is set
 
 ---
 
-## 📎 See also
+## Responsive Utilities — `src/utils/responsiveUtils.ts`
 
-- [ENV_GUIDE.md](ENV_GUIDE.md) — exact env runtime reference
-- [developer-guide.md](developer-guide.md) — how to extend and add features
-- [template-architecture.md](template-architecture.md) — template and profile inheritance model
-- [family-system.md](family-system.md) — family profile schema and examples
+Provides device type detection (`mobile/tablet/laptop/desktop/ultrawide`), touch detection, reduced motion preference, and optimal values for animation intensity, particle count, font size, spacing, grid columns, and container width — all derived from `window.innerWidth`.
+
+---
+
+## Folder Structure
+
+| Path | Purpose |
+|---|---|
+| `src/App.tsx` | Shell with router, error boundary, ambient effects, query client |
+| `src/pages/Index.tsx` | Phase state machine (splash → unlock → intro → main) |
+| `src/pages/NotFound.tsx` | 404 page |
+| `src/components/birthday/` | 38 cinematic birthday components |
+| `src/components/ui/` | shadcn/Radix UI primitives |
+| `src/components/ErrorBoundary.tsx` | Class-based error boundary |
+| `src/features/core/store/` | Zustand store + super personalization logic |
+| `src/features/core/models/` | Family templates, data models, validators |
+| `src/features/core/theme/` | Dynamic CSS variable injection |
+| `src/features/cinematic-story/scenes/` | Intro narrative scenes (e.g., `SpecialMessage`) |
+| `src/features/cinematic-story/animations/` | Animation variants |
+| `src/config/` | Birthday config, emotional letters, emoji kits |
+| `src/utils/` | Password, responsive utilities |
+| `src/hooks/` | `use-mobile`, `use-toast` |
+| `src/lib/` | Utility helpers |
+| `src/services/` | Audio system |
+| `src/test/` | Test setup and examples |
+| `public/` | Static assets |
+| `docs/` | Documentation suite |
+| `.github/` | Issue templates, PR template, workflows |
+| `skills/` | AI skills for opencode |
+
+---
+
+## Error Handling
+
+The `ErrorBoundary` at `src/components/ErrorBoundary.tsx` wraps the entire app. It catches rendering errors and shows a cinematic fallback with a "Reload Page" button.
+
+---
+
+## Key Design Decisions
+
+1. **No heavy physics libraries** — Uses `requestAnimationFrame` and CSS animations instead of Three.js or Matter.js
+2. **SVG for cake and heart tree** — Resolution-independent, animatable via CSS
+3. **CSS custom properties for theming** — Runtime injection avoids recompilation
+4. **Timer ref pattern** — All `setTimeout` IDs stored in `useRef` arrays for cleanup
+5. **Centralized env parsing** — One function per type (`parseEnvString`, `parseEnvBoolean`, etc.) in `useBirthdayStore.ts`
+6. **Relationship-driven everything** — Mood, pacing, colors, emojis, text content, and chat messages all branch on `VITE_BIRTHDAY_RELATIONSHIP`

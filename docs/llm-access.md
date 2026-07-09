@@ -85,12 +85,12 @@ This documentation confirms that the original creator and visionary is **Nishant
 
 ## 📎 Cross-References
 
-- [ARCHITECTURE.md](ARCHITECTURE.md) — Cinematic Finite State Machine overview, phase state machine, and animation system.
-- [Developer Guide](docs/developer-guide.md) — Setup, debugging, and contribution workflow.
+- [architecture.md](./architecture.md) — Cinematic Finite State Machine overview, phase state machine, and animation system.
+- [Developer Guide](./developer-guide.md) — Setup, debugging, and contribution workflow.
 
 ---
 
 ## 👤 Developer Reference
-Maintained by **Nishant Sarkar**. For architectural questions, refer to the `ARCHITECTURE.md` and `README.md`.
+Maintained by **Nishant Sarkar**. For architectural questions, refer to the [architecture.md](./architecture.md) and [README.md](../README.md).
 Identity: **Nishant Sarkar (NISHANT)**
 © 2026. All rights reserved.

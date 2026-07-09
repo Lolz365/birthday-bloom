@@ -46,7 +46,7 @@ gantt
 
 ### 🛠️ Completed Milestones
 * **✅ Standard Community Health Files**
-  * Established standard documentation including [CODE_OF_CONDUCT.md](file:///d:/Projects/Website/birthday-bloom-main/CODE_OF_CONDUCT.md) for community guidelines, [SECURITY.md](file:///d:/Projects/Website/birthday-bloom-main/SECURITY.md) for vulnerability reporting, and [SUPPORT.md](file:///d:/Projects/Website/birthday-bloom-main/SUPPORT.md) for user assistance.
+  * Established standard documentation including [CODE_OF_CONDUCT.md](file:///d:/Projects/Website/birthday-bloom-main/.github/CODE_OF_CONDUCT.md) for community guidelines, [SECURITY.md](file:///d:/Projects/Website/birthday-bloom-main/.github/SECURITY.md) for vulnerability reporting, and [SUPPORT.md](file:///d:/Projects/Website/birthday-bloom-main/.github/SUPPORT.md) for user assistance.
 * **✅ Pull Request & Issue Templates**
   * Created custom YAML-driven templates for Bug Reports, Feature Requests, and Documentation requests, as well as a markdown Pull Request template.
 * **✅ Continuous Integration (CI) Automation**
@@ -54,7 +54,7 @@ gantt
 * **✅ Automated Dependency Management**
   * Added Dependabot configuration to track node package updates and automatically submit security PRs.
 * **✅ Redesigned Documentation Suite**
-  * Created deep-dive guides: [ARCHITECTURE.md](file:///d:/Projects/Website/birthday-bloom-main/ARCHITECTURE.md), [ENV_CONFIGS.md](file:///d:/Projects/Website/birthday-bloom-main/ENV_CONFIGS.md), [FAQ.md](file:///d:/Projects/Website/birthday-bloom-main/FAQ.md), [CHANGELOG.md](file:///d:/Projects/Website/birthday-bloom-main/CHANGELOG.md), and a comprehensive [README.md](file:///d:/Projects/Website/birthday-bloom-main/README.md).
+  * Created deep-dive guides: [architecture.md](file:///d:/Projects/Website/birthday-bloom-main/docs/architecture.md), [env-configs.md](file:///d:/Projects/Website/birthday-bloom-main/docs/env-configs.md), [faq.md](file:///d:/Projects/Website/birthday-bloom-main/docs/faq.md), [CHANGELOG.md](file:///d:/Projects/Website/birthday-bloom-main/CHANGELOG.md), and a comprehensive [README.md](file:///d:/Projects/Website/birthday-bloom-main/README.md).
 
 ### ⏳ Current Work-in-Progress
 * **🔄 Community Discussions Hub**
@@ -115,4 +115,4 @@ We prioritize features that align with our core values:
 ### Want to influence the direction?
 * **Upvote:** Add a 👍 reaction to existing feature requests.
 * **Discuss:** Start a discussion thread to brainstorm new ideas.
-* **Submit:** Pull Requests are always welcome! Check [CONTRIBUTING.md](file:///d:/Projects/Website/birthday-bloom-main/CONTRIBUTING.md) to get started.
+* **Submit:** Pull Requests are always welcome! Check [CONTRIBUTING.md](file:///d:/Projects/Website/birthday-bloom-main/.github/CONTRIBUTING.md) to get started.

@@ -8,11 +8,11 @@ Most questions are already answered in our documentation:
 
 | Topic | Document |
 | --- | --- |
-| Customization & env setup | [ENV_GUIDE.md](./docs/ENV_GUIDE.md) |
-| Local installation | [Quick Start](./QUICK_START.md) |
-| Common issues | [Troubleshooting](./docs/troubleshooting.md) |
-| Frequently asked questions | [FAQ](./FAQ.md) |
-| Full documentation index | [DOCUMENTATION_INDEX.md](./docs/DOCUMENTATION_INDEX.md) |
+| Customization & env setup | [ENV_GUIDE.md](../docs/ENV_GUIDE.md) |
+| Local installation | [quick-start.md](../docs/quick-start.md) |
+| Common issues | [troubleshooting.md](../docs/troubleshooting.md) |
+| Frequently asked questions | [faq.md](../docs/faq.md) |
+| Full documentation index | [DOCUMENTATION_INDEX.md](../docs/DOCUMENTATION_INDEX.md) |
 
 ## I Have a Question
 
@@ -31,8 +31,7 @@ Describe the problem you're solving and why it fits Birthday Bloom.
 
 ## I Need Help Deploying
 
-See the [Deployment Guide](./docs/deployment.md) and
-[Hosting Solutions](./docs/hosting-solutions.md) docs.
+See the [deployment.md](../docs/deployment.md) guide.
 If you're still stuck, open a question issue with the "Deployment" category.
 
 ## Security Issues

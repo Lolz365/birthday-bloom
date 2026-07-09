@@ -74,8 +74,7 @@ export const BirthdayQuiz = () => {
             setScore(s => s + 1);
             playPop();
         }
-        else {
-        }
+
         setTimeout(() => {
             if (currentIdx < questions.length - 1) {
                 setCurrentIdx(c => c + 1);

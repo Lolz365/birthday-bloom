@@ -36,7 +36,7 @@ We have created two animated walkthrough guides to help you contribute to Birthd
 ---
 
 > [!IMPORTANT]
-> **Before writing code:** Please read [ARCHITECTURE.md](file:///d:/Projects/Website/birthday-bloom-main/ARCHITECTURE.md) and [STYLEGUIDE.md](file:///d:/Projects/Website/birthday-bloom-main/STYLEGUIDE.md) to understand how the project is structured.
+> **Before writing code:** Please read [architecture.md](file:///d:/Projects/Website/birthday-bloom-main/docs/architecture.md) and [styleguide.md](file:///d:/Projects/Website/birthday-bloom-main/docs/styleguide.md) to understand how the project is structured.
 
 ---
 
@@ -138,7 +138,7 @@ perf/optimize-particle-render
 
 ### Coding Standards
 
-See [STYLEGUIDE.md](./STYLEGUIDE.md) for detailed conventions. Key points:
+See [styleguide.md](../docs/styleguide.md) for detailed conventions. Key points:
 
 - Components: PascalCase, one per file
 - Hooks: `use` prefix, camelCase
@@ -179,7 +179,7 @@ Keep the first line under 72 characters. Reference issues in the body if applica
 
 ## Pull Request Process
 
-We follow a strict, manually reviewed pull request process to maintain high codebase standards. Pull requests are never merged automatically. For details on merge criteria, approvals, and administrator reviews, please see our [.github/PULL_REQUEST_POLICY.md](.github/PULL_REQUEST_POLICY.md).
+We follow a strict, manually reviewed pull request process to maintain high codebase standards. Pull requests are never merged automatically. For details on merge criteria, approvals, and administrator reviews, please see our [PULL_REQUEST_POLICY.md](./PULL_REQUEST_POLICY.md).
 
 1. **Open early, even as a draft** — feedback is welcome
 2. **Link the issue** your PR addresses
@@ -246,7 +246,7 @@ If your change affects:
 Welcome! Here's how to get started:
 
 1. **Find a `good first issue`** — these are labeled and scoped for newcomers
-2. **Read the [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+2. **Read the [architecture.md](../docs/architecture.md)** to understand the codebase
 3. **Set up the project** using the [Development Setup](#development-setup) section
 4. **Ask questions** — comment on the issue if something is unclear
 5. **Submit a draft PR** — we'll help you polish it

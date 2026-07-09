@@ -43,7 +43,7 @@ If you ask an AI coding agent to customize Birthday Bloom, tell it this first:
 Direct docs:
 
 - [Complete env customization guide](./docs/ENV_GUIDE.md)
-- [Quick start](./QUICK_START.md)
+- [Quick start](./docs/quick-start.md)
 - [Family system](./docs/family-system.md)
 - [Template architecture](./docs/template-architecture.md)
 - [Developer guide](./docs/developer-guide.md)
@@ -61,16 +61,16 @@ Everything you need to get the most out of Birthday Bloom:
 | If you want to... | Start here |
 | --- | --- |
 | Customize names, colors, photos, sections | [ENV_GUIDE.md](./docs/ENV_GUIDE.md) |
-| Run the project locally | [QUICK_START.md](./QUICK_START.md) |
-| Understand the codebase | [ARCHITECTURE.md](./ARCHITECTURE.md) |
+| Run the project locally | [quick-start.md](./docs/quick-start.md) |
+| Understand the codebase | [architecture.md](./docs/architecture.md) |
 | Deploy to Vercel / Netlify / Docker | [docs/deployment.md](./docs/deployment.md) |
 | Set up family profiles (brother, sister, etc.) | [docs/family-system.md](./docs/family-system.md) |
 | Troubleshoot issues | [docs/troubleshooting.md](./docs/troubleshooting.md) |
-| Contribute to the project | [CONTRIBUTING.md](./CONTRIBUTING.md) |
-| See what's coming next | [ROADMAP.md](./ROADMAP.md) |
-| Browse community standards | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
-| Report a security issue | [SECURITY.md](./SECURITY.md) |
-| Get help | [SUPPORT.md](./SUPPORT.md) / [FAQ.md](./FAQ.md) |
+| Contribute to the project | [CONTRIBUTING.md](./.github/CONTRIBUTING.md) |
+| See what's coming next | [roadmap.md](./docs/roadmap.md) |
+| Browse community standards | [CODE_OF_CONDUCT.md](./.github/CODE_OF_CONDUCT.md) |
+| Report a security issue | [SECURITY.md](./.github/SECURITY.md) |
+| Get help | [SUPPORT.md](./.github/SUPPORT.md) / [faq.md](./docs/faq.md) |
 | View version history | [CHANGELOG.md](./CHANGELOG.md) |
 | Explore all docs | [docs/DOCUMENTATION_INDEX.md](./docs/DOCUMENTATION_INDEX.md) |
 
@@ -958,9 +958,9 @@ We have created two animated walkthrough guides to help you contribute to Birthd
 
 ### Quick Start for Contributors
 
-1. **Read [CONTRIBUTING.md](./CONTRIBUTING.md)** for the full workflow
-2. **Read [STYLEGUIDE.md](./STYLEGUIDE.md)** for code conventions
-3. **Read [ARCHITECTURE.md](./ARCHITECTURE.md)** to understand the codebase
+1. **Read [CONTRIBUTING.md](./.github/CONTRIBUTING.md)** for the full workflow
+2. **Read [styleguide.md](./docs/styleguide.md)** for code conventions
+3. **Read [architecture.md](./docs/architecture.md)** to understand the codebase
 4. **Check [good first issues](https://github.com/naborajs/birthday-bloom/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** for beginner-friendly tasks
 5. **Fork, branch, commit, push, and PR** — see the [PR template](.github/pull_request_template.md)
 
@@ -975,7 +975,7 @@ We have created two animated walkthrough guides to help you contribute to Birthd
 
 ### Community Standards
 
-All contributors are expected to follow our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md). Please be respectful, inclusive, and constructive.
+All contributors are expected to follow our [CODE_OF_CONDUCT.md](./.github/CODE_OF_CONDUCT.md). Please be respectful, inclusive, and constructive.
 
 ---
 
